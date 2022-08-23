@@ -1,5 +1,6 @@
 """
 Author: Luc Roghi - lcr0059
+Author: Jared Ireland - jai0095
 https://docs.python.org/3/library/sqlite3.html
 """
 import sqlite3
