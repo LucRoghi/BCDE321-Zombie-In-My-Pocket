@@ -2,6 +2,20 @@
 Author: Luc Roghi - lcr0059
 Author: Jared Ireland - jai0095
 https://docs.python.org/3/library/sqlite3.html
+
+This module serves as a database handler. It can be used to create, interact and pull data from a database
+Attributes:
+    self.db_name: (str) The database name you wish to create
+    self.mydb: (sqlite3 connection) A connection to the named database set above (If unable to be found or created
+    will raise a database error)
+    self.cursor: (sqlite3 cursor) A cursor to aid in the writing or reading of data within the database
+
+Methods:
+     open_db(self, db_name):
+     @Params: db_name: str
+     @returns: None
+
+     close_db(self, db_name)
 """
 import sqlite3
 
@@ -13,17 +27,32 @@ class Database:
         self.cursor = self.mydb.cursor()
 
     def open_db(self):
-        self.mydb = sqlite3.connect(self.db_name)
+        try:
+            self.mydb = sqlite3.connect(self.db_name)
+            return True
+        except sqlite3.DatabaseError as e:
+            print(e)
+            return False
+
 
     def close_db(self):
-        self.mydb.close()
+        try:
+            self.mydb.close()
+        except sqlite3.DatabaseError as e:
+            print(e)
+            return False
+        return True
 
     def create_new_table(self, table_name: str, columns: dict):
         table_creation_string = f'''CREATE TABLE IF NOT EXISTS {table_name} (id INT AUTO_INCREMENT PRIMARY_KEY'''
         for key in columns:
             table_creation_string += f''', {key} {columns[key]}'''
         table_creation_string += f''')'''
-        self.cursor.execute(table_creation_string)
+        try:
+            self.cursor.execute(table_creation_string)
+        except sqlite3.DatabaseError as e:
+            print(e)
+            return False
         return True
 
     def insert_item_data(self):
@@ -70,7 +99,7 @@ class Database:
         return self.cursor.fetchall()
 
     def get_tile_data(self):
-        self.cursor.execute("SELECT * FROM Tiles")
+        self.cursor.execute("SELECT * FROM Tiles ORDER BY ")
         return self.cursor.fetchall()
 
 if __name__ == "__main__":
