@@ -1,0 +1,3 @@
+{"room_name": "TEXT", "zombie_number": "INT", "effect": "TEXT", "door_up": "BOOL", "door_right": "BOOL",
+  "door_down": "BOOL", "door_left": "BOOL", "room_up": "TEXT", "room_right": "TEXT", "room_down": "TEXT",
+  "room_left": "TEXT"}
