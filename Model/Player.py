@@ -1,7 +1,7 @@
 import dataclasses
 
 from Model.Cards import Item
-from Model.Level import MapTile
+from Model.MapTile import MapTile
 
 
 @dataclasses

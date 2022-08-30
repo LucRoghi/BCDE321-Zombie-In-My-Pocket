@@ -72,6 +72,14 @@ class Database:
         self.cursor.execute("SELECT * FROM Tiles")
         return self.cursor.fetchall()
 
+    def query_all_data_from_table(self, table_name: str) -> tuple:
+        self.cursor.execute(f"SELECT * FROM {table_name}")
+        return self.cursor.fetchall()
+
+    def query_data_from_table(self, table_name: str, column: str, query: str):
+        self.cursor.execute(f"SELECT * FROM {table_name} WHERE {column} = {query}")
+
+
 if __name__ == "__main__":
     new_db = Database("test.db")
     test_dict = {"hp": "INT", "atk": "INT", "item1": "TEXT", "item2": "TEXT", "currentLocation": "TEXT", "previousLocation": "TEXT"}

@@ -3,16 +3,11 @@
 import dataclasses
 from typing import Callable, Generic
 
-from Model import Level, Player
-from Model.Level import MapTile
+from Model import MapTile, Player
+from Model.MapTile import MapTile
 
 
-@dataclasses
-class Item:
-    name: str = ""
-    effect: Callable = None
-    can_combine: bool = False
-    combines_with: Generic = None
+
 
 
 @dataclasses
