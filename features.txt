@@ -1,0 +1,15 @@
+1. Support Command Line Arguments
+2. Has a line-oriented command interpreter based on cmd or similar package
+3. Display command line help of available commands
+4. Change commands and options
+5. Extract data DONE (No exception handling)
+6. Validate data
+7. Provide object persistence / object serialization using pickle or shelve WORKING (No exception handling)
+8. Can load data from a file DONE (No exception handling)
+9. Can deal with file directory DONE (No exception handling)
+10. Can raise exceptions and provide exception handling
+11. Amount of checking for pre and post conditions of methods
+12. Provide Doctest
+13. Provide Unittests
+14. Pretty Print
+15. Can save and read data from a database DONE
