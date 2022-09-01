@@ -3,7 +3,7 @@
 import dataclasses
 from typing import Callable, Generic
 
-from Model import MapTile, Player
+from Model import Player
 from Model.MapTile import MapTile
 
 

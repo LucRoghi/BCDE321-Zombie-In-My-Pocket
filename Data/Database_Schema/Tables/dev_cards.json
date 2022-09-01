@@ -1,2 +1,5 @@
-{"room_name": "TEXT", "effect": "TEXT", "door_up": "BOOL", "door_right": "BOOL",
-  "door_down": "BOOL", "door_left": "BOOL", "type": "TEXT"}
+{
+  "9_message": "TEXT", "9_effect": "TEXT",
+  "10_message": "TEXT", "10_effect": "TEXT",
+  "11_message": "TEXT", "11_effect": "TEXT"
+}
