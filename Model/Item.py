@@ -1,11 +1,10 @@
-import dataclasses
 from typing import Callable, Generic
 
 
-@dataclasses
 class Item:
-    name: str = ""
-    effect: Callable = None
-    can_combine: bool = False
-    combines_with: Generic = None
-    uses: int = 0
+    def __init__(self, name, effect, can_combine, combines_with, uses):
+        self.name: str = name
+        self.effect: Callable = effect
+        self.can_combine: bool = can_combine
+        self.combines_with: Generic = combines_with
+        self.uses: int = uses
