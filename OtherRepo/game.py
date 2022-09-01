@@ -4,12 +4,12 @@ Author: Luc Roghi - lcr0059
 For: BCDE311 Assignment2
 """
 
-from player import Player as p
+from Model.Player import Player as p
 from DevCards import DevCard as d
 from TileCards import TileCard as t
-from Level import Level as l
-from CMD_Commands import Commands as c
-from dev_card import DevCard as Dc
+from Model.MapTile import MapTile as l
+from View.view_commands import Commands as c
+from Model.GameData import GameData as Gd
 
 
 @staticmethod
@@ -25,23 +25,21 @@ class Game:
         self.time = time
         self.game_state = game_state
 
-    # TODO WIP
-    # FIXME A better Name - Used in both Startup and when New Time happens
-    #   FOR I IN RANGE FIX ????
-    #   Moved to here for better use maybe?
     def dev_card_popper(self):
-        # FIXME Still needs to have the functionality of the DevCards lol
-        # FIXME Wait does this even work logically?
-        current_game_state = self.game_state
-        match current_game_state:
-            case "START":
+        current_game_self = self.game_state
+        match current_game_self:
+            case ["START", self.dev_card_check()]:
                 x = 2
-            case dev_card_check():
-                x = 2
-            case card_played():
+            case "Memes":
                 x = 1
-        for x in current_game_state:
-            self.dev_cards.pop(0)
+        if x != 0:
+            for x in current_game_self:
+                Gd.dev_cards.pop(0)
+
+    def dev_card_check(self):
+        if self.dev_card is None and self.game_state is "PLAY":
+            self.time += 1
+            print(f'It is now {self.time}pm')
 
     def game_start(self):
         self.game_state = "START"
