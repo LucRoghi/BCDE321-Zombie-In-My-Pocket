@@ -2,13 +2,13 @@ from Model.MapTile import MapTile
 
 
 class Player:
-    def __init__(self, name, current_location, attack, health, inventory, has_totem):
-        self.name: str = ""
-        self.current_location: MapTile = None
+    def __init__(self, name, current_location):
+        self.name: str = name
+        self.current_location: MapTile = current_location
         self.attack: int = 1
         self.health: int = 6
         self.inventory = []
-        self.has_totem: bool = None
+        self.has_totem: bool = False
 
     def move_player_up(self):
         if self.current_location.room_up is not None:

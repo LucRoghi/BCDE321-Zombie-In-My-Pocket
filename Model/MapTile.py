@@ -59,6 +59,7 @@ class MapTile:
             self.door_down = door_list[-3]
             self.door_left = door_list[0]
 
+
     def print_door(self):
         print(f"up: {self.door_up}, right: {self.door_right}, down: {self.door_down}, left: {self.door_left}")
 

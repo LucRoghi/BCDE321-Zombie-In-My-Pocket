@@ -1,11 +1,7 @@
-from typing import List
-
-from Model import effects
 from Model.Devcard import Devcard
 from Model.DatabaseHandler import Database
 from Model.Filehandler import Filehandler
 from Model.MapTile import MapTile
-import Model.effects
 
 
 def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
@@ -21,19 +17,8 @@ def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
     devcard_list = []
     for card in tuple_list:
         _, nine_message, nine_effect, ten_message, ten_effect, eleven_message, eleven_effect, item = card
-        if nine_effect.isnumeric():
-            zombie_number = int(nine_effect)
-            nine_effect = getattr(effects, 'add_zombies_to_room')
-        elif ten_effect.isnumeric():
-            zombie_number = int(ten_effect)
-            ten_effect = getattr(effects, 'add_zombie_to_room')
-        elif eleven_effect.isnumeric():
-            zombie_number = int(eleven_effect)
-            eleven_effect = getattr(effects, 'add_zombie_to_room')
 
-
-
-        dev_card = Devcard(zombie_number, nine_message, nine_effect, ten_message, ten_effect,
+        dev_card = Devcard(nine_message, nine_effect, ten_message, ten_effect,
                            eleven_message, eleven_effect)
         devcard_list.append(dev_card)
     return devcard_list
