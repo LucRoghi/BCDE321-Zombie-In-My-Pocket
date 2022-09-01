@@ -2,6 +2,8 @@
 from GameData import GameData
 from MapTile import MapTile
 from Player import Player
+from View.view_commands import Commands
+
 
 # TODO - Luc fix :)
 class GameController:
@@ -10,12 +12,20 @@ class GameController:
         self.map_tile = MapTile()
         self.player = Player()
         self.time = 9
+        self.game_state = ""
+        self.root = self.game_data.map_tiles_indoor[-1]
+        self.user_prompt = Commands().prompt
+
+    def game_start(self):
+        self.game_state = "START"
+        self.player.current_location = self.root
+        self.user_prompt = f'{Commands.intro_block()}'
 
     def dev_card_popper(self):
         pass
 
     def time_update(self):
-        if not self.game_data.dev_card and self.game_state is "PLAY":
+        if not self.game_data.dev_cards and self.game_state is "PLAY":
             self.time += 1
             print(f'It is now {self.time}pm')
 
@@ -34,4 +44,3 @@ class GameController:
         else:
             for attr in player_actions:
                 setattr(self.player, attr, False)
-

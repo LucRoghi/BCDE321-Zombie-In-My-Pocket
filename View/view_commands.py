@@ -34,7 +34,6 @@ from time import sleep
 
 
 class Commands(cmd.Cmd):
-
     def __init__(self):
         cmd.CMD.__init__(self)
         self.prompt = ">>> "
@@ -50,14 +49,7 @@ class Commands(cmd.Cmd):
                      "you! "
         self.prompt = "You are currently in the 'Main Menu' of the game - you have 3 options: 'Load' 'Start' " \
                       "'Help'/'?' "
-        text = self.prompt
-        intro = welcome, sleep(0.5), hint_one, sleep(0.5), hint_two, sleep(0.5), hint_three, sleep(0.5), text
-
-# TODO WIP
-    def do_start_cmd(self):
-        g.game_start == "START"
-        if self.intro_block.text == "Start":
-            pass
+        intro = welcome, sleep(0.5), hint_one, sleep(0.5), hint_two, sleep(0.5), hint_three, sleep(0.5)
 
 # TODO - Logic might not work
     def do_move_cmd(self):
