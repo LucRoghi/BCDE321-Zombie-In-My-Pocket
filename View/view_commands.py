@@ -3,9 +3,8 @@ Author: Jared Ireland - jai0095
 For: BCDE311 Assignment2
 """
 import cmd
-import Model.Player as p
-import Model.GameData as g
-import Model.Level as l
+import Modep.Player as p
+import Modep.GameData as g
 from time import sleep
 
 
@@ -68,13 +67,13 @@ class Commands(cmd.Cmd):
             command = self.prompt.upper()
             match command:
                 case "N":
-                    l.move_player_up()
+                    p.move_player_up()
                 case "E":
-                    l.move_player_right()
+                    p.move_player_right()
                 case "S":
-                    l.move_player_down()
+                    p.move_player_down()
                 case "W":
-                    l.move_player_left()
+                    p.move_player_left()
             if self.prompt not in valid_input:
                 print("Please look at the Help command for valid Movement")
         else:

@@ -17,7 +17,7 @@ For: BCDE311 Assignment2
 # FIXME This whole file LMAO
 
 from Database import Database
-from Player import Player
+from player import Player
 
 
 class Item:

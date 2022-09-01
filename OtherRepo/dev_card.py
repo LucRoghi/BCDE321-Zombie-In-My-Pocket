@@ -8,7 +8,7 @@ import random
 from Database import Database
 from Game import Game
 from MapNode import MapNode
-from Player import Player
+from player import Player
 
 
 class DevCard:

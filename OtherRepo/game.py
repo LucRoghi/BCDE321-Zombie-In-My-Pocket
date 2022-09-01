@@ -4,7 +4,7 @@ Author: Luc Roghi - lcr0059
 For: BCDE311 Assignment2
 """
 
-from Player import Player as p
+from player import Player as p
 from DevCards import DevCard as d
 from TileCards import TileCard as t
 from Level import Level as l
