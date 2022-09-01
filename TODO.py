@@ -11,3 +11,6 @@
 #   DEAD - Player has reached 0 HP
 #   END - The Timer is UP
 #   WIN - The Player has buried the totem in the Graveyard
+
+# TODO:
+#   Making Pretty Graph for Player HP - Log Player HP
