@@ -1,6 +1,5 @@
 import dataclasses
 
-from Model.Cards import Item
 from Model.MapTile import MapTile
 
 
@@ -10,7 +9,6 @@ class Player:
     current_location: MapTile = None
     attack: int = 1
     health: int = 6
-    items_1: Item = None
-    items_2: Item = None
+    inventory = []
     has_totem: bool = None
 

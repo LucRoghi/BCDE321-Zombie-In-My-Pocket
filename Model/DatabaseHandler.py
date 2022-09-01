@@ -52,7 +52,7 @@ class Database:
         table_creation_string += f''')'''
         try:
             self.cursor.execute(table_creation_string)
-            self.mydb.commit()
+            print(f"Create table {table_name}")
         except sqlite3.DatabaseError as e:
             print(e)
             return False
@@ -60,10 +60,11 @@ class Database:
 
     def drop_table_in_db(self, table_name: str):
         self.cursor.execute(f'''DROP TABLE IF EXISTS {self.mydb}.{table_name}''')
-        self.mydb.commit()
 
     def delete_all_rows_in_db(self, table_name: str):
         self.cursor.execute(f'''DELETE FROM {table_name}''')
+
+    def commit_db(self):
         self.mydb.commit()
 
     def insert_item_data(self):
@@ -74,17 +75,14 @@ class Database:
         if self.cursor.execute('SELECT COUNT(*) from Maptiles') == 0:
             for tile in tile_data:
                 self.cursor.execute('INSERT INTO Maptiles VALUES(?,?,?,?,?,?,?,?)', tile)
-                self.mydb.commit()
 
     def insert_dev_card_data(self):
-        item_data = self.file_handler.read_csv_data_into_list("/Data/", "items_data")
-        if self.cursor.execute('SELECT COUNT(*) from Items') == 0:
-            for tile in item_data:
-                self.cursor.execute('INSERT INTO Devcards VALUES(?,?,?,?,?,?,?,?)', tile)
-                self.mydb.commit()
+        dev_card_data = self.file_handler.read_csv_data_into_list("/Data/", "dev_cards_data")
+        for dev_card in dev_card_data:
+            self.cursor.execute('INSERT INTO Devcards VALUES(?,?,?,?,?,?,?,?)', dev_card)
 
     def get_dev_card_data(self):
-        self.cursor.execute("SELECT * FROM DevCard")
+        self.cursor.execute("SELECT * FROM Devcards")
         return self.cursor.fetchall()
 
     def get_tile_data(self):
