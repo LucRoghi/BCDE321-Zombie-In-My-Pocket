@@ -2,6 +2,7 @@ from Model.Devcard import Devcard
 from Model.DatabaseHandler import Database
 from Model.Filehandler import Filehandler
 from Model.MapTile import MapTile
+from os.path import exists
 
 
 def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
@@ -17,11 +18,13 @@ def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
     devcard_list = []
     for card in tuple_list:
         _, nine_message, nine_effect, ten_message, ten_effect, eleven_message, eleven_effect, item = card
-
         dev_card = Devcard(nine_message, nine_effect, ten_message, ten_effect,
                            eleven_message, eleven_effect)
         devcard_list.append(dev_card)
     return devcard_list
+
+def convert_tuples_to_items(tule_list: tuple) -> list[Devcard]:
+    pass
 
 
 class GameData:
@@ -32,6 +35,12 @@ class GameData:
         self.items = []
         self.database = Database("ZombieInMyPocket.db")
         self.file_handler = Filehandler()
+
+    def initialize_game_data(self):
+        if not exists("/Model/ZombieInMyPocket.db"):
+            self.populate_db()
+        self.populate_map_tiles()
+        self.populate_dev_cards()
 
     def populate_db(self):
         # Maptile Insert
@@ -44,6 +53,12 @@ class GameData:
         dev_card_table = self.file_handler.read_file_from_json("/Data/Database_Schema/Tables/", "dev_cards")
         self.database.create_new_table("Devcards", dev_card_table)
         self.database.insert_dev_card_data()
+        self.database.commit_db()
+
+        # Items Insert
+        item_table = self.file_handler.read_file_from_json("/Data/Database_Schema/Tables/", "items_data")
+        self.database.create_new_table("Items", item_table)
+        self.database.insert_item_data()
         self.database.commit_db()
 
     def populate_map_tiles(self):
@@ -60,7 +75,8 @@ class GameData:
         self.dev_cards = convert_tuples_to_dev_card(dev_card_tuples)
 
     def populate_items(self):
-        pass
+        item_tuples = self.database.get_item_data()
+        self.item_cards = convert_tuples_to_items(item_tuples)
 
 
 if __name__ == "__main__":

@@ -22,3 +22,4 @@ to a current room
 Player wins if the totem from the Evil Temple is buried in the Graveyard
 Player loses if health drops to 0 OR
 """
+
