@@ -4,12 +4,12 @@ Author: Luc Roghi - lcr0059
 For: BCDE311 Assignment2
 """
 
-from Model.Player import Player as p
-from DevCards import DevCard as d
-from TileCards import TileCard as t
-from Model.MapTile import MapTile as l
-from View.view_commands import Commands as c
-from Model.GameData import GameData as Gd
+from Model.Player import Player
+from DevCards import DevCard
+from TileCards import TileCard
+from Model.MapTile import MapTile
+from View.view_commands import Commands
+from Model.GameData import GameData
 
 
 @staticmethod
@@ -34,7 +34,7 @@ class Game:
                 x = 1
         if x != 0:
             for x in current_game_self:
-                Gd.dev_cards.pop(0)
+                GameData.dev_cards.pop(0)
 
     def dev_card_check(self):
         if self.dev_card is None and self.game_state is "PLAY":
@@ -46,7 +46,7 @@ class Game:
         l.initialize_map()
         # I don't know if this is technically how it works? its possible this might duplicate the intro block
         c.intro_block()
-        dev_card_popper()
+        self.dev_card_popper()
 
         pass
         # Get the DevCards loaded
