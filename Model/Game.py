@@ -3,10 +3,10 @@ from GameData import GameData
 from MapTile import MapTile
 from Player import Player
 
-
+# TODO - Luc fix :)
 class GameController:
     def __init__(self):
-        self.game_data = GameData().initialize_game_data()
+        self.game_data = GameData()
         self.map_tile = MapTile()
         self.player = Player()
         self.time = 9
@@ -15,7 +15,7 @@ class GameController:
         pass
 
     def time_update(self):
-        if self.game_data.dev_card is None and self.game_state is "PLAY":
+        if not self.game_data.dev_card and self.game_state is "PLAY":
             self.time += 1
             print(f'It is now {self.time}pm')
 
