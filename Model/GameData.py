@@ -35,6 +35,7 @@ class GameData:
         self.items = []
         self.database = Database("ZombieInMyPocket.db")
         self.file_handler = Filehandler()
+        self.initialize_game_data()
 
     def initialize_game_data(self):
         if not exists("/Model/ZombieInMyPocket.db"):
