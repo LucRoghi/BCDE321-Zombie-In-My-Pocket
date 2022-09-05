@@ -9,7 +9,7 @@ class Player:
         self.previous_location = None
         self.attack: int = 1
         self.health: int = 6
-        self.inventory = []
+        self.inventory: list = []
         self.has_totem: bool = None
         self.can_cower: bool = False
         self.can_attack: bool = False
