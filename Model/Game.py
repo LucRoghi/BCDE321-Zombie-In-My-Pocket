@@ -11,6 +11,7 @@ class GameController:
         self.game_data = GameData()
         self.map_tile = MapTile()
         self.player = Player()
+        self.dev_cards = self.game_data.dev_cards
         self.time = 9
         self.game_state = ""
         self.root = self.game_data.map_tiles_indoor[-1]

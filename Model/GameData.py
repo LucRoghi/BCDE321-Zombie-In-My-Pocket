@@ -1,6 +1,5 @@
 from typing import List
 
-from Model import effects
 from Model.Devcard import Devcard
 from Model.DatabaseHandler import Database
 from Model.Filehandler import Filehandler
@@ -21,31 +20,45 @@ def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
     devcard_list = []
     for card in tuple_list:
         _, nine_message, nine_effect, ten_message, ten_effect, eleven_message, eleven_effect, item = card
-        if nine_effect.isnumeric():
-            zombie_number = nine_effect
-            nine_effect = getattr(effects, "add_zombies_to_room")
-        elif ten_effect.isnumeric():
-            zombie_number = ten_effect
-            ten_effect = getattr(effects, "add_zombies_to_room")
-        elif eleven_effect.isnumeric():
-            zombie_number = eleven_effect
-            eleven_effect = getattr(effects, "add_zombies_to_room")
-        else:
-            zombie_number = 0
-
-        if nine_effect != ('None' and 'add_zombies_to_room'):
-            nine_effect = getattr(effects, nine_effect)
-        if ten_effect != ('None' and 'add_zombies_to_room'):
-            ten_effect = getattr(effects, ten_effect)
-        if eleven_effect != ('None' and 'add_zombies_to_room'):
-            eleven_effect = getattr(effects, eleven_effect)
-        dev_card = Devcard(zombie_number, nine_message, nine_effect, ten_message, ten_effect,
+        dev_card = Devcard(0, nine_message, nine_effect, ten_message, ten_effect,
                            eleven_message, eleven_effect)
+
+        if nine_effect.isnumeric():
+            dev_card.zombie_number = nine_effect
+            dev_card.nine_effect = getattr(dev_card, "add_zombies_to_room")
+        elif ten_effect.isnumeric():
+            dev_card.zombie_number = ten_effect
+            dev_card.ten_effect = getattr(dev_card, "add_zombies_to_room")
+        elif eleven_effect.isnumeric():
+            dev_card.zombie_number = eleven_effect
+            dev_card.eleven_effect = getattr(Devcard, "add_zombies_to_room")
+        else:
+            dev_card.nine_effect = None
+            dev_card.ten_effect = None
+            dev_card.eleven_effect = None
+            dev_card.zombie_number = 0
+
+        if nine_effect != (None or 'add_zombies_to_room'):
+            dev_card.nine_effect = getattr(Devcard, str(nine_effect), None)
+
+        if ten_effect != (None or 'add_zombies_to_room'):
+            dev_card.ten_effect = getattr(Devcard, str(ten_effect), None)
+
+        if eleven_effect != (None or 'add_zombies_to_room'):
+            dev_card.eleven_effect = getattr(Devcard, str(eleven_effect), None)
+
         devcard_list.append(dev_card)
     return devcard_list
 
+
 def convert_tuples_to_items(tuple_list: tuple) -> list[Item]:
-    pass
+    item_list = []
+    for item in tuple_list:
+        _, name, effect, can_combine, combines_with_1, combines_with_2, makes_1, makes_2, uses = item
+        effect = Item.getattr()
+        new_item = Item(name, effect, can_combine, [combines_with_1, combines_with_2], [makes_1, makes_2], uses)
+        item_list.append(new_item)
+    return item_list
 
 
 class GameData:
@@ -56,6 +69,11 @@ class GameData:
         self.items = []
         self.database = Database("ZombieInMyPocket.db")
         self.file_handler = Filehandler()
+
+    def initialize_game_data(self):
+        self.get_map_tiles()
+        self.get_dev_cards()
+        self.get_items()
 
     def populate_db(self):
         # Maptile Insert
@@ -70,7 +88,13 @@ class GameData:
         self.database.insert_dev_card_data()
         self.database.commit_db()
 
-    def populate_map_tiles(self):
+        # Item insert
+        item_table = self.file_handler.read_file_from_json("/Data/Database_Schema/Tables/", "items")
+        self.database.create_new_table("Items", item_table)
+        self.database.insert_item_data()
+        self.database.commit_db()
+
+    def get_map_tiles(self):
         # GET ALL INDOOR TILES
         map_tuples = self.database.query_data_from_table("Maptiles", "type", "Indoor")
         self.map_tiles_indoor = convert_tuples_to_maptile(map_tuples)
@@ -79,20 +103,16 @@ class GameData:
         map_tuples = self.database.query_data_from_table("Maptiles", "type", "Outdoor")
         self.map_tiles_outdoor = convert_tuples_to_maptile(map_tuples)
 
-    def populate_dev_cards(self):
-        dev_card_tuples = self.database.get_dev_card_data()
+    def get_dev_cards(self):
+        dev_card_tuples = self.database.query_all_data_from_table("Devcards")
         self.dev_cards = convert_tuples_to_dev_card(dev_card_tuples)
 
-    def populate_items(self):
-        pass
+    def get_items(self):
+        item_tuples = self.database.query_all_data_from_table("Items")
+        self.items = convert_tuples_to_items()
 
 
 if __name__ == "__main__":
     test_game_data = GameData()
-    test_game_data.database.delete_all_rows_in_db("Maptiles")
-    test_game_data.database.delete_all_rows_in_db("Devcards")
     test_game_data.populate_db()
-    test_game_data.populate_map_tiles()
-    test_game_data.database.query_all_data_from_table("Devcards")
-    test_game_data.populate_dev_cards()
-    print(test_game_data.dev_cards)
+    test_game_data.initialize_game_data()
