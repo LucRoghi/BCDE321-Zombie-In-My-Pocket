@@ -11,11 +11,7 @@ Attributes:
     self.cursor: (sqlite3 cursor) A cursor to aid in the writing or reading of data within the database
 
 Methods:
-     open_db(self, db_name):
-     @Params: db_name: str
-     @returns: None
 
-     close_db(self, db_name)
 """
 import sqlite3
 
@@ -40,10 +36,10 @@ class Database:
     def close_db(self):
         try:
             self.mydb.close()
+            return True
         except sqlite3.DatabaseError as e:
             print(e)
             return False
-        return True
 
     def create_new_table(self, table_name: str, columns: dict):
         table_creation_string = f'''CREATE TABLE IF NOT EXISTS {table_name} (id INT PRIMARY_KEY'''
@@ -81,12 +77,17 @@ class Database:
         for dev_card in dev_card_data:
             self.cursor.execute('INSERT INTO Devcards VALUES(?,?,?,?,?,?,?,?)', dev_card)
 
+    def insert_item_data(self):
+        item_data = self.file_handler.read_csv_data_into_list("/Data/", "items_data.csv")
+        for item in item_data:
+            self.cursor.execute('INSERT INTO Items VALUES(?,?,?,?,?,?,?,?)', item)
+
     def get_dev_card_data(self):
         self.cursor.execute("SELECT * FROM Devcards")
         return self.cursor.fetchall()
 
     def get_tile_data(self):
-        self.cursor.execute("SELECT * FROM Tiles ORDER BY ")
+        self.cursor.execute("SELECT * FROM Tiles")
         return self.cursor.fetchall()
 
     def query_all_data_from_table(self, table_name: str) -> tuple:

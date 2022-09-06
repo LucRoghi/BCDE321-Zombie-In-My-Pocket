@@ -4,8 +4,8 @@ from Model import effects
 from Model.Devcard import Devcard
 from Model.DatabaseHandler import Database
 from Model.Filehandler import Filehandler
+from Model.Item import Item
 from Model.MapTile import MapTile
-import Model.effects
 
 
 def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
@@ -30,7 +30,6 @@ def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
         elif eleven_effect.isnumeric():
             zombie_number = eleven_effect
             eleven_effect = getattr(effects, "add_zombies_to_room")
-
         else:
             zombie_number = 0
 
@@ -44,6 +43,9 @@ def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
                            eleven_message, eleven_effect)
         devcard_list.append(dev_card)
     return devcard_list
+
+def convert_tuples_to_items(tuple_list: tuple) -> list[Item]:
+    pass
 
 
 class GameData:
