@@ -56,7 +56,7 @@ class Database:
         return True
 
     def drop_table_in_db(self, table_name: str):
-        self.cursor.execute(f'''DROP TABLE IF EXISTS {self.mydb}.{table_name}''')
+        self.cursor.execute(f'''DROP TABLE IF EXISTS {table_name}''')
 
     def delete_all_rows_in_db(self, table_name: str):
         self.cursor.execute(f'''DELETE FROM {table_name}''')
@@ -66,9 +66,8 @@ class Database:
 
     def insert_tile_data(self):
         tile_data = self.file_handler.read_csv_data_into_list("/Data/", "maptiles_data")
-        if self.cursor.execute('SELECT COUNT(*) from Maptiles') == 0:
-            for tile in tile_data:
-                self.cursor.execute('INSERT INTO Maptiles VALUES(?,?,?,?,?,?,?,?)', tile)
+        for tile in tile_data:
+            self.cursor.execute('INSERT INTO Maptiles VALUES(?,?,?,?,?,?,?,?)', tile)
 
     def insert_dev_card_data(self):
         dev_card_data = self.file_handler.read_csv_data_into_list("/Data/", "dev_cards_data")
@@ -78,7 +77,7 @@ class Database:
     def insert_item_data(self):
         item_data = self.file_handler.read_csv_data_into_list("/Data/", "items_data")
         for item in item_data:
-            self.cursor.execute('INSERT INTO Items VALUES(?,?,?,?,?,?,?,?)', item)
+            self.cursor.execute('INSERT INTO Items VALUES(?,?,?,?,?,?,?,?,?)', item)
 
     def get_dev_card_data(self):
         self.cursor.execute("SELECT * FROM Devcards")
@@ -88,13 +87,14 @@ class Database:
         self.cursor.execute("SELECT * FROM Tiles")
         return self.cursor.fetchall()
 
-    def query_all_data_from_table(self, table_name: str) -> list[tuple]:
+    def query_all_data_from_table(self, table_name: str):
         self.cursor.execute(f"SELECT * FROM {table_name}")
         self.mydb.commit()
         return self.cursor.fetchall()
 
     def query_data_from_table(self, table_name: str, column: str, query: str):
         self.cursor.execute(f"SELECT * FROM {table_name} WHERE {column}='{query}'")
+        self.mydb.commit()
         return self.cursor.fetchall()
 
 

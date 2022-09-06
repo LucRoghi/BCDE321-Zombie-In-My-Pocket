@@ -4,7 +4,6 @@ For: BCDE321 Zombie In My Pocket
 
 This module provides the setup for the nodes within the ternary tree within the Level Class
 """
-from dataclasses import dataclass
 from typing import Callable
 
 
@@ -73,6 +72,15 @@ class MapTile:
 
     def print_door(self):
         print(f"up: {self.door_up}, right: {self.door_right}, down: {self.door_down}, left: {self.door_left}")
+
+    def add_1_health(self):
+        pass
+
+    def find_an_item(self):
+        pass
+
+    def bury_totem(self):
+        pass
 
 
 if __name__ == "__main__":

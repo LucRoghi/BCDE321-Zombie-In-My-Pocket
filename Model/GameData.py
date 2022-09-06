@@ -12,6 +12,7 @@ def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
     for tile in tuple_list:
         _, room_name, effect, door_up, door_right, door_down, door_left, type = tile
         tile = MapTile(room_name, effect, door_up, door_right, door_down, door_left)
+        tile.effect = getattr(tile, effect, None)
         tile_list.append(tile)
     return tile_list
 
@@ -55,8 +56,8 @@ def convert_tuples_to_items(tuple_list: tuple) -> list[Item]:
     item_list = []
     for item in tuple_list:
         _, name, effect, can_combine, combines_with_1, combines_with_2, makes_1, makes_2, uses = item
-        effect = Item.getattr()
         new_item = Item(name, effect, can_combine, [combines_with_1, combines_with_2], [makes_1, makes_2], uses)
+        new_item.effect = getattr(new_item, effect, None)
         item_list.append(new_item)
     return item_list
 
@@ -109,10 +110,13 @@ class GameData:
 
     def get_items(self):
         item_tuples = self.database.query_all_data_from_table("Items")
-        self.items = convert_tuples_to_items()
+        self.items = convert_tuples_to_items(item_tuples)
 
 
 if __name__ == "__main__":
     test_game_data = GameData()
+    test_game_data.database.drop_table_in_db("Maptiles")
+    test_game_data.database.drop_table_in_db("Devcards")
+    test_game_data.database.drop_table_in_db("Items")
     test_game_data.populate_db()
     test_game_data.initialize_game_data()

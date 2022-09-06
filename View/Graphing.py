@@ -3,8 +3,8 @@ from Model.Player import Player
 
 
 # class Graphing:
-#     def __init__(self):
-#         self.player = Player()
+#     def __init__(self, player):
+#         self.player = player
 #
 #     def player_health_graph(self):
 #         x = 1  # [self.player.turn]

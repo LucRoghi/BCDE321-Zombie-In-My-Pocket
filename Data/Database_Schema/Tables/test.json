@@ -1,9 +1,0 @@
-{
-    "room_name": "TEXT",
-    "effect": "TEXT",
-    "door_up": "BOOL",
-    "door_right": "BOOL",
-    "door_down": "BOOL",
-    "door_left": "BOOL",
-    "type": "TEXT"
-}
