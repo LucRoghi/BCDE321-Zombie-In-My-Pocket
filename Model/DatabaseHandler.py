@@ -14,6 +14,7 @@ Methods:
 
 """
 import sqlite3
+from typing import List, Any
 
 from Model.Filehandler import Filehandler
 
@@ -63,12 +64,6 @@ class Database:
     def commit_db(self):
         self.mydb.commit()
 
-    def insert_item_data(self):
-        tile_data = self.file_handler.read_csv_data_into_list("/Data/", "items_data")
-        if self.cursor.execute('SELECT COUNT(*) from Maptiles') == 0:
-            for tile in tile_data:
-                self.cursor.execute('INSERT INTO Maptiles VALUES(?,?,?,?,?,?,?,?)', tile)
-
     def insert_tile_data(self):
         tile_data = self.file_handler.read_csv_data_into_list("/Data/", "maptiles_data")
         if self.cursor.execute('SELECT COUNT(*) from Maptiles') == 0:
@@ -81,7 +76,7 @@ class Database:
             self.cursor.execute('INSERT INTO Devcards VALUES(?,?,?,?,?,?,?,?)', dev_card)
 
     def insert_item_data(self):
-        item_data = self.file_handler.read_csv_data_into_list("/Data/", "items_data.csv")
+        item_data = self.file_handler.read_csv_data_into_list("/Data/", "items_data")
         for item in item_data:
             self.cursor.execute('INSERT INTO Items VALUES(?,?,?,?,?,?,?,?)', item)
 
@@ -93,7 +88,7 @@ class Database:
         self.cursor.execute("SELECT * FROM Tiles")
         return self.cursor.fetchall()
 
-    def query_all_data_from_table(self, table_name: str) -> tuple:
+    def query_all_data_from_table(self, table_name: str) -> list[tuple]:
         self.cursor.execute(f"SELECT * FROM {table_name}")
         self.mydb.commit()
         return self.cursor.fetchall()

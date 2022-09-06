@@ -2,11 +2,12 @@ import dataclasses
 from typing import Callable, Generic
 
 
-@dataclasses
+
 class Item:
-    name: str = ""
-    effect: Callable = None
-    can_combine: bool = False
-    combines_with: list[str] = None
-    makes: list[str] = None
-    uses: int = 0
+    def __init__(self):
+        self.name = ""
+        self.effect: Callable = None
+        self.can_combine: bool = False
+        self.combines_with: list[str] = None
+        self.makes: list[str] = None
+        self.uses: int = 0

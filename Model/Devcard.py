@@ -3,8 +3,8 @@ from Model.Player import Player
 
 
 class Devcard:
-    def __init__(self, nine_message, nine_effect, ten_message, ten_effect, eleven_message, eleven_effect):
-        self.zombie_number = 0
+    def __init__(self, zombie_number, nine_message, nine_effect, ten_message, ten_effect, eleven_message, eleven_effect):
+        self.zombie_number = zombie_number
         self.nine_oclock_message = nine_message
         self.nine_oclock: Callable = self.set_effect(nine_effect)
         self.ten_oclock_message = ten_message
@@ -20,7 +20,7 @@ class Devcard:
             return None
         else:
             self.zombie_number = 0
-            return getattr(Devcard, effect_string)
+            return getattr(Devcard, effect_string, None)
 
     def add_zombies_to_room(self, player: Player, zombie_number):
         player.current_location.zombie_number = zombie_number
@@ -34,3 +34,8 @@ class Devcard:
     def get_new_item(self, player, _):
         # Implement card draw logic
         pass
+
+if __name__ == "__main__":
+    test_devcard = Devcard(0, "", "", "", "", "", "")
+    test_func = getattr(Devcard, 'add_zombies_to_room')
+    print(test_func)
