@@ -45,3 +45,29 @@ class GameController:
         else:
             for attr in player_actions:
                 setattr(self.player, attr, False)
+
+    def player_item_cap(self):
+        if len(self.player.inventory) > 2:
+            print("You can not pick up an items. Please drop one to replace!")
+
+    def win_con(self):
+        if self.player.current_location == "Graveyard" and self.map_tile.bury_totem():
+            print("The horde starts to crumble into dust, you collapse on the ground exhausted.\nYou have won!")
+            self.game_state = "WIN"
+
+    def loss_con(self):
+        command = ""
+        if self.time == 12:
+            command = "Time"
+
+        if self.player.health <= 0:
+            command = "Dead"
+
+        match command:
+            case "Time":
+                print("The time has reached 12am. The horde has grown stronger and there is no stopping them")
+                self.game_state = "END"
+            case "Dead":
+                print("You have died")
+                self.game_state = "DEAD"
+

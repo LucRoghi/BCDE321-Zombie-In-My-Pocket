@@ -3,8 +3,8 @@ Author: Jared Ireland - jai0095
 For: BCDE311 Assignment2
 """
 import cmd
-import Model.Player as p
-import Model.GameData as g
+from Model.Player import Player as p
+from Model.GameData import GameData as g
 from time import sleep
 
 
@@ -35,7 +35,7 @@ from time import sleep
 
 class Commands(cmd.Cmd):
     def __init__(self):
-        cmd.CMD.__init__(self)
+        super().__init__()
         self.prompt = ">>> "
         self.player = p.Player()
         self.game = g.Game(self.player)
