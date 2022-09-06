@@ -1,7 +1,7 @@
 # This is the controller
-from GameData import GameData
-from MapTile import MapTile
-from Player import Player
+from game_data import GameData
+from maptile import MapTile
+from player import Player
 from View.view_commands import Commands
 
 
@@ -23,7 +23,7 @@ class GameController:
         self.user_prompt = f'{Commands.intro_block()}'
 
     def dev_card_popper(self):
-        pass
+        popped_dev_card = self.game_data.dev_cards.pop()
 
     def time_update(self):
         if not self.game_data.dev_cards and self.game_state is "PLAY":

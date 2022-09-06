@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from Model.Player import Player
+from Model.player import Player
 from view_commands import Commands
 
 
