@@ -14,27 +14,22 @@ class Player:
         self.can_cower: bool = False
         self.can_attack: bool = False
         self.can_flee: bool = False
-        self.turn: int = 0
 
     def move_player_up(self):
         if self.current_location.room_up is not None:
             self.current_location = self.current_location.room_up
-            self.turn += 1
 
     def move_player_right(self):
         if self.current_location.room_right is not None:
             self.current_location = self.current_location.room_right
-            self.turn += 1
 
     def move_player_down(self):
         if self.current_location.room_down is not None:
             self.current_location = self.current_location.room_down
-            self.turn += 1
 
     def move_player_left(self):
         if self.current_location.room_left is not None:
             self.current_location = self.current_location.room_left
-            self.turn += 1
 
     # FIXME - Logic is broken here
     def cower(self):

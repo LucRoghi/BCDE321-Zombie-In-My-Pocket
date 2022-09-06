@@ -1,28 +1,31 @@
 import matplotlib.pyplot as plt
 from Model.Player import Player
+from view_commands import Commands
 
 
-# class Graphing:
-#     def __init__(self):
-#         self.player = Player()
-#
-#     def player_health_graph(self):
-#         x = 1  # [self.player.turn]
-#         y = 1  # [self.player.health]
-#         plt.plot(y, x)
-#         plt.xlabel("Turns")
-#         plt.ylabel(f"{self.player.name} Health")
-#         plt.title(f'{self.player.name} Health over Turns')
-#         plt.show()
+class Graph:
+    def __init__(self, turn, turn_list, health_list):
+        self.player = Player()
+        self.turn = 0
+        self.turn_list = []
+        self.health_list = []
 
-def player_health_graph():
-    x = [1, 2]  # [self.player.turn]
-    y = [1, 2]  # [self.player.health]
-    plt.plot(y, x)
-    plt.xlabel("Turns")
-    plt.ylabel(f"memes Health")
-    plt.title(f'memes Health over Turns')
-    plt.show()
+    # Make Turn here
+    def turn_count(self):
+        if Commands.do_move_cmd == "N" or "E" or "S" or "W":
+            self.turn += 1
+
+    def player_health_graph(self):
+        x = self.turn_list.append(self.turn)
+        y = self.health_list.append(self.player.health)
+        plt.plot(y, x)
+        plt.xlabel("Turns")
+        plt.ylabel("Health")
+        plt.title('Health over Turns')
+        plt.show()
 
 
-print(player_health_graph())
+# health=6, turn=9
+# name, current_location, attack, health, inventory=None, has_totem=None, turn=9
+if __name__ == "__main__":
+    print(Graph.player_health_graph())
