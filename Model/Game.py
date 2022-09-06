@@ -20,6 +20,8 @@ class GameController:
     def game_start(self):
         self.game_state = "START"
         self.player.current_location = self.root
+        # Shuffle DevCards
+        # Pop 2 Cards
         self.user_prompt = f'{Commands.intro_block()}'
 
     def dev_card_popper(self):
@@ -28,6 +30,8 @@ class GameController:
     def time_update(self):
         if not self.game_data.dev_cards and self.game_state is "PLAY":
             self.time += 1
+            # Shuffle DevCards
+            # Pop 2 Cards
             print(f'It is now {self.time}pm')
 
     def player_status(self):
@@ -70,4 +74,20 @@ class GameController:
             case "Dead":
                 print("You have died")
                 self.game_state = "DEAD"
-
+    # What else do I need to make?
+    # TODO:
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make
+    #   Make

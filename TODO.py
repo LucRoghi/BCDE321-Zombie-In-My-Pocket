@@ -14,3 +14,6 @@
 
 # TODO:
 #   Making Pretty Graph for Player HP - Log Player HP
+
+# TODO:
+#   CHANGE ALL THE SWITCH STATEMENTS TO DICKS!

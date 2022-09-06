@@ -3,8 +3,9 @@ Author: Jared Ireland - jai0095
 For: BCDE311 Assignment2
 """
 import cmd
-from Model.Player import Player as p
-from Model.GameData import GameData as g
+from Model.player import Player
+from Model.game_data import GameData
+from Model.Game import GameController
 from time import sleep
 
 
@@ -37,8 +38,9 @@ class Commands(cmd.Cmd):
     def __init__(self):
         super().__init__()
         self.prompt = ">>> "
-        self.player = p.Player()
-        self.game = g.Game(self.player)
+        self.player = Player()
+        self.game = GameController()
+        self.game_data = GameData()
 
 # TODO: Done
     def intro_block(self):
@@ -59,13 +61,13 @@ class Commands(cmd.Cmd):
             command = self.prompt.upper()
             match command:
                 case "N":
-                    p.move_player_up()
+                    self.player.move_player_up()
                 case "E":
-                    p.move_player_right()
+                    self.player.move_player_right()
                 case "S":
-                    p.move_player_down()
+                    self.player.move_player_down()
                 case "W":
-                    p.move_player_left()
+                    self.player.move_player_left()
             if self.prompt not in valid_input:
                 print("Please look at the Help command for valid Movement")
         else:
@@ -86,41 +88,53 @@ class Commands(cmd.Cmd):
 
 # TODO WIP - Kinda done - Possible to Change
     def do_actions_cmd(self):
-        if p.current_location.zombie_number > 0:
+        if self.player.current_location.zombie_number > 0:
             g.game_state == "ZOMBIES"
-            p.can_cower = True
-            p.can_attack = True
-            p.can_flee = True
-            p.can_rest = True
+            self.player.can_cower = True
+            self.player.can_attack = True
+            self.player.can_flee = True
+            self.player.can_rest = True
 
             valid_input = ["Attack", "atk", "Cower", "Flee"]
             self.prompt = f'What would you like to do? {valid_input}'
             command = self.prompt.upper()
+            # Look at Effects in DevCard
+            # Change to dictionary
             match command:
                 case "Attack":
-                    p.player_attack()
+                    self.player.player_attack()
                 case "atk":
-                    p.player_attack()
+                    self.player.player_attack()
                 case "Cower":
-                    p.cower()
+                    self.player.cower()
                 case "Flee":
-                    p.flee()
-                case "Rest":
-                    p.rest()
+                    self.player.flee()
             if self.prompt not in valid_input:
                 print("Please look at the Help command for valid Actions")
 
 # TODO WIP - Probs needs the items stuff done
     def do_item_cmd(self):
-        # if Inventory = 2 -- Always check this!
-            #do_drop_item_cmd
+        if self.game.player_item_cap():
+            self.prompt = "Would you like to drop an item? (Y/N)"
+            command = self.prompt.upper()
+            match command:
+                case "Y":
+                    self.do_item_drop()
+                case "N":
+                    pass
         # if DevCard Drawn
             # do_item_search_cmd
-        # if p.current_location = "Temple" and p.current_item contains "Totem"
-            # self.prompt = "Do you wish to bury the totem? (Y/N) "
-            # answer = self.prompt.upper()
-            # if answer == "Y"
-                #do_bury_item_cmd
+
+        # Need to add DevCard pulling to make sure it has item on it for the hour
+        if self.player.current_location == "Graveyard" and "Totem" in self.player.inventory:
+            self.prompt = "Do you wish to bury the totem? (Y/N) "
+            answer = self.prompt.upper()
+            if answer == "Y":
+                pass
+        pass
+
+# TODO: Add logic :)
+    def do_item_drop(self):
         pass
 
 # TODO TODO WIP - Kinda done - Possible to Change
