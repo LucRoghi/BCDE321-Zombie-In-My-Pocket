@@ -4,12 +4,12 @@ Author: Luc Roghi - lcr0059
 For: BCDE311 Assignment2
 """
 
-from Model.Player import Player
+from Model.player import Player
 from DevCards import DevCard
 from TileCards import TileCard
-from Model.MapTile import MapTile
+from Model.maptile import MapTile
 from View.view_commands import Commands
-from Model.GameData import GameData
+from Model.game_data import GameData
 
 
 @staticmethod

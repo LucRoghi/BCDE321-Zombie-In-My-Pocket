@@ -1,5 +1,5 @@
 from typing import Callable
-from Model.Player import Player
+from Model.player import Player
 
 
 class Devcard:

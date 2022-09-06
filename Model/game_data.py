@@ -1,10 +1,10 @@
 from typing import List
 
-from Model.Devcard import Devcard
-from Model.DatabaseHandler import Database
-from Model.Filehandler import Filehandler
-from Model.Item import Item
-from Model.MapTile import MapTile
+from Model.dev_cards import Devcard
+from Model.database_handler import Database
+from Model.file_handler import Filehandler
+from Model.item import Item
+from Model.maptile import MapTile
 
 
 def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:

@@ -1,7 +1,7 @@
 import dataclasses
 from typing import Callable, Generic
 
-from Model.Player import Player
+from Model.player import Player
 
 
 class Item:

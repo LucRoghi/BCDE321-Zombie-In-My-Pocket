@@ -1,7 +1,7 @@
 # This is the controller
-from GameData import GameData
-from MapTile import MapTile
-from Player import Player
+from game_data import GameData
+from maptile import MapTile
+from player import Player
 from View.view_commands import Commands
 
 

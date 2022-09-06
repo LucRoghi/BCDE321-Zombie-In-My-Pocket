@@ -16,7 +16,7 @@ Methods:
 import sqlite3
 from typing import List, Any
 
-from Model.Filehandler import Filehandler
+from Model.file_handler import Filehandler
 
 
 class Database:

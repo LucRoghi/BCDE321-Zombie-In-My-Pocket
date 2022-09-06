@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from Model.MapTile import MapTile
+from Model.maptile import MapTile
 
 
 class Player:
