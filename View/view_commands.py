@@ -3,8 +3,8 @@ Author: Jared Ireland - jai0095
 For: BCDE311 Assignment2
 """
 import cmd
-import Modep.Player as p
-import Modep.GameData as g
+import Model.Player as p
+import Model.GameData as g
 from time import sleep
 
 
