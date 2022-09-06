@@ -64,7 +64,10 @@ class Database:
         self.mydb.commit()
 
     def insert_item_data(self):
-        pass
+        tile_data = self.file_handler.read_csv_data_into_list("/Data/", "items_data")
+        if self.cursor.execute('SELECT COUNT(*) from Maptiles') == 0:
+            for tile in tile_data:
+                self.cursor.execute('INSERT INTO Maptiles VALUES(?,?,?,?,?,?,?,?)', tile)
 
     def insert_tile_data(self):
         tile_data = self.file_handler.read_csv_data_into_list("/Data/", "maptiles_data")

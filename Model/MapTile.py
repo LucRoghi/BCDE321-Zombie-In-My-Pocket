@@ -23,6 +23,18 @@ class MapTile:
         self.room_down = None
         self.room_left = None
 
+    def __str__(self):
+        available_doors = ""
+        if self.door_up:
+            available_doors += "UP "
+        if self.door_left:
+            available_doors += "LEFT "
+        if self.door_down:
+            available_doors += "DOWN "
+        if self.door_right:
+            available_doors += "RIGHT "
+        return f"{self.room_name} Doors [{available_doors}]"
+
     def add_new_room_up(self, tile):
         if self.door_up and tile.door_down and self.room_up is None:
             tile.room_down = self
@@ -65,19 +77,19 @@ class MapTile:
 
 if __name__ == "__main__":
     test_tile = MapTile("test_room", None, True, False, True, False)
-    test_tile.print_door()
     test_tile.rotate_tile_right()
-    test_tile.print_door()
     test_tile.rotate_tile_left()
-    test_tile.print_door()
     test_tile_2 = MapTile("test_room_2", None, True, False, False, True)
     test_tile.add_new_room_up(test_tile_2)
-    print(test_tile.room_up)
     test_tile_2.rotate_tile_left()
     test_tile_2.rotate_tile_left()
     test_tile.add_new_room_up(test_tile_2)
-    print(test_tile.room_up)
     test_tile_3 = MapTile("test_room_3", None, True, False, True, True)
     test_tile_2.add_new_room_up(test_tile_3)
     test_tile_2.add_new_room_right(test_tile_3)
-    print(test_tile_2.room_right)
+    print(test_tile_3)
+    test_tile_3.rotate_tile_left()
+    print(test_tile_3)
+    test_tile_3.rotate_tile_left()
+    print(test_tile_3)
+

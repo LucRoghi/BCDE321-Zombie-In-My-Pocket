@@ -12,5 +12,5 @@
 11,Evil Temple,find_totem,False,True,False,True,Indoor
 12,Family Room,None,True,True,False,True,Indoor
 13,Dining Room,enter_outdoors,True,True,True,True,Indoor
-15,Bedroom,None,True,False,False,True,Indoor
-16,Foyer,None,True,False,False,False,Indoor
+14,Bedroom,None,True,False,False,True,Indoor
+15,Foyer,None,True,False,False,False,Indoor
