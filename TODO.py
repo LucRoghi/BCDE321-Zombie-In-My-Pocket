@@ -17,3 +17,6 @@
 
 # TODO:
 #   CHANGE ALL THE SWITCH STATEMENTS TO DICKS!
+
+# TODO:
+#   Luc - Dev_Card_Pop, Item func's (Dropping, Picking up, Burying totem etc)
