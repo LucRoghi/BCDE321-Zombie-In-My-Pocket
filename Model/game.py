@@ -1,6 +1,6 @@
 # This is the controller
 from Model.game_data import GameData
-from Model.maptile import MapTile
+from Model.map_tile import MapTile
 from Model.player import Player
 from View.view_commands import Commands
 
@@ -73,23 +73,3 @@ class GameController:
             command = "Dead"
         command_dict = {"Time": self.time_game_over(), "Dead": self.dead_game_over}
         command_dict[command]
-
-
-
-    # What else do I need to make?
-    # TODO:
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make
-    #   Make

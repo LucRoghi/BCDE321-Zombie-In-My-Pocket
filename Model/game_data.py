@@ -4,7 +4,7 @@ from Model.dev_cards import Devcard
 from Model.database_handler import Database
 from Model.file_handler import Filehandler
 from Model.item import Item
-from Model.maptile import MapTile
+from Model.map_tile import MapTile
 
 
 def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:

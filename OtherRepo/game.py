@@ -7,7 +7,7 @@ For: BCDE311 Assignment2
 from Model.player import Player
 from DevCards import DevCard
 from TileCards import TileCard
-from Model.maptile import MapTile
+from Model.map_tile import MapTile
 from View.view_commands import Commands
 from Model.game_data import GameData
 

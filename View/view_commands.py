@@ -5,7 +5,7 @@ For: BCDE311 Assignment2
 import cmd
 from Model.player import Player
 from Model.game_data import GameData
-from Model.Game import GameController
+from Model.game import GameController
 from time import sleep
 
 
@@ -38,9 +38,11 @@ class Commands(cmd.Cmd):
     def __init__(self):
         super().__init__()
         self.prompt = ">>> "
+        self.game_state = ""
         self.player = Player()
         self.game = GameController()
         self.game_data = GameData()
+        self.valid_input = []
 
 # TODO: Done
     def intro_block(self):
@@ -53,29 +55,31 @@ class Commands(cmd.Cmd):
                       "'Help'/'?' "
         intro = welcome, sleep(0.5), hint_one, sleep(0.5), hint_two, sleep(0.5), hint_three, sleep(0.5)
 
+# TODO - Doubt this works lmao
+    def not_valid_input(self):
+        if self.prompt not in self.valid_input:
+            print("That is not a Valid Input\nPlease try again or look at the help page")
+
 # TODO - Logic might not work
     def do_move_cmd(self):
         if g.game_state == "MOVING":
-            valid_input = ["N", "E", "S", "W"]
-            self.prompt = f'Which way do you wish to move? {valid_input}'
+            self.valid_input = ["N", "E", "S", "W"]
+            self.prompt = f'Which way do you wish to move? {self.valid_input}'
             command = self.prompt.upper()
-            match command:
-                case "N":
-                    self.player.move_player_up()
-                case "E":
-                    self.player.move_player_right()
-                case "S":
-                    self.player.move_player_down()
-                case "W":
-                    self.player.move_player_left()
-            if self.prompt not in valid_input:
-                print("Please look at the Help command for valid Movement")
+            command_dict = {
+                "N": self.player.move_player_up(),
+                "E": self.player.move_player_right(),
+                "S": self.player.move_player_down(),
+                "W": self.player.move_player_left()
+            }
+            command_dict[command]
+            self.not_valid_input()
         else:
             print("Player can not move at this time")
 
 # TODO WIP
     def do_rotate_cmd(self):
-        if g.game_state == "ROTATE":
+        if GameData.game_state == "ROTATE":
             self.prompt = "Do you wish to Rotate? (Y/N) "
             answer = self.prompt.upper()
             if answer == "Y":
@@ -95,22 +99,19 @@ class Commands(cmd.Cmd):
             self.player.can_flee = True
             self.player.can_rest = True
 
-            valid_input = ["Attack", "atk", "Cower", "Flee"]
-            self.prompt = f'What would you like to do? {valid_input}'
+            self.valid_input = ["Attack", "atk", "Cower", "Flee"]
+            self.prompt = f'What would you like to do? {self.valid_input}'
             command = self.prompt.upper()
             # Look at Effects in DevCard
             # Change to dictionary
-            match command:
-                case "Attack":
-                    self.player.player_attack()
-                case "atk":
-                    self.player.player_attack()
-                case "Cower":
-                    self.player.cower()
-                case "Flee":
-                    self.player.flee()
-            if self.prompt not in valid_input:
-                print("Please look at the Help command for valid Actions")
+            command_dict = {
+                "Attack": self.player.player_attack(),
+                "atk": self.player.player_attack(),
+                "Cower": self.player.cower(),
+                "Flee": self.player.flee()
+            }
+            command_dict[command]
+            self.not_valid_input()
 
 # TODO WIP - Probs needs the items stuff done
     def do_item_cmd(self):
