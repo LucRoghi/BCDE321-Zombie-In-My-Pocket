@@ -9,3 +9,4 @@
 8,Machete,add_2_attack,False,None,None,None,None,1
 9,Oil with Candle,kill_all_zombies,False,None,None,None,None,1
 10,Gasoline with Candle,kill_all_zombies,False,None,None,None,None,1
+11,Totem,None,False,None,None,None,None,None,1

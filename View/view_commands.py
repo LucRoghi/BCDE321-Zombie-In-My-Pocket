@@ -118,11 +118,17 @@ class Commands(cmd.Cmd):
         pass
 
     def do_bury_totem(self):
-        if self.player.current_location == "Graveyard" and "Totem" in self.player.inventory:
-            self.prompt = "Do you wish to bury the totem? (Y/N) "
-            answer = self.prompt.upper()
-            if answer == "Y":
-                pass
+        for item in self.player.inventory:
+            if item.name == "Totem" and self.player.current_location.room_name == "Graveyard":
+                self.prompt = "Do you wish to bury the totem? (Y/N) "
+                answer = self.prompt.upper()
+                if answer == "Y":
+                    pass
+            else:
+                if self.player.current_location.room_name != "Graveyard":
+                    print("You cannot bury the totem here")
+                else:
+                    print("You do not have the item in your inventory")
 
     def do_item_drop(self):
         if self.game.player_item_cap():
