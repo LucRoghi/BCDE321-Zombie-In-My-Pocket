@@ -3,6 +3,8 @@ Author: Luc Roghi lcr0059
 Filehandler is a class designed to be able to read and write
 files of multiple types and return them into usable format
 
+NOTE: FOR ALL FUNCTIONS FILE EXTENSIONS ARE NOT TO BE USED WITHIN THE FILENAME
+
 FILE HANDLING) JSON ::
     >>> temp_filehandler = Filehandler()
     >>> temp_filehandler.write_file_into_json("/Data/Test_Data/", "json_write", {"test1": 1, "test2": 2})
@@ -103,7 +105,7 @@ class Filehandler:
 
     def load_object_from_pickle(self, path: str, save_name: str) -> Generic:
         """
-        Loads a pickle file
+        Loads an object from a pickle file designated above
         :param save_name:
         :return: :Generic
         """
