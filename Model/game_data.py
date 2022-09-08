@@ -4,9 +4,33 @@ Author: Luc Roghi lcr0059
 Game Data is a class designed to hold all the instantiated object being used within the game. The items are converted
 from string format to object format within the 3 static methods at the top of the file.
 
-USING GAME DATA:
+GAME DATA MAPTILES:
         >>> test_game_data = GameData()
-        >>> print(test_game_data.map_tiles_indoor)
+        >>> print(len(test_game_data.map_tiles_indoor))
+        8
+        >>> print(test_game_data.map_tiles_indoor) #doctest: +ELLIPSIS
+        [<Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>]
+        >>> print(test_game_data.map_tiles_indoor[-1])
+        Foyer Available Doors [UP LEFT DOWN RIGHT ]
+        >>> print(test_game_data.map_tiles_indoor[0].room_name)
+        Bathroom
+        >>> test_game_data.map_tiles_outdoor[0].get_doors()
+        {'up': 'False', 'right': 'True', 'down': 'True', 'left': 'True'}
+        >>> test_game_data.map_tiles_outdoor[0].rotate_tile_left()
+        >>> test_game_data.map_tiles_outdoor[0].get_doors()
+        {'up': 'True', 'right': 'True', 'down': 'True', 'left': 'False'}
+        >>> test_game_data.map_tiles_outdoor[0].rotate_tile_right()
+        >>> test_game_data.map_tiles_outdoor[0].get_doors()
+        {'up': 'False', 'right': 'True', 'down': 'True', 'left': 'True'}
+
+GAME DATA DEVCARDS:
+        >>> print(len(test_game_data.dev_cards))
+        9
+        >>> print(test_game_data.dev_cards) #doctest: +ELLIPSIS
+        [<Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>]
+        >>> print(test_game_data.dev_cards[0]) #doctest: +ELLIPSIS
+        <Model.dev_cards.Devcard object at ...>
+
 
 
 """

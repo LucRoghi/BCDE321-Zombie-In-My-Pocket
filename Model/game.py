@@ -7,12 +7,11 @@ from Model.player import Player
 from View.view_commands import Commands
 
 
-# TODO - Luc fix :)
 class GameController:
     def __init__(self):
         self.game_data = GameData()
         self.map_tile = MapTile()
-        self.player = Player(self.game_data)
+        self.player = Player()
         self.dev_cards = self.game_data.dev_cards
         self.time = 9
         self.game_state = ""

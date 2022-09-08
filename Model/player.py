@@ -1,20 +1,18 @@
 from Model.map_tile import MapTile
-from Model.game_data import GameData
 
 
 class Player:
-    def __init__(self, name, current_location, attack, health, inventory, has_totem, game_data):
-        self.name: str = ""
+    def __init__(self, name=""):
+        self.name: str = name
         self.current_location: MapTile = None
         self.previous_location = None
         self.attack: int = 1
         self.health: int = 6
         self.inventory: list = []
-        self.has_totem: bool = None
+        self.has_totem: bool = False
         self.can_cower: bool = False
         self.can_attack: bool = False
         self.can_flee: bool = False
-        self.game_data = game_data
 
     def move_player_up(self):
         if self.current_location.room_up is not None:
@@ -36,6 +34,7 @@ class Player:
     def cower(self):
         if self.can_cower:
             self.health += 3
+            # CANNOT ADD GAME_DATA DUE TO CIRCULAR IMPORT
             self.game_data.dev_card_pop()
             print("You cower in fear, gaining 3 health, but lose time with the dev card")
         else:
