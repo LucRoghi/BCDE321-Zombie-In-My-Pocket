@@ -1,3 +1,6 @@
+"""
+Author: Jared Ireland jai0095
+"""
 from Model.map_tile import MapTile
 from Model.game_data import GameData
 
@@ -32,7 +35,6 @@ class Player:
         if self.current_location.room_left is not None:
             self.current_location = self.current_location.room_left
 
-    # FIXME - Logic is broken here
     def cower(self):
         if self.can_cower:
             self.health += 3

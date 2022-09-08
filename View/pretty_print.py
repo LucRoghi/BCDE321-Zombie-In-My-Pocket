@@ -1,3 +1,7 @@
+"""
+Author: Jared Ireland jai0095
+"""
+
 import matplotlib.pyplot as plt
 from Model.player import Player
 from view_commands import Commands

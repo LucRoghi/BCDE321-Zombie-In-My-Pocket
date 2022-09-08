@@ -1,5 +1,6 @@
-# This is the controller
-import random
+"""
+Author: Jared Ireland jai0095
+"""
 
 from Model.game_data import GameData
 from Model.map_tile import MapTile
