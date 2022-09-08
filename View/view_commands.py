@@ -98,7 +98,6 @@ class Commands(cmd.Cmd):
             print("Unable to Rotate Tile")
 
     def do_place_tile(self, type: str = "Indoor"):
-
         if type == "Indoor":
             map_tile_list = self.game_data.map_tiles_indoor
         elif type == "Outdoor":
