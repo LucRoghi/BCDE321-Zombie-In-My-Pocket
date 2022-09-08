@@ -33,7 +33,7 @@ class Devcard:
 
     def get_new_item(self, player, _):
         if player.inventory < 2:
-
+            player.game_data
 
 if __name__ == "__main__":
     test_devcard = Devcard(0, "", "", "", "", "", "")
