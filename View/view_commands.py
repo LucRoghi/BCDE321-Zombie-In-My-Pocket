@@ -11,27 +11,6 @@ from Model.game_data import GameData
 from Model.game import GameController
 from time import sleep
 
-
-# Commands needed:
-# Start Command
-#
-# Move Command
-# Rotate Command
-#
-# Attack Command
-# Flee Command
-# Rest Command
-# Cower Command
-#
-# Item "Search" Command -- Pick up the item
-# Drop Item
-# Bury Totem
-#
-# Help
-
-# Load
-# Save
-
 # FIXME SuperSet Commands
 #   This is for Global Commands - Mainly to Exit, Load, Save and Quit to main menu
 #   Quit might have Quit -app and Quit -menu as Arguments
