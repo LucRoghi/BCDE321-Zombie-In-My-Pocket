@@ -100,6 +100,7 @@ class Commands(cmd.Cmd):
     def do_place_tile(self):
         random_max_index = random.randint(0, len(self.game_data.map_tiles_indoor) - 1)
         new_tile = self.game_data.map_tiles_indoor.pop(random_max_index)
+        self.player.current_location.print_door()
         self.prompt = "Which direction do you wish to place a new tile? (up/left/down/right)"
         r = self.prompt.lower()
         new_tile = self.do_rotate_cmd(new_tile)
