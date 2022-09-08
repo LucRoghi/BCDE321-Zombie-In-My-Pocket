@@ -5,6 +5,9 @@ Game Data is a class designed to hold all the instantiated object being used wit
 from string format to object format within the 3 static methods at the top of the file.
 
 USING GAME DATA:
+        >>> test_game_data = GameData()
+        >>> print(test_game_data.map_tiles_indoor)
+
 
 """
 
@@ -204,9 +207,5 @@ class GameData:
 
 
 if __name__ == "__main__":
-    test_game_data = GameData()
-    test_game_data.database.drop_table_in_db("Maptiles")
-    test_game_data.database.drop_table_in_db("Devcards")
-    test_game_data.database.drop_table_in_db("Items")
-    test_game_data.populate_db()
-    test_game_data.initialize_game_data()
+    import doctest
+    doctest.testmod()
