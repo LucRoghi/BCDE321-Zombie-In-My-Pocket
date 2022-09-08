@@ -2,7 +2,7 @@
 Author: Luc Roghi
 For: BCDE321 Zombie In My Pocket
 
-This module provides the setup for the nodes within the ternary tree within the Level Class
+This module provides the setup for the nodes within the ternary tree within the MapTile Class
 """
 from typing import Callable
 

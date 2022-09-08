@@ -97,9 +97,14 @@ class Commands(cmd.Cmd):
         else:
             print("Unable to Rotate Tile")
 
-    def do_place_tile(self):
-        random_max_index = random.randint(0, len(self.game_data.map_tiles_indoor) - 1)
-        new_tile = self.game_data.map_tiles_indoor.pop(random_max_index)
+    def do_place_tile(self, type: str = "Indoor"):
+
+        if type == "Indoor":
+            map_tile_list = self.game_data.map_tiles_indoor
+        elif type == "Outdoor":
+            map_tile_list = self.game_data.map_tiles_outdoor
+        random_max_index = random.randint(0, len(map_tile_list) - 1)
+        new_tile = map_tile_list.pop(random_max_index)
         self.player.current_location.print_door()
         self.prompt = "Which direction do you wish to place a new tile? (up/left/down/right)"
         r = self.prompt.lower()
@@ -108,7 +113,6 @@ class Commands(cmd.Cmd):
                      "left": self.player.current_location.add_new_room_left(new_tile),
                      "down": self.player.current_location.add_new_room_down(new_tile),
                      "right": self.player.current_location.add_new_room_right(new_tile)}
-        self.player.current_location.print_door()
         direction[r]
 
 
