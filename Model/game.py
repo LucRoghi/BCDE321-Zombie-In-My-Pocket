@@ -32,8 +32,10 @@ class GameController:
     def room_state_changes(self):
         if self.player.current_location.room_name == "Patio":
             self.room_state = "Outdoors"
+            # Use Outdoor Tiles
         if self.player.current_location.room_name == "Dining Room":
             self.room_state = "Indoors"
+            # Use Indoor Tiles
 
     def time_update(self):
         if not self.game_data.dev_cards and self.game_state is "PLAY":
