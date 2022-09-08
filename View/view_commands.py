@@ -3,6 +3,9 @@ Author: Jared Ireland - jai0095
 For: BCDE311 Assignment2
 """
 import cmd
+from random import random
+
+from Model.map_tile import MapTile
 from Model.player import Player
 from Model.game_data import GameData
 from Model.game import GameController
@@ -78,17 +81,35 @@ class Commands(cmd.Cmd):
             print("Player can not move at this time")
 
 # TODO WIP
-    def do_rotate_cmd(self):
+    def do_rotate_cmd(self, tile: MapTile = None):
         if self.game.game_state == "ROTATE":
             self.prompt = "Do you wish to Rotate? (Y/N) "
             answer = self.prompt.upper()
             if answer == "Y":
                 self.prompt = "How many times do you wish to rotate? (90º Steps) "
-                r = self.prompt
-            # rotate(r)
-            # place()
+                r = int(self.prompt)
+                try:
+                    for i in range(r):
+                        tile.rotate_tile_left()
+                except:
+                    raise TypeError
+                return tile
         else:
             print("Unable to Rotate Tile")
+
+    def do_place_tile(self):
+        random_max_index = random.randint(0, len(self.game_data.map_tiles_indoor) - 1)
+        new_tile = self.game_data.map_tiles_indoor.pop(random_max_index)
+        self.prompt = "Which direction do you wish to place a new tile? (up/left/down/right)"
+        r = self.prompt.lower()
+        new_tile = self.do_rotate_cmd(new_tile)
+        direction = {"up": self.player.current_location.add_new_room_up(new_tile),
+                     "left": self.player.current_location.add_new_room_left(new_tile),
+                     "down": self.player.current_location.add_new_room_down(new_tile),
+                     "right": self.player.current_location.add_new_room_right(new_tile)}
+        self.player.current_location.print_door()
+        direction[r]
+
 
 # TODO WIP - Kinda done - Possible to Change
     def do_actions_cmd(self):
