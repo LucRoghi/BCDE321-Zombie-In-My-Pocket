@@ -12,7 +12,7 @@ class GameController:
     def __init__(self):
         self.game_data = GameData()
         self.map_tile = MapTile()
-        self.player = Player()
+        self.player = Player(self.game_data)
         self.commands = Commands()
         self.dev_cards = self.game_data.dev_cards
         self.time = 9
