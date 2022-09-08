@@ -32,7 +32,7 @@ class MapTile:
             available_doors += "DOWN "
         if self.door_right:
             available_doors += "RIGHT "
-        return f"{self.room_name} Doors [{available_doors}]"
+        return f"{self.room_name} Available Doors [{available_doors}]"
 
     def add_new_room_up(self, tile):
         if self.door_up and tile.door_down and self.room_up is None:
