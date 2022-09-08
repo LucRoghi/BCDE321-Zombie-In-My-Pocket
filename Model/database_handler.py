@@ -9,9 +9,6 @@ Attributes:
     self.mydb: (sqlite3 connection) A connection to the named database set above (If unable to be found or created
     will raise a database error)
     self.cursor: (sqlite3 cursor) A cursor to aid in the writing or reading of data within the database
-
-Methods:
-
 """
 import sqlite3
 from typing import List, Any
@@ -27,6 +24,10 @@ class Database:
         self.file_handler = Filehandler()
 
     def open_db(self):
+        """
+        Creates a new database connection
+        :return: Bool
+        """
         try:
             self.mydb = sqlite3.connect(self.db_name)
             return True
@@ -35,6 +36,10 @@ class Database:
             return False
 
     def close_db(self):
+        """
+        Closes the current database connection
+        :return: Bool
+        """
         try:
             self.mydb.close()
             return True
@@ -43,6 +48,13 @@ class Database:
             return False
 
     def create_new_table(self, table_name: str, columns: dict):
+        """
+        Create a new table within the current connection with a name and columns. The columns are a dictionary
+        to define the column name and type
+        :param table_name:
+        :param columns:
+        :return:
+        """
         table_creation_string = f'''CREATE TABLE IF NOT EXISTS {table_name} (id INT PRIMARY_KEY'''
         for key in columns:
             table_creation_string += f''', {key} {columns[key]}'''
@@ -56,6 +68,11 @@ class Database:
         return True
 
     def drop_table_in_db(self, table_name: str):
+        """
+        Removes a table from the current schema
+        :param table_name:
+        :return:
+        """
         self.cursor.execute(f'''DROP TABLE IF EXISTS {table_name}''')
 
     def delete_all_rows_in_db(self, table_name: str):
