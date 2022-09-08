@@ -32,8 +32,8 @@ class Devcard:
         player.health += 1
 
     def get_new_item(self, player, _):
-        # Implement card draw logic
-        pass
+        if player.inventory < 2:
+
 
 if __name__ == "__main__":
     test_devcard = Devcard(0, "", "", "", "", "", "")

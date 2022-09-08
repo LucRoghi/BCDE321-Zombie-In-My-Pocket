@@ -53,5 +53,6 @@ class Player:
             self.current_location = self.previous_location
             print(f'Player has lost {self.current_location.zombie_number} and now has {self.health}.')
 
-    def drop_item(self):
-        pass
+    def drop_item(self, index):
+        self.inventory.pop(index)
+

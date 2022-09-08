@@ -1,3 +1,4 @@
+from random import random
 from typing import List
 
 from Model.dev_cards import Devcard
@@ -112,6 +113,11 @@ class GameData:
     def get_items(self):
         item_tuples = self.database.query_all_data_from_table("Items")
         self.items = convert_tuples_to_items(item_tuples)
+
+    def dev_card_pop(self):
+        max_dev_card_index = len(self.game_data.dev_cards) - 1
+        random_index = random.randint(0, max_dev_card_index)
+        return self.game_data.dev_cards.pop(random_index)
 
 
 if __name__ == "__main__":

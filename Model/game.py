@@ -25,12 +25,6 @@ class GameController:
         self.dev_card_pop(2)
         self.user_prompt = f'{Commands.intro_block()}'
 
-    def dev_card_pop(self):
-        max_dev_card_index = len(self.game_data.dev_cards) - 1
-        random_index = random.randint(0, max_dev_card_index)
-        return self.game_data.dev_cards.pop(random_index)
-
-
     def time_update(self):
         if not self.game_data.dev_cards and self.game_state is "PLAY":
             self.time += 1
