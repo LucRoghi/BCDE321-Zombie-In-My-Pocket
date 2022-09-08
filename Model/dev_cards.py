@@ -32,8 +32,8 @@ class Devcard:
         player.health += 1
 
     def get_new_item(self, player, _):
-        if player.inventory < 2:
-            player.game_data
+        if player.inventory < 2 and not player.game_data.dev_cards.isempty():
+            player.inventory.append(player.game_data.dev_card_pop())
 
 if __name__ == "__main__":
     test_devcard = Devcard(0, "", "", "", "", "", "")
