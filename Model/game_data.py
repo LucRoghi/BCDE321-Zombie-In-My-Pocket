@@ -30,9 +30,6 @@ GAME DATA DEVCARDS:
         [<Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>]
         >>> print(test_game_data.dev_cards[0]) #doctest: +ELLIPSIS
         <Model.dev_cards.Devcard object at ...>
-
-
-
 """
 
 from random import random
