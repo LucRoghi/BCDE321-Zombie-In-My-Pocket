@@ -3,7 +3,7 @@ from Model.game_data import GameData
 
 
 class Player:
-    def __init__(self, name, current_location, attack, health, inventory, has_totem):
+    def __init__(self, name, current_location, attack, health, inventory, has_totem, game_data):
         self.name: str = ""
         self.current_location: MapTile = None
         self.previous_location = None
@@ -14,7 +14,7 @@ class Player:
         self.can_cower: bool = False
         self.can_attack: bool = False
         self.can_flee: bool = False
-        self.game_data = GameData()
+        self.game_data = game_data
 
     def move_player_up(self):
         if self.current_location.room_up is not None:
