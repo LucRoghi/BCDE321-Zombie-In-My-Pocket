@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 from Model.map_tile import MapTile
 
 

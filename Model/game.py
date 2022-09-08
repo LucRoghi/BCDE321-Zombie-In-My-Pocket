@@ -1,4 +1,6 @@
 # This is the controller
+import random
+
 from Model.game_data import GameData
 from Model.map_tile import MapTile
 from Model.player import Player
@@ -24,7 +26,10 @@ class GameController:
         self.user_prompt = f'{Commands.intro_block()}'
 
     def dev_card_pop(self):
-        popped_dev_card = self.game_data.dev_cards.pop()
+        max_dev_card_index = len(self.game_data.dev_cards) - 1
+        random_index = random.randint(0, max_dev_card_index)
+        return self.game_data.dev_cards.pop(random_index)
+
 
     def time_update(self):
         if not self.game_data.dev_cards and self.game_state is "PLAY":
