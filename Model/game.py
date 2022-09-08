@@ -22,13 +22,15 @@ class GameController:
     def game_start(self):
         self.game_state = "START"
         self.player.current_location = self.root
-        self.dev_card_pop(2)
+        self.game_data.dev_card_pop()
+        self.game_data.dev_card_pop()
         self.user_prompt = f'{Commands.intro_block()}'
 
     def time_update(self):
         if not self.game_data.dev_cards and self.game_state is "PLAY":
             self.time += 1
-            self.dev_card_pop(2)
+            self.game_data.dev_card_pop()
+            self.game_data.dev_card_pop()
             print(f'It is now {self.time}pm')
 
     def player_status(self):

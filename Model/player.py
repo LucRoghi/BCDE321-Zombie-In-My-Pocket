@@ -1,4 +1,5 @@
 from Model.map_tile import MapTile
+from Model.game_data import GameData
 
 
 class Player:
@@ -13,6 +14,7 @@ class Player:
         self.can_cower: bool = False
         self.can_attack: bool = False
         self.can_flee: bool = False
+        self.game_data = GameData()
 
     def move_player_up(self):
         if self.current_location.room_up is not None:
@@ -34,7 +36,7 @@ class Player:
     def cower(self):
         if self.can_cower:
             self.health += 3
-            # GameController.dev_card_popper()
+            self.game_data.dev_card_pop()
             print("You cower in fear, gaining 3 health, but lose time with the dev card")
         else:
             return print("Cannot cower during a zombie door attack")

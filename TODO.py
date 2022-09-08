@@ -19,7 +19,7 @@
 #   CHANGE ALL THE SWITCH STATEMENTS TO DICKS!
 
 # TODO:
-#   Luc - Dev_Card_Pop, Item func's (Dropping, Picking up, Burying totem etc)
+#   Luc - Dev_Card_Pop (DONE), Item func's (Dropping, Picking up, Burying totem etc)
 #   Figuring out where GameStates Go - Technically they go everywhere :L but thats a bad smell
 #   Added the map_tile (NAMING CONVENTIONS REEE) rotation to do_rotate_cmd
 #   DocTest and UnitTest

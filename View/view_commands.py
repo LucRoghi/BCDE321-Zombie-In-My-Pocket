@@ -79,7 +79,7 @@ class Commands(cmd.Cmd):
 
 # TODO WIP
     def do_rotate_cmd(self):
-        if GameData.game_state == "ROTATE":
+        if self.game.game_state == "ROTATE":
             self.prompt = "Do you wish to Rotate? (Y/N) "
             answer = self.prompt.upper()
             if answer == "Y":
@@ -93,7 +93,7 @@ class Commands(cmd.Cmd):
 # TODO WIP - Kinda done - Possible to Change
     def do_actions_cmd(self):
         if self.player.current_location.zombie_number > 0:
-            g.game_state == "ZOMBIES"
+            self.game.game_state = "ZOMBIES"
             self.player.can_cower = True
             self.player.can_attack = True
             self.player.can_flee = True
@@ -115,6 +115,16 @@ class Commands(cmd.Cmd):
 
 # TODO WIP - Probs needs the items stuff done
     def do_item_cmd(self):
+        pass
+
+    def do_bury_totem(self):
+        if self.player.current_location == "Graveyard" and "Totem" in self.player.inventory:
+            self.prompt = "Do you wish to bury the totem? (Y/N) "
+            answer = self.prompt.upper()
+            if answer == "Y":
+                pass
+
+    def do_item_drop(self):
         if self.game.player_item_cap():
             self.prompt = "Would you like to drop an item? (Y/N)"
             command = self.prompt.upper()
@@ -123,26 +133,12 @@ class Commands(cmd.Cmd):
                     self.do_item_drop()
                 case "N":
                     pass
-        # if DevCard Drawn
-            # do_item_search_cmd
-
-        # Need to add DevCard pulling to make sure it has item on it for the hour
-        if self.player.current_location == "Graveyard" and "Totem" in self.player.inventory:
-            self.prompt = "Do you wish to bury the totem? (Y/N) "
-            answer = self.prompt.upper()
-            if answer == "Y":
-                pass
-        pass
-
-# TODO: Add logic :)
-    def do_item_drop(self):
-        pass
 
 # TODO TODO WIP - Kinda done - Possible to Change
     def do_help_cmd(self):
         commands_list = ["SAVE", "LOAD", "EXIT", "Movement", "N", "E", "S", "W", "Actions", "Attack", "Atk", "Cower",
                          "Flee", "Rotate", "Start", "-s", "-ns"]
-        if self.intro_block.text == "Help" or self.intro_block.text == "?":
+        if self.intro_block == "Help" or self.intro_block == "?":
             print(f'A list of commands: \n{commands_list}')
             self.prompt = "Please type '?' before the command you wish to look at: (? move)"
             command = self.prompt.upper()
@@ -214,7 +210,7 @@ class Commands(cmd.Cmd):
     def file_handler(self):
         if self.prompt == "Save":
             pass
-        if self.intro_block.text == "Load" or self.prompt == "Load":
+        if self.intro_block == "Load" or self.prompt == "Load":
             pass
 
     def do_load_cmd(self):
