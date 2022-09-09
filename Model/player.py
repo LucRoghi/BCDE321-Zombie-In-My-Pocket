@@ -36,8 +36,6 @@ class Player:
     def cower(self):
         if self.can_cower:
             self.health += 3
-            # CANNOT ADD GAME_DATA DUE TO CIRCULAR IMPORT
-            self.game_data.dev_card_pop()
             print("You cower in fear, gaining 3 health, but lose time with the dev card")
         else:
             return print("Cannot cower during a zombie door attack")
