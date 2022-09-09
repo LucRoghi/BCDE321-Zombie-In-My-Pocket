@@ -115,6 +115,9 @@ class Commands(cmd.Cmd):
                 "Flee": self.player.flee()
             }
             command_dict[command]
+
+            if command == "cower":
+                self.game_data.dev_card_pop()
             self.not_valid_input()
 
 # TODO WIP - Probs needs the items stuff done
