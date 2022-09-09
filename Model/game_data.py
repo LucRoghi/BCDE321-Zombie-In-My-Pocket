@@ -38,7 +38,6 @@ from Model.database_handler import Database
 from Model.file_handler import Filehandler
 from Model.item import Item
 from Model.map_tile import MapTile
-from Model.game import GameController
 
 
 def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
@@ -230,4 +229,4 @@ class GameData:
 
 if __name__ == "__main__":
     import doctest
-    doctest.testmod()
+    doctest.testmod(verbose=True)
