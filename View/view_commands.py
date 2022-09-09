@@ -93,7 +93,6 @@ class Commands(cmd.Cmd):
                      "right": self.player.current_location.add_new_room_right(new_tile)}
         direction[r]
 
-
 # TODO WIP - Kinda done - Possible to Change
     def do_actions_cmd(self):
         if self.player.current_location.zombie_number > 0:
