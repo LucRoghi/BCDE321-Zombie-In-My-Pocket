@@ -9,7 +9,30 @@ Attributes:
     self.mydb: (sqlite3 connection) A connection to the named database set above (If unable to be found or created
     will raise a database error)
     self.cursor: (sqlite3 cursor) A cursor to aid in the writing or reading of data within the database
+
+USING DATABASE HANDLER::
+    >>> test_database = Database("test.db")
+    >>> print(test_database.db_name)
+    test.db
+    >>> print(test_database.mydb) #doctest: +ELLIPSIS
+    <sqlite3.Connection object at ...>
+    >>> print(test_database.open_db())
+    True
+    >>> test_database.db_name = "not_test.db"
+    >>> print(test_database.open_db())
+    True
+    >>> print(test_database.close_db())
+    True
+    >>> test_database.create_new_table("test_table", {"Full Name": "TEXT", "Age": "INTEGER"})
+    Create table test_table
+    True
+    >>> test_database.drop_table_in_db("test_table")
+    True
+    >>> test_database.delete_all_rows_in_table("test_table")
+    True
+
 """
+import doctest
 import sqlite3
 from typing import List, Any
 
@@ -74,9 +97,11 @@ class Database:
         :return:
         """
         self.cursor.execute(f'''DROP TABLE IF EXISTS {table_name}''')
+        return True
 
-    def delete_all_rows_in_db(self, table_name: str):
+    def delete_all_rows_in_table(self, table_name: str):
         self.cursor.execute(f'''DELETE FROM {table_name}''')
+        return True
 
     def commit_db(self):
         self.mydb.commit()
@@ -116,4 +141,4 @@ class Database:
 
 
 if __name__ == "__main__":
-    pass
+    doctest.testmod()
