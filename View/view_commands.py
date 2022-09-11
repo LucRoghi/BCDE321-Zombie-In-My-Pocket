@@ -44,7 +44,7 @@ class Commands(cmd.Cmd):
 
 # TODO - Logic might not work
     def do_move_cmd(self):
-        if g.game_state == "MOVING":
+        if self.game.game_state == "MOVING":
             self.valid_input = ["N", "E", "S", "W"]
             self.prompt = f'Which way do you wish to move? {self.valid_input}'
             command = self.prompt.upper()

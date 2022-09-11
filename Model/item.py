@@ -1,3 +1,6 @@
+"""
+Author: Luc Roghi lcr0059
+"""
 import dataclasses
 from typing import Callable, Generic
 
