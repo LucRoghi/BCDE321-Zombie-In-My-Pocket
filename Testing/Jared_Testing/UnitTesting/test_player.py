@@ -3,9 +3,12 @@ from Model.player import Player
 
 
 class TestPlayer(unittest.TestCase):
+
     def test_drop_item(self):
-        Player.inventory = ["A", "B"]
-        inv_len = len(Player.inventory)
+        p = Player()
+        p.inventory = ["A", "B"]
+        inv_len = len(p.inventory)
         print(f"Player's currently holds {inv_len} item's")
-        Player.drop_item(self=Player, index=1)
-        self.assertIs(inv_len, 1, f"Player's currently holds {inv_len} item")
+        p.drop_item(1)
+        self.assertIs(inv_len, 1, "Passed")
+
