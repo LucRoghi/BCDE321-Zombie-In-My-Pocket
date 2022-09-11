@@ -7,5 +7,5 @@ class TestPlayer(unittest.TestCase):
         Player.inventory = ["A", "B"]
         inv_len = len(Player.inventory)
         print(f"Player's currently holds {inv_len} item's")
-        Player.drop_item(index=1)
+        Player.drop_item(self=Player, index=1)
         self.assertIs(inv_len, 1, f"Player's currently holds {inv_len} item")
