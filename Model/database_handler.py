@@ -12,6 +12,7 @@ Attributes:
 
 USING DATABASE HANDLER::
     >>> test_database = Database("test.db")
+    >>> test_file_handler = Filehandler()
     >>> print(test_database.db_name)
     test.db
     >>> print(test_database.mydb) #doctest: +ELLIPSIS
@@ -26,10 +27,35 @@ USING DATABASE HANDLER::
     >>> test_database.create_new_table("test_table", {"Full Name": "TEXT", "Age": "INTEGER"})
     Create table test_table
     True
-    >>> test_database.drop_table_in_db("test_table")
-    True
     >>> test_database.delete_all_rows_in_table("test_table")
     True
+    >>> test_database.drop_table_in_db("test_table")
+    True
+    >>> test_database.open_db()
+    True
+    >>> maptile_table = test_file_handler.read_file_from_json("/Data/Database_Schema/Tables/", "maptiles")
+    >>> test_database.create_new_table("Maptiles", maptile_table)
+    Create table Maptiles
+    True
+    >>> test_database.commit_db()
+    >>> test_database.query_all_data_from_table("Maptiles")
+    []
+    >>> test_database.get_tile_data()
+    []
+    >>> dev_card_table = test_file_handler.read_file_from_json("/Data/Database_Schema/Tables/", "dev_cards")
+    >>> test_database.create_new_table("Devcards", dev_card_table)
+    Create table Devcards
+    True
+    >>> test_database.commit_db()
+    >>> test_database.get_dev_card_data()
+    []
+    >>> item_table = test_file_handler.read_file_from_json("/Data/Database_Schema/Tables/", "items")
+    >>> test_database.create_new_table("Items", item_table)
+    Create table Items
+    True
+    >>> test_database.commit_db()
+    >>> test_database.query_all_data_from_table("Items")
+    []
 
 """
 import doctest
@@ -78,14 +104,14 @@ class Database:
         :param columns:
         :return:
         """
-        table_creation_string = f'''CREATE TABLE IF NOT EXISTS {table_name} (id INT PRIMARY_KEY'''
-        for key in columns:
-            table_creation_string += f''', {key} {columns[key]}'''
-        table_creation_string += f''')'''
         try:
+            table_creation_string = f'''CREATE TABLE IF NOT EXISTS {table_name} (id INT PRIMARY_KEY'''
+            for key in columns:
+                table_creation_string += f''', {key} {columns[key]}'''
+            table_creation_string += f''')'''
             self.cursor.execute(table_creation_string)
             print(f"Create table {table_name}")
-        except sqlite3.DatabaseError as e:
+        except (sqlite3.DatabaseError, TypeError) as e:
             print(e)
             return False
         return True
@@ -96,37 +122,60 @@ class Database:
         :param table_name:
         :return:
         """
-        self.cursor.execute(f'''DROP TABLE IF EXISTS {table_name}''')
+        try:
+            self.cursor.execute(f'''DROP TABLE IF EXISTS {table_name}''')
+        except sqlite3.DatabaseError as e:
+            print(e)
+            return False
         return True
 
     def delete_all_rows_in_table(self, table_name: str):
-        self.cursor.execute(f'''DELETE FROM {table_name}''')
+        try:
+            self.cursor.execute(f'''DELETE FROM {table_name}''')
+        except sqlite3.DatabaseError as e:
+            print(e)
+            return False
         return True
 
     def commit_db(self):
         self.mydb.commit()
 
     def insert_tile_data(self):
-        tile_data = self.file_handler.read_csv_data_into_list("/Data/", "maptiles_data")
-        for tile in tile_data:
-            self.cursor.execute('INSERT INTO Maptiles VALUES(?,?,?,?,?,?,?,?)', tile)
+        try:
+            tile_data = self.file_handler.read_csv_data_into_list("/Data/", "maptiles_data")
+            for tile in tile_data:
+                self.cursor.execute('INSERT INTO Maptiles VALUES(?,?,?,?,?,?,?,?)', tile)
+        except (sqlite3.DatabaseError, FileNotFoundError) as e:
+            print(e)
+            return False
+        return True
 
     def insert_dev_card_data(self):
-        dev_card_data = self.file_handler.read_csv_data_into_list("/Data/", "dev_cards_data")
-        for dev_card in dev_card_data:
-            self.cursor.execute('INSERT INTO Devcards VALUES(?,?,?,?,?,?,?,?)', dev_card)
+        try:
+            dev_card_data = self.file_handler.read_csv_data_into_list("/Data/", "dev_cards_data")
+            for dev_card in dev_card_data:
+                self.cursor.execute('INSERT INTO Devcards VALUES(?,?,?,?,?,?,?,?)', dev_card)
+        except (sqlite3.DatabaseError, FileNotFoundError, FileExistsError) as e:
+            print(e)
+            return False
+        return True
 
     def insert_item_data(self):
-        item_data = self.file_handler.read_csv_data_into_list("/Data/", "items_data")
-        for item in item_data:
-            self.cursor.execute('INSERT INTO Items VALUES(?,?,?,?,?,?,?,?,?)', item)
+        try:
+            item_data = self.file_handler.read_csv_data_into_list("/Data/", "items_data")
+            for item in item_data:
+                self.cursor.execute('INSERT INTO Items VALUES(?,?,?,?,?,?,?,?,?)', item)
+        except (sqlite3.DatabaseError, FileNotFoundError, FileExistsError) as e:
+            print(e)
+            return False
+        return True
 
     def get_dev_card_data(self):
         self.cursor.execute("SELECT * FROM Devcards")
         return self.cursor.fetchall()
 
     def get_tile_data(self):
-        self.cursor.execute("SELECT * FROM Tiles")
+        self.cursor.execute("SELECT * FROM Maptiles")
         return self.cursor.fetchall()
 
     def query_all_data_from_table(self, table_name: str):
@@ -141,4 +190,4 @@ class Database:
 
 
 if __name__ == "__main__":
-    doctest.testmod()
+    doctest.testmod(verbose=True)
