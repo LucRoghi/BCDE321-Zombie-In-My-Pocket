@@ -5,11 +5,13 @@ Author: Jared Ireland jai0095
 from Model.game_data import GameData
 from Model.map_tile import MapTile
 from Model.player import Player
+from View.pretty_print import Graph
 from time import sleep
 
 
 class GameController:
     def __init__(self):
+        self.graph = Graph()
         self.game_data = GameData()
         self.map_tile = MapTile()
         self.player = Player(self.game_data)
@@ -80,14 +82,17 @@ class GameController:
         if self.player.current_location.room_name == "Graveyard" and self.map_tile.bury_totem():
             print("The horde starts to crumble into dust, you collapse on the ground exhausted.\nYou have won!")
             self.game_state = "WIN"
+            self.graph.player_health_graph()
 
     def time_game_over(self):
         print("The time has reached 12am. The horde has grown stronger and there is no stopping them")
         self.game_state = "END"
+        self.graph.player_health_graph()
 
     def dead_game_over(self):
         print("You have died")
         self.game_state = "DEAD"
+        self.graph.player_health_graph()
 
     def loss_con(self):
         command = ""
