@@ -8,7 +8,6 @@ from Model.player import Player
 from time import sleep
 
 
-# TODO - Luc fix :)
 class GameController:
     def __init__(self):
         self.game_data = GameData()
