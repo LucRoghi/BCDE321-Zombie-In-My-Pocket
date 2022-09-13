@@ -17,11 +17,11 @@ class GameController:
         self.player = Player(self.game_data)
         self.active_tile = []
         self.dev_cards = self.game_data.dev_cards
-        self.time = 9
-        self.game_state = ""
-        self.room_state = ""
+        self.time: int = 9
+        self.game_state: str = ""
+        self.room_state: str = ""
         self.root = self.game_data.map_tiles_indoor[-1]
-        self.prompt = ">>>"
+        self.prompt: str = ">>>"
 
     def intro_block(self):
         welcome = "Welcome to Zombies In My Pocket. A free to play card based print and play game made in Python"
@@ -52,7 +52,7 @@ class GameController:
             self.active_tile = self.game_data.map_tiles_indoor
 
     def time_update(self):
-        if not self.game_data.dev_cards and self.game_state is "PLAY":
+        if not self.game_data.dev_cards and self.game_state == "PLAY":
             self.time += 1
             self.game_data.dev_card_pop()
             self.game_data.dev_card_pop()

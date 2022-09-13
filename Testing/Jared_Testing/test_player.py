@@ -1,17 +1,18 @@
 import unittest
-from pathlib import Path
 
 from Model.database_handler import Database
 from Model.file_handler import Filehandler
 from Model.player import Player
 from Model.map_tile import MapTile
 from Model.game_data import GameData
+from Model.game import GameController
 
 
 class TestPlayer(unittest.TestCase):
     def setUp(self) -> None:
         self.test_player = Player("Test")
         self.test_game_data = GameData()
+        self.test_controller = GameController()
         self.database = Database("test.db")
         self.file_handler = Filehandler()
         self.previous_room = MapTile("Previous Room", None, True, True, True, True)
@@ -53,7 +54,11 @@ class TestPlayer(unittest.TestCase):
         pass
 
     def test_cower_time_change(self):
-        pass
+        cur_time = self.test_controller.time
+        self.test_player.cower()
+        new_time = self.test_controller.time_update()
+        time_compare = new_time > cur_time
+        self.assertIs(time_compare, True, "Passed")
 
     # Fails
     def test_move_up(self):
