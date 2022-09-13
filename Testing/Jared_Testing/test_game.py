@@ -1,6 +1,7 @@
 import unittest
 from Model.game import GameController
 
+
 class TestGame(unittest.TestCase):
     def setUp(self) -> None:
         self.test_game_controller = GameController()
@@ -16,7 +17,6 @@ class TestGame(unittest.TestCase):
 
     def test_time_update(self):
         self.assertIs(len(self.test_game_controller.game_data.dev_cards), 0, self.test_game_controller.time_update())
-        pass
 
     def test_player_status(self):
         pass

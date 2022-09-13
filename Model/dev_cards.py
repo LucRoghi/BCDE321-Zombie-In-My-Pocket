@@ -2,7 +2,6 @@
 Author: Luc Roghi lcr0059
 """
 from typing import Callable
-from Model.player import Player
 
 
 class Devcard:
@@ -27,7 +26,7 @@ class Devcard:
             self.zombie_number = 0
             return getattr(Devcard, effect_string, None)
 
-    def add_zombies_to_room(self, player: Player, zombie_number):
+    def add_zombies_to_room(self, player,  zombie_number):
         player.current_location.zombie_number = zombie_number
 
     def lose_1_health(self, player, _):

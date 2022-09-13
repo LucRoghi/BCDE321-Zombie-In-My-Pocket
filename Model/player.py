@@ -2,10 +2,12 @@
 Author: Jared Ireland jai0095
 """
 from Model.map_tile import MapTile
+from Model.game_data import GameData
 
 
 class Player:
     def __init__(self, name=""):
+        self.game_data = GameData()
         self.name: str = name
         self.current_location: MapTile = None
         self.previous_location = None
@@ -36,7 +38,9 @@ class Player:
     def cower(self):
         if self.can_cower:
             self.health += 3
-            print("You cower in fear, gaining 3 health, but lose time with the dev card")
+            print(f"You cower in fear, gaining 3 health, but lose time with the dev card."
+                  f" Current Health: {self.health}")
+            self.game_data.dev_card_pop()
         else:
             return print("Cannot cower during a zombie door attack")
 
@@ -44,15 +48,19 @@ class Player:
         if self.can_attack:
             self.current_location.zombie_number -= self.attack
             self.health = self.health - self.current_location.zombie_number
-            print(f'Player lost {self.current_location.zombie_number}. The player now has {self.health}')
+            print(f'Player lost {self.current_location.zombie_number} health. The player now has {self.health} health '
+                  f'remaining')
         else:
             print("Player can not attack")
 
     def flee(self):
         if self.can_flee:
-            self.health = self.health - self.current_location.zombie_number
+            new_health = self.health - self.current_location.zombie_number
+            health_diff = self.health - new_health
+            self.health = new_health
             self.current_location = self.previous_location
-            print(f'Player has lost {self.current_location.zombie_number} and now has {self.health}.')
+            print(f'Player lost {health_diff} health. The player now has {self.health} health '
+                  f'remaining')
 
     def drop_item(self, index):
         self.inventory.pop(index)
