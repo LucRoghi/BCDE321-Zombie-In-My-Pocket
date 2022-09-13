@@ -1,4 +1,8 @@
 import unittest
+from pathlib import Path
+
+from Model.database_handler import Database
+from Model.file_handler import Filehandler
 from Model.player import Player
 from Model.map_tile import MapTile
 from Model.game_data import GameData
@@ -8,6 +12,8 @@ class TestPlayer(unittest.TestCase):
     def setUp(self) -> None:
         self.test_player = Player("Test")
         self.test_game_data = GameData()
+        self.database = Database("test.db")
+        self.file_handler = Filehandler()
         self.previous_room = MapTile("Previous Room", None, True, True, True, True)
         self.a_room = MapTile("New Room", None, True, True, True, True)
         self.previous_room.zombie_number = 5
