@@ -7,7 +7,7 @@ class TestPlayer(unittest.TestCase):
     def setUp(self) -> None:
         self.test_player = Player("Test")
         self.test_initial_maptile = MapTile("Test Room 1", None, True, False, True, False)
-        self.adding_new_maptile = MapTile("Test Room UP", None, True, False, True, False)
+        self.adding_new_maptile = MapTile("Test Room 2", effect="Zombies", True, False, True, False)
 
     # Passes
     def test_drop_item(self):
