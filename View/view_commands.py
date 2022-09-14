@@ -25,6 +25,7 @@ class Commands(cmd.Cmd):
         self.game = GameController()
         self.game_data = GameData()
         self.valid_input = []
+        self.prompt = ">>> "
 
     # TODO - Doubt this works lmao
     def not_valid_input(self):

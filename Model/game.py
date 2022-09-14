@@ -18,7 +18,7 @@ class GameController:
         self.game_state: str = ""
         self.room_state: str = ""
         self.root = self.game_data.map_tiles_indoor[-1]
-        self.prompt: str = ">>>"
+        self.prompt: str = ">>> "
 
     def intro_block(self):
         welcome = "Welcome to Zombies In My Pocket. A free to play card based print and play game made in Python"
@@ -39,6 +39,19 @@ class GameController:
         self.game_data.dev_card_pop()
         self.game_data.dev_card_pop()
         self.prompt = f'{self.intro_block()}'
+
+    def get_game(self):
+        text = ''
+        if self.game_state == "Moving":
+            text = "In this state, the player can choose a cardinal direction to move in"
+        if self.game_state == "Rotating":
+            text = "In this state, the player can choose how many rotations happen to the tile piece"
+        if self.game_state == "DrawDevCard":
+            text = "Use the draw command to draw a development card"
+
+        # Fixme: Change self.temp to the correct commands - New Tile + Its doors
+        return print(f'The chosen tile is {self.temp}, the valible doors are: {self.temp}. '
+                     f'Current game state: {self.game_state}')
 
     def room_state_changes(self):
         if self.player.current_location.room_name == "Patio":
