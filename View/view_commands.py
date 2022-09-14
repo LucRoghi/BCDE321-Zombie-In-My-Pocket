@@ -17,8 +17,6 @@ from Model.game import GameController
 
 
 class Commands(cmd.Cmd):
-    intro = GameController.intro_block()
-
     def __init__(self):
         cmd.Cmd.__init__(self)
         super().__init__()

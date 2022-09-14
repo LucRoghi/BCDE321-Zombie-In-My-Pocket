@@ -122,6 +122,7 @@ class GameData:
         self.items = []
         self.database = Database("ZombieInMyPocket.db")
         self.file_handler = Filehandler()
+        self.populate_db()
         self.initialize_game_data()
 
     def initialize_game_data(self):

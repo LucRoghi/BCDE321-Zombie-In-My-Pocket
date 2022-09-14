@@ -5,15 +5,12 @@ Author: Jared Ireland jai0095
 from Model.game_data import GameData
 from Model.map_tile import MapTile
 from Model.player import Player
-from View.pretty_print import Graph
 from time import sleep
 
 
 class GameController:
     def __init__(self):
-        self.graph = Graph()
         self.game_data = GameData()
-        self.map_tile = MapTile()
         self.player = Player(self.game_data)
         self.active_tile = []
         self.dev_cards = self.game_data.dev_cards
