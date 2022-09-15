@@ -230,9 +230,12 @@ class GameData:
         Returns a devcard object from a random index in the list and then removes it from the list
         :return:
         """
-        max_dev_card_index = len(self.dev_cards) - 1
-        random_index = random.randint(0, max_dev_card_index)
-        return self.dev_cards.pop(random_index)
+        if len(self.dev_cards) > 0:
+            max_dev_card_index = len(self.dev_cards) - 1
+            random_index = random.randint(0, max_dev_card_index)
+            return self.dev_cards.pop(random_index)
+        else:
+            return IndexError("Cannot pop dev card from an empty list")
 
 
 if __name__ == "__main__":

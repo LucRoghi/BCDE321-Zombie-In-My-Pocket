@@ -40,14 +40,15 @@ class MapTile:
             self.room_up = tile
             return True
         else:
-            return False
+            return ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
+
     def add_new_room_right(self, tile):
         if self.door_right and tile.door_left and self.room_right is None:
             tile.room_left = self
             self.room_right = tile
             return True
         else:
-            return False
+            return ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
 
     def add_new_room_down(self, tile):
         if self.door_down and tile.door_up and self.room_down is None:
@@ -55,7 +56,7 @@ class MapTile:
             self.room_down = tile
             return True
         else:
-            return False
+            return ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
 
     def add_new_room_left(self, tile):
         if self.door_left and tile.door_right and self.room_left is None:
@@ -63,7 +64,7 @@ class MapTile:
             self.room_left = tile
             return True
         else:
-            return False
+            return ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
 
     def rotate_tile_left(self):
         if (self.room_up and self.room_right and self.room_down and self.room_left) is None:
@@ -114,4 +115,3 @@ if __name__ == "__main__":
     print(test_tile_3)
     test_tile_3.rotate_tile_left()
     print(test_tile_3)
-
