@@ -17,6 +17,8 @@ from Model.game import GameController
 
 
 class Commands(cmd.Cmd):
+    intro = "Donk Memes"
+
     def __init__(self):
         cmd.Cmd.__init__(self)
         super().__init__()
@@ -42,6 +44,11 @@ class Commands(cmd.Cmd):
 
     # TODO - Logic might not work
     def do_move_cmd(self):
+        """
+        Reads the players input in which they wish to move, checks if the input is valid, if the input is valid it will
+        look in the Dictionary and move in the corresponding input
+        :return:
+        """
         if self.game.game_state == "MOVING":
             self.valid_input = ["N", "E", "S", "W"]
             self.game.prompt = f'Which way do you wish to move? {self.valid_input}'
@@ -59,6 +66,11 @@ class Commands(cmd.Cmd):
 
     # TODO WIP
     def do_rotate_cmd(self, tile: MapTile = None):
+        """
+        Reads the players input to see their rotation, checks if the input is valid, if the input is valid it will
+        then apply the rotation command
+        :return:
+        """
         if self.game.game_state == "ROTATE":
             self.game.prompt = "Do you wish to Rotate? (Y/N) "
             answer = self.game.prompt.upper()
@@ -75,6 +87,13 @@ class Commands(cmd.Cmd):
             print("Unable to Rotate Tile")
 
     def do_place_tile(self, type: str = "Indoor"):
+        """
+        When the game has to draw a tile it will check where the player is - by default they are INDOORs
+        It will draw a random tile in which the player then gets given a choice in where to place this tile
+        It will then place the tile in accordance to the players choice in which the player can then continue
+            playing the game
+        :return:
+        """
         if type == "Indoor":
             map_tile_list = self.game_data.map_tiles_indoor
         elif type == "Outdoor":
@@ -93,12 +112,19 @@ class Commands(cmd.Cmd):
 
     # TODO WIP - Kinda done - Possible to Change
     def do_actions_cmd(self):
+        """
+        This sets up what actions the player can do only when there are zombies in the room. The following actions can
+        be done:
+        Attack/Atk - Attacks the zombies for how many attack points the player has. Lose HP on remaining zombies
+        Cower - Gains 3HP but loses a Development Card
+        Flee - Flees the room, losing 1 HP
+        :return:
+        """
         if self.player.current_location.zombie_number > 0:
             self.game.game_state = "ZOMBIES"
             self.player.can_cower = True
             self.player.can_attack = True
             self.player.can_flee = True
-            self.player.can_rest = True
 
             self.valid_input = ["Attack", "atk", "Cower", "Flee"]
             self.game.prompt = f'What would you like to do? {self.valid_input}'
@@ -122,6 +148,10 @@ class Commands(cmd.Cmd):
         pass
 
     def do_bury_totem(self):
+        """
+
+        :return:
+        """
         for item in self.player.inventory:
             if item.name == "Totem" and self.player.current_location.room_name == "Graveyard":
                 self.game.prompt = "Do you wish to bury the totem? (Y/N) "
