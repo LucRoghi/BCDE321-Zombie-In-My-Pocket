@@ -124,3 +124,5 @@ class GameController:
                             "Outdoor": self.commands.do_place_tile("Outdoor")}
             command_dict[command]
             self.commands.not_valid_input()
+
+

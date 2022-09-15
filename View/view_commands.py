@@ -36,12 +36,21 @@ class Commands(cmd.Cmd):
         """
         In case the database storing the rows is broken, running this function will recreate the database
         from the datafiles in the /Data file
+        SYNOPSIS: fix_db
+        ARGS: No args required
         :return:
         """
         self.game_data.reset_database()
 
     # TODO - Logic might not work
     def do_move_cmd(self):
+        """
+        Allows the player to move to a room with a corresponding door.
+        The player will not be able to move if a room does not have a door in the correct direction or if the
+        door does not have a door connected to it
+        SYNOPSIS: move_cmd [move_direction]
+        :return:
+        """
         if self.game.game_state == "MOVING":
             self.valid_input = ["N", "E", "S", "W"]
             self.game.prompt = f'Which way do you wish to move? {self.valid_input}'
