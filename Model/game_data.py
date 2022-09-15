@@ -122,8 +122,16 @@ class GameData:
         self.items = []
         self.database = Database("ZombieInMyPocket.db")
         self.file_handler = Filehandler()
-        self.populate_db()
         self.initialize_game_data()
+
+    def reset_database(self):
+        """
+
+        :return:
+        """
+        self.database.delete_database()
+        self.database = Database("ZombieInMyPocket.db")
+        self.populate_db()
 
     def initialize_game_data(self):
         """

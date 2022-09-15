@@ -60,6 +60,7 @@ USING DATABASE HANDLER::
 """
 import doctest
 import sqlite3
+import os
 from typing import List, Any
 
 from Model.file_handler import Filehandler
@@ -93,6 +94,17 @@ class Database:
             self.mydb.close()
             return True
         except sqlite3.DatabaseError as e:
+            print(e)
+            return False
+
+    def delete_database(self):
+        """
+        Deletes the database file to aid in recovering from a corrupt db
+        """
+        try:
+            os.remove(self.db_name)
+            return True
+        except OSError as e:
             print(e)
             return False
 

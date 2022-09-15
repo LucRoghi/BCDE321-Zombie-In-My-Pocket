@@ -32,6 +32,14 @@ class Commands(cmd.Cmd):
         if self.game.prompt not in self.valid_input:
             print("That is not a Valid Input\nPlease try again or look at the help page")
 
+    def do_fix_db(self):
+        """
+        In case the database storing the rows is broken, running this function will recreate the database
+        from the datafiles in the /Data file
+        :return:
+        """
+        self.game_data.reset_database()
+
     # TODO - Logic might not work
     def do_move_cmd(self):
         if self.game.game_state == "MOVING":
