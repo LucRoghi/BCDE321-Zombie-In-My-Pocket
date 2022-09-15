@@ -1,6 +1,7 @@
 """
 Author: Jared Ireland jai0095
 """
+from random import random
 
 from Model.game_data import GameData
 from Model.map_tile import MapTile
@@ -124,5 +125,49 @@ class GameController:
                             "Outdoor": self.commands.do_place_tile("Outdoor")}
             command_dict[command]
             self.commands.not_valid_input()
+
+    def draw_new_map_tile(self, type_: str) -> MapTile:
+        """
+        Draws a new map tile from the respective list in game data. It is done by popping a random tile within the
+        list and returning it as a Maptile object
+        :param type_: str
+        :return: Maptile object
+        """
+        if type_ == "Indoors":
+            random_index = random.randint(0, len(self.game_data.map_tiles_indoor) - 1)
+            return self.game_data.map_tiles_indoor.pop(random_index)
+        elif type_ == "Outdoors":
+            random_index = random.randint(0, len(self.game_data.map_tiles_outdoor) - 1)
+            return self.game_data.map_tiles_outdoor.pop(random_index)
+
+
+    def move_player(self, direction):
+        """
+        Moves the player in the corresponding direction based on the accepted argument
+        :param direction:
+        :return:
+        """
+        directions = {"up": self.player.move_player_up(), "right": self.player.move_player_right(),
+                      "down": self.player.move_player_down(), "left": self.player.move_player_left()}
+        if direction not in directions.keys():
+            return False
+        else:
+            directions[direction.lower()]
+
+    def add_new_tile(self, location):
+        """
+        Adds a new tile to the player tree based on the chose direction
+        :param location:
+        :return:
+        """
+        new_tile = self.draw_new_map_tile(self.room_state)
+        add_tile_to_direction = {"up": self.player.current_location.add_new_room_up(new_tile),
+                                 "right": self.player.current_location.add_new_room_right(new_tile),
+                                 "down": self.player.current_location.add_new_room_down(new_tile),
+                                 "left": self.player.current_location.add_new_room_down(new_tile)}
+        status = add_tile_to_direction[location]
+        if not status:
+            print("Cannot add new room as a room is already placed or no door connects the room")
+        return True
 
 

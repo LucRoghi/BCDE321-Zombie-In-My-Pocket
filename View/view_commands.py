@@ -52,17 +52,10 @@ class Commands(cmd.Cmd):
         :return:
         """
         if self.game.game_state == "MOVING":
-            self.valid_input = ["N", "E", "S", "W"]
+            self.valid_input = ["Up", "Right", "Down", "Right"]
             self.game.prompt = f'Which way do you wish to move? {self.valid_input}'
             command = self.game.prompt.upper()
-            command_dict = {
-                "N": self.player.move_player_up(),
-                "E": self.player.move_player_right(),
-                "S": self.player.move_player_down(),
-                "W": self.player.move_player_left()
-            }
-            command_dict[command]
-            self.not_valid_input()
+            self.game.move_player(command)
         else:
             print("Player can not move at this time")
 
