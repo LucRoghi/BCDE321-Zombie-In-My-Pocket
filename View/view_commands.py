@@ -76,22 +76,16 @@ class Commands(cmd.Cmd):
         else:
             print("Unable to Rotate Tile")
 
-    def do_place_tile(self, type: str = "Indoor"):
-        if type == "Indoor":
-            map_tile_list = self.game_data.map_tiles_indoor
-        elif type == "Outdoor":
-            map_tile_list = self.game_data.map_tiles_outdoor
-        random_max_index = random.randint(0, len(map_tile_list) - 1)
-        new_tile = map_tile_list.pop(random_max_index)
+    def do_place_tile(self):
+        """
+        Prints the doors the player currently has access to and asks the player to choose a door.
+        If a tile can be placed, the tile is placed in the selected direction. Else a prompt is returned
+        :return:
+        """
         self.player.current_location.print_door()
         self.game.prompt = "Which direction do you wish to place a new tile? (up/left/down/right)"
         r = self.game.prompt.lower()
-        new_tile = self.do_rotate_cmd(new_tile)
-        direction = {"up": self.player.current_location.add_new_room_up(new_tile),
-                     "left": self.player.current_location.add_new_room_left(new_tile),
-                     "down": self.player.current_location.add_new_room_down(new_tile),
-                     "right": self.player.current_location.add_new_room_right(new_tile)}
-        direction[r]
+        self.game.add_new_tile(r)
 
     # TODO WIP - Kinda done - Possible to Change
     def do_actions_cmd(self):
