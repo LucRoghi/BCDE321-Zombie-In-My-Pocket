@@ -6,9 +6,8 @@ from Model.game_data import GameData
 
 
 class Player:
-    def __init__(self, name=""):
-        self.game_data = GameData()
-        self.name: str = name
+    def __init__(self, game_data):
+        self.game_data: GameData = game_data
         self.current_location: MapTile = None
         self.previous_location = None
         self.attack: int = 1
