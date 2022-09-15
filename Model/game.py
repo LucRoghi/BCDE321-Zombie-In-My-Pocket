@@ -3,6 +3,7 @@ Author: Jared Ireland jai0095
 """
 from random import random
 
+from Model.file_handler import Filehandler
 from Model.game_data import GameData
 from Model.map_tile import MapTile
 from Model.player import Player
@@ -169,5 +170,14 @@ class GameController:
         if not status:
             print("Cannot add new room as a room is already placed or no door connects the room")
         return True
+
+    def save_game(self):
+        file_handler = Filehandler()
+        file_handler.save_object_to_pickle("/Saves/", self)
+
+    def load_save(self, save_name):
+        file_handler = Filehandler()
+        new_save_game = file_handler.load_object_from_pickle("/Saves/", save_name)
+        return new_save_game
 
 

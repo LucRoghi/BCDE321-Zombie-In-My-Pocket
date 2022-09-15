@@ -126,7 +126,6 @@ class GameData:
 
     def reset_database(self):
         """
-
         :return:
         """
         self.database.delete_database()
