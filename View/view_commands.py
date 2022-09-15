@@ -29,6 +29,13 @@ class Commands(cmd.Cmd):
         self.valid_input = []
         self.prompt = ">>> "
 
+    def do_start(self):
+        """
+        This starts a new game!
+        :return: Done
+        """
+        self.game.game_start()
+
     # TODO - Doubt this works lmao
     def not_valid_input(self):
         if self.game.prompt not in self.valid_input:
