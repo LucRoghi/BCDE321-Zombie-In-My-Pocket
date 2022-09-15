@@ -220,10 +220,10 @@ class Commands(cmd.Cmd):
             pass
 
     def do_load_cmd(self):
-        pass
+        self.game = self.game.load_save()
 
     def do_save_cmd(self):
-        pass
+        self.game.save_game()
 
 
 if __name__ == "__main__":
