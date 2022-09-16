@@ -4,7 +4,7 @@ Author: Luc Roghi lcr0059
 from typing import Callable
 
 
-class Devcard:
+class DevCard:
     def __init__(self, zombie_number, nine_message, nine_effect,
                  ten_message, ten_effect, eleven_message, eleven_effect, item):
         self.zombie_number: int = zombie_number
@@ -19,12 +19,12 @@ class Devcard:
     def set_effect(self, effect_string):
         if effect_string.isnumeric():
             self.zombie_number = int(effect_string)
-            return getattr(Devcard, 'add_zombies_to_room')
+            return getattr(DevCard, 'add_zombies_to_room')
         elif effect_string == 'None':
             return None
         else:
             self.zombie_number = 0
-            return getattr(Devcard, effect_string, None)
+            return getattr(DevCard, effect_string, None)
 
     def add_zombies_to_room(self, player,  zombie_number):
         player.current_location.zombie_number = zombie_number
@@ -40,6 +40,6 @@ class Devcard:
             player.inventory.append(player.game_data.dev_card_pop())
 
 if __name__ == "__main__":
-    test_devcard = Devcard(0, "", "", "", "", "", "")
-    test_func = getattr(Devcard, 'add_zombies_to_room')
+    test_devcard = DevCard(0, "", "", "", "", "", "")
+    test_func = getattr(DevCard, 'add_zombies_to_room')
     print(test_func)

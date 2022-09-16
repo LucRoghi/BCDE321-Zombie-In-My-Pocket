@@ -33,7 +33,7 @@ GAME DATA DEVCARDS:
 """
 
 from random import random
-from Model.dev_cards import Devcard
+from Model.dev_cards import DevCard
 from Model.database_handler import Database
 from Model.file_handler import Filehandler
 from Model.item import Item
@@ -56,7 +56,7 @@ def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
     return tile_list
 
 
-def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
+def convert_tuples_to_dev_card(tuple_list: tuple) -> list[DevCard]:
     """
     When given a tuple it will attempt to convert it into a DevCard object and then append to a list. During the
     conversion, if the effect is an integer it will convert it to a call to a function within the MapTile Class to
@@ -67,7 +67,7 @@ def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
     devcard_list = []
     for card in tuple_list:
         _, nine_message, nine_effect, ten_message, ten_effect, eleven_message, eleven_effect, item = card
-        dev_card = Devcard(0, nine_message, nine_effect, ten_message, ten_effect,
+        dev_card = DevCard(0, nine_message, nine_effect, ten_message, ten_effect,
                            eleven_message, eleven_effect, item)
 
         if nine_effect.isnumeric():
@@ -78,7 +78,7 @@ def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
             dev_card.ten_effect = getattr(dev_card, "add_zombies_to_room")
         elif eleven_effect.isnumeric():
             dev_card.zombie_number = eleven_effect
-            dev_card.eleven_effect = getattr(Devcard, "add_zombies_to_room")
+            dev_card.eleven_effect = getattr(DevCard, "add_zombies_to_room")
         else:
             dev_card.nine_effect = None
             dev_card.ten_effect = None
@@ -86,13 +86,13 @@ def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
             dev_card.zombie_number = 0
 
         if nine_effect != (None or 'add_zombies_to_room'):
-            dev_card.nine_effect = getattr(Devcard, str(nine_effect), None)
+            dev_card.nine_effect = getattr(DevCard, str(nine_effect), None)
 
         if ten_effect != (None or 'add_zombies_to_room'):
-            dev_card.ten_effect = getattr(Devcard, str(ten_effect), None)
+            dev_card.ten_effect = getattr(DevCard, str(ten_effect), None)
 
         if eleven_effect != (None or 'add_zombies_to_room'):
-            dev_card.eleven_effect = getattr(Devcard, str(eleven_effect), None)
+            dev_card.eleven_effect = getattr(DevCard, str(eleven_effect), None)
 
         devcard_list.append(dev_card)
     return devcard_list
