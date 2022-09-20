@@ -10,7 +10,6 @@ class ZombieInMyPocket(cmd.Cmd):
 
     def do_new_game(self, arg):
         self.game = Game()
-        self.game.start_game()
         self.prompt = '(Game)'
 
     def do_draw(self, arg):
@@ -33,6 +32,17 @@ class ZombieInMyPocket(cmd.Cmd):
                 print("Argument must be up, down, left or right")
         except ValueError as e:
             print(e)
+
+    def do_look(self, arg):
+        try:
+            rooms_dict = {"up": self.game.player.current_location.room_up,
+                          "left": self.game.player.current_location.room_left,
+                          "down": self.game.player.current_location.room_down,
+                          "right": self.game.player.current_location.room_right}
+            if arg.lower() in ["up", "down", "left", "right"]:
+                print(f"{rooms_dict[arg].room_name}")
+        except AttributeError:
+            print(f"There is no room {arg} to look into")
 
     def do_get(self, arg):
         if arg == "doors":

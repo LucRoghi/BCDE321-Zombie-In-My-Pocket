@@ -38,7 +38,6 @@ class MapTile:
         if self.door_up and tile.door_down and self.room_up is None:
             tile.room_down = self
             self.room_up = tile
-            return True
         else:
             raise ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
 
@@ -46,7 +45,6 @@ class MapTile:
         if self.door_right and tile.door_left and self.room_right is None:
             tile.room_left = self
             self.room_right = tile
-            return True
         else:
             raise ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
 
@@ -54,7 +52,6 @@ class MapTile:
         if self.door_down and tile.door_up and self.room_down is None:
             tile.room_up = self
             self.room_down = tile
-            return True
         else:
             raise ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
 

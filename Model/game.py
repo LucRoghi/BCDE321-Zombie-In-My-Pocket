@@ -16,9 +16,9 @@ class Game:
         self.time = 9
         self.root = None  # Start in Foyer
         self.last_action = None
-        self.player.current_location = None
         self.current_dev_card = None
         self.current_tile = None
+        self.start_game()
 
     def start_game(self):
         """
@@ -26,8 +26,7 @@ class Game:
         setting the player at the foyer
         :return:
         """
-        self.root = self.active_tile_list[-1]
-        print(self.root.room_name)
+        self.root = self.active_tile_list.pop(-1)
         self.player.current_location = self.root
 
     def move_player(self, direction):

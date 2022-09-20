@@ -49,9 +49,8 @@ def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
     """
     tile_list = []
     for tile in tuple_list:
-        _, room_name, effect, door_up, door_right, door_down, door_left, type = tile
-        tile = MapTile(room_name, effect, door_up, door_right, door_down, door_left)
-        tile.effect = getattr(tile, effect, None)
+        _, room_name, _, door_up, door_right, door_down, door_left, type = tile
+        tile = MapTile(room_name, None, door_up, door_right, door_down, door_left)
         tile_list.append(tile)
     return tile_list
 
