@@ -37,9 +37,13 @@ class ZombieInMyPocket(cmd.Cmd):
     def do_get(self, arg):
         if arg == "doors":
             self.game.player.current_location.print_doors()
+
     def do_move(self, arg):
         self.prompt = '(Player)'
-        self.game.move_player(arg)
+        try:
+            self.game.move_player(arg)
+        except ValueError as e:
+            print(e)
         print(f"Current location is: {self.game.player.current_location.room_name}")
 
     def do_attack(self):

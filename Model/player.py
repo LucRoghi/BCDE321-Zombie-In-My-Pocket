@@ -14,25 +14,25 @@ class Player:
         if self.current_location.room_up is not None:
             self.current_location = self.current_location.room_up
         else:
-            return ValueError("The room going up does not exist, cannot travel")
+            raise ValueError("The room going up does not exist, cannot travel")
 
     def move_player_right(self):
         if self.current_location.room_right is not None:
             self.current_location = self.current_location.room_right
         else:
-            return ValueError("The room going right does not exist, cannot travel")
+            raise ValueError("The room going right does not exist, cannot travel")
 
     def move_player_down(self):
         if self.current_location.room_down is not None:
             self.current_location = self.current_location.room_down
         else:
-            return ValueError("The room going down does not exist, cannot travel")
+            raise ValueError("The room going down does not exist, cannot travel")
 
     def move_player_left(self):
         if self.current_location.room_left is not None:
             self.current_location = self.current_location.room_left
         else:
-            return ValueError("The room going left does not exist, cannot travel")
+            raise ValueError("The room going left does not exist, cannot travel")
 
     def cower(self):
         self.health += 3
