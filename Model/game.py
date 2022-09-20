@@ -14,7 +14,6 @@ class Game:
         self.active_tile_list = self.game_data.map_tiles_indoor
         self.player = Player()
         self.time = 9
-        self.root = None  # Start in Foyer
         self.last_action = None
         self.current_dev_card = None
         self.current_tile = None
@@ -26,8 +25,7 @@ class Game:
         setting the player at the foyer
         :return:
         """
-        self.root = self.active_tile_list.pop(-1)
-        self.player.current_location = self.root
+        self.player.current_location = self.active_tile_list.pop(-1)
 
     def move_player(self, direction):
         direction = direction.lower()
