@@ -5,7 +5,6 @@ from Model.game_data import GameData
 class Player:
     def __init__(self):
         self.current_location = None
-        self.previous_location = None
         self.attack: int = 1
         self.health: int = 6
         self.inventory: list = []

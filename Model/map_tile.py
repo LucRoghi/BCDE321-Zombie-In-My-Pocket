@@ -40,7 +40,7 @@ class MapTile:
             self.room_up = tile
             return True
         else:
-            return ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
+            raise ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
 
     def add_new_room_right(self, tile):
         if self.door_right and tile.door_left and self.room_right is None:
@@ -82,20 +82,19 @@ class MapTile:
             self.door_down = door_list[-3]
             self.door_left = door_list[0]
 
-    def print_door(self):
-        return f"up: {self.door_up}, right: {self.door_right}, down: {self.door_down}, left: {self.door_left}"
-
+    def print_doors(self):
+        final_string = f"Available doors are: "
+        if self.door_up:
+            final_string += "Up "
+        if self.door_left:
+            final_string += "Left "
+        if self.door_down:
+            final_string += "Right "
+        if self.door_right:
+            final_string += "Down "
+        print(final_string)
     def get_doors(self):
         return {"up": self.door_up, "right": self.door_right, "down": self.door_down, "left": self.door_left}
-
-    def add_1_health(self):
-        pass
-
-    def find_an_item(self):
-        pass
-
-    def bury_totem(self):
-        pass
 
 
 if __name__ == "__main__":
