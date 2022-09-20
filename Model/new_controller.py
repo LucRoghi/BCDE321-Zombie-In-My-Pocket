@@ -9,9 +9,9 @@ from random import random
 
 class ZIMPController:
     def __init__(self):
-        self.map = MapTile
-        self.file_handler = Filehandler
-        self.game_data = GameData
+        self.map = MapTile("", None, False, False, False, False)
+        self.file_handler = Filehandler()
+        self.game_data = GameData()
         self.player = Player(self.game_data)
         self.valid_input = []
         self.active_tile = []
@@ -22,14 +22,6 @@ class ZIMPController:
         self.dev_cards = DevCard
         self.time: int = 9
         self.is_at_temple = False
-
-    def start_game(self):
-        self.game_state = "START"
-        self.room_state = "INDOORS"
-        self.player.current_location = self.root
-        self.game_data.dev_card_pop()
-        self.game_data.dev_card_pop()
-        self.intro_block()
 
     def intro_block(self):
         welcome = "Welcome to Zombies In My Pocket. A free to play card based print and play game made in Python"
@@ -42,6 +34,14 @@ class ZIMPController:
         self.prompt = user_input
         intro = welcome, sleep(0.5), hint_one, sleep(0.5), hint_two, sleep(0.5), hint_three, sleep(0.5), user_input
         return intro
+
+    def start_game(self):
+        self.game_state = "START"
+        self.room_state = "INDOORS"
+        self.player.current_location = self.root
+        self.game_data.dev_card_pop()
+        self.game_data.dev_card_pop()
+        self.intro_block()
 
     def room_state_changes(self):
         if self.player.current_location.room_name == "Patio":
