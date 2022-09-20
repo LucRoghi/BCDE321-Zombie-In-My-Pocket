@@ -44,7 +44,6 @@ class ZombieInMyPocket(cmd.Cmd):
             self.game.move_player(arg)
         except ValueError as e:
             print(e)
-        print(f"Current location is: {self.game.player.current_location.room_name}")
 
     def do_attack(self):
         self.prompt = '(Player)'

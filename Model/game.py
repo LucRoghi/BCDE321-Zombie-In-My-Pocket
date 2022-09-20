@@ -38,12 +38,16 @@ class Game:
                                  "left": self.player.move_player_left()}
         try:
             move_player_functions[direction]
+            print(f"Current location is {self.player.current_location.room_name}")
         except (ValueError, KeyError) as e:
             print(e)
 
     def player_attack(self):
         zombie_number = self.player.current_location.zombie_number
         self.player.health = self.player.health - (zombie_number - self.player.attack)
+        self.player.current_location.zombie_number -= self.player.attack
+        if self.player.current_location.zombie_number < 0:
+            self.player.current_location.zombie_number = 0
         if self.player.health <= 0:
             print("YOU HAVE DIED")
 
