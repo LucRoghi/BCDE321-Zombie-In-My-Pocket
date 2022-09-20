@@ -28,13 +28,12 @@ class Game:
         self.player.current_location = self.active_tile_list.pop(-1)
 
     def move_player(self, direction):
-        direction = direction.lower()
-        move_player_functions = {"up": self.player.move_player_up(),
-                                 "right": self.player.move_player_right(),
-                                 "down": self.player.move_player_down(),
-                                 "left": self.player.move_player_left()}
+        move_player_functions = {"up": self.player.move_player_up,
+                                 "right": self.player.move_player_right,
+                                 "down": self.player.move_player_down,
+                                 "left": self.player.move_player_left}
         try:
-            move_player_functions[direction]
+            move_player_functions[direction]()
             print(f"Current location is {self.player.current_location.room_name}")
         except (ValueError, KeyError) as e:
             print(e)
@@ -81,6 +80,14 @@ class Game:
         except (ValueError, KeyError) as e:
             print(e)
             print("You need to rotate the tile in order to place it correctly")
+
+if __name__ == "__main__":
+    new_game = Game()
+    new_tile = new_game.draw_new_tile()
+    print(new_game.player.current_location.room_name)
+    new_game.attach_new_tile(new_tile, "up")
+    new_game.move_player("up")
+    print(new_game.player.current_location.room_name)
 
 
 
