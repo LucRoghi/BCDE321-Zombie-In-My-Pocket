@@ -4,7 +4,6 @@
 import random
 
 from Model.game_data import GameData
-from Model.map_tile import MapTile
 from Model.player import Player
 
 
@@ -65,7 +64,7 @@ class Game:
     def draw_new_tile(self):
         try:
             random_index = random.randint(0, len(self.active_tile_list) - 1)
-            return self.active_tile_list.pop(random_index)
+            self.current_tile = self.active_tile_list.pop(random_index)
         except IndexError as e:
             print(e)
 
@@ -81,13 +80,17 @@ class Game:
             print(e)
             print("You need to rotate the tile in order to place it correctly")
 
+    def rotate_tile(self, direction):
+        if direction == "left":
+            self.current_tile.rotate_tile_left()
+        elif direction == "right":
+            self.current_tile.rotate_tile_right()
+
+
 if __name__ == "__main__":
     new_game = Game()
-    new_tile = new_game.draw_new_tile()
+    new_game.draw_new_tile()
     print(new_game.player.current_location.room_name)
-    new_game.attach_new_tile(new_tile, "up")
+    new_game.attach_new_tile(new_game.current_tile, "up")
     new_game.move_player("up")
     print(new_game.player.current_location.room_name)
-
-
-

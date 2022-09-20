@@ -21,32 +21,24 @@ class ZombieInMyPocket(cmd.Cmd):
         except KeyError:
             print("Invalid Option: Command must have tile or devcard as the arguments")
 
-    def do_tile(self, arg):
+    def do_tile(self, args):
         try:
-            if arg.lower() in ["up", "down", "left", "right"]:
-                tile = self.game.draw_new_tile()
-                print(f'Drew the {tile.room_name} card')
-                self.game.attach_new_tile(tile, arg)
-                print(f'Attached {tile.room_name} to {self.game.player.current_location.room_name}')
-            else:
-                print("Argument must be up, down, left or right")
+            arg_list = args.split()
+            if arg_list[0] == "draw":
+                self.game.draw_new_tile()
+                print(f"Drew a new tile: {self.game.current_tile.room_name}")
+            elif arg_list[0] == "rotate":
+                self.game.rotate_tile(arg_list[1])
+            elif arg_list[0] == "place":
+                self.game.attach_new_tile(self.game.current_tile, arg_list[1])
+                print(f"Attached tile {self.game.player.current_location.room_name} to {self.game.current_tile} "
+                      f"going {arg_list[1]}")
         except ValueError as e:
             print(e)
 
-    def do_look(self, arg):
-        try:
-            rooms_dict = {"up": self.game.player.current_location.room_up,
-                          "left": self.game.player.current_location.room_left,
-                          "down": self.game.player.current_location.room_down,
-                          "right": self.game.player.current_location.room_right}
-            if arg.lower() in ["up", "down", "left", "right"]:
-                print(f"{rooms_dict[arg].room_name}")
-        except AttributeError:
-            print(f"There is no room {arg} to look into")
-
     def do_get(self, arg):
         if arg == "doors":
-            self.game.player.current_location.print_doors()
+            print(self.game.player.current_location.get_doors())
 
     def do_move(self, arg):
         self.prompt = '(Player)'

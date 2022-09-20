@@ -102,6 +102,7 @@ class Database:
         Deletes the database file to aid in recovering from a corrupt db
         """
         try:
+            self.close_db()
             os.remove(self.db_name)
             return True
         except OSError as e:
@@ -122,7 +123,6 @@ class Database:
                 table_creation_string += f''', {key} {columns[key]}'''
             table_creation_string += f''')'''
             self.cursor.execute(table_creation_string)
-            print(f"Create table {table_name}")
         except (sqlite3.DatabaseError, TypeError) as e:
             print(e)
             return False
