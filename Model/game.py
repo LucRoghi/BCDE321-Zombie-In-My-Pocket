@@ -1,6 +1,7 @@
 """
 
 """
+
 import random
 from pathlib import Path
 
@@ -122,9 +123,7 @@ class Game:
             img = Image.open(f"{root_dir}/Data/TileImages/{image_ref_dict[direction].room_name}.png")
             img.show()
         except (FileNotFoundError, AttributeError) as e:
-            print(e)
             print("There is no room to look into")
-
 
 if __name__ == "__main__":
     new_game = Game()
