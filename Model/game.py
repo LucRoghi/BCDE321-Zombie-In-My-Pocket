@@ -44,6 +44,20 @@ class Game:
         except (ValueError, KeyError) as e:
             print(e)
 
+    def break_open_wall(self, direction):
+        try:
+            break_wall_direction = {"up": self.player.current_location.door_up,
+                                    "left": self.player.current_location.door_left,
+                                    "right": self.player.current_location.door_right,
+                                    "down": self.player.current_location.door_down}
+            if not break_wall_direction[direction]:
+                break_wall_direction[direction] = True
+                self.player.current_location.zombie_number = 3
+                print("You break open a wall but attract 3 zombies to you")
+            else:
+                raise ValueError("Cannot break open a wall where a door is")
+        except ValueError as e:
+            print(e)
     def player_attack(self):
         zombie_number = self.player.current_location.zombie_number
         self.player.health = self.player.health - (zombie_number - self.player.attack)
@@ -64,7 +78,6 @@ class Game:
     def draw_new_dev_card(self):
         try:
             self.current_dev_card = self.game_data.dev_card_pop()
-            return self.current_dev_card
         except IndexError as e:
             print(e)
 
@@ -100,6 +113,7 @@ class Game:
     def print_tile(self, direction):
         try:
             image_ref_dict = {"here": self.player.current_location,
+                              "drawn": self.current_tile,
                               "up": self.player.current_location.room_up,
                               "left": self.player.current_location.room_left,
                               "down": self.player.current_location.room_down,

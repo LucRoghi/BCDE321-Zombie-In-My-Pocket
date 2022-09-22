@@ -69,31 +69,6 @@ def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
         _, nine_message, nine_effect, ten_message, ten_effect, eleven_message, eleven_effect, item = card
         dev_card = Devcard(0, nine_message, nine_effect, ten_message, ten_effect,
                            eleven_message, eleven_effect, item)
-
-        if nine_effect.isnumeric():
-            dev_card.zombie_number = nine_effect
-            dev_card.nine_effect = getattr(dev_card, "add_zombies_to_room")
-        elif ten_effect.isnumeric():
-            dev_card.zombie_number = ten_effect
-            dev_card.ten_effect = getattr(dev_card, "add_zombies_to_room")
-        elif eleven_effect.isnumeric():
-            dev_card.zombie_number = eleven_effect
-            dev_card.eleven_effect = getattr(Devcard, "add_zombies_to_room")
-        else:
-            dev_card.nine_effect = None
-            dev_card.ten_effect = None
-            dev_card.eleven_effect = None
-            dev_card.zombie_number = 0
-
-        if nine_effect != (None or 'add_zombies_to_room'):
-            dev_card.nine_effect = getattr(Devcard, str(nine_effect), None)
-
-        if ten_effect != (None or 'add_zombies_to_room'):
-            dev_card.ten_effect = getattr(Devcard, str(ten_effect), None)
-
-        if eleven_effect != (None or 'add_zombies_to_room'):
-            dev_card.eleven_effect = getattr(Devcard, str(eleven_effect), None)
-
         devcard_list.append(dev_card)
     return devcard_list
 
