@@ -32,7 +32,7 @@ GAME DATA DEVCARDS:
         <Model.dev_cards.Devcard object at ...>
 """
 
-from random import random
+from random import randint
 from Model.dev_cards import DevCard
 from Model.database_handler import Database
 from Model.file_handler import Filehandler
@@ -233,7 +233,7 @@ class GameData:
         :return:
         """
         max_dev_card_index = len(self.dev_cards) - 1
-        random_index = random.randint(0, max_dev_card_index)
+        random_index = randint(0, max_dev_card_index)
         return self.dev_cards.pop(random_index)
 
 

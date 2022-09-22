@@ -23,25 +23,12 @@ class ZIMPController:
         self.time: int = 9
         self.is_at_temple = False
 
-    def intro_block(self):
-        welcome = "Welcome to Zombies In My Pocket. A free to play card based print and play game made in Python"
-        hint_one = "Type 'help' or '?' to get a list of usable commands - This is recommended for first time players!"
-        hint_two = "Type 'rules' to get the rules and how to play - This is recommended for first time players!"
-        hint_three = "When closing the game please use the 'exit' command. This will automatically save the game for " \
-                     "you! "
-        user_input = "You are currently in the 'Main Menu' of the game - you have 3 options: 'Load' 'Start' " \
-                     "'Help'"
-        self.prompt = user_input
-        intro = welcome, sleep(0.5), hint_one, sleep(0.5), hint_two, sleep(0.5), hint_three, sleep(0.5), user_input
-        return intro
-
     def start_game(self):
         self.game_state = "START"
         self.room_state = "INDOORS"
         self.player.current_location = self.root
         self.game_data.dev_card_pop()
         self.game_data.dev_card_pop()
-        self.intro_block()
 
     def room_state_changes(self):
         if self.player.current_location.room_name == "Patio":

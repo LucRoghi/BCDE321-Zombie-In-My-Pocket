@@ -4,7 +4,9 @@ from Model.new_controller import ZIMPController
 
 class NewCommands(cmd.Cmd):
     intro = "The dead walk the earth. You must search the house for the [EVIL TEMPLE] and find the [ZOMBIE TOTEM]. \n" \
-            "Then take the totem outside and bury it in the [GRAVEYARD]... all before the clock strikes midnight!"
+            "Then take the totem outside and bury it in the [GRAVEYARD]... all before the clock strikes midnight! \n" \
+            "\n -Use the help command to get a list of all the commands you can run \n -Use the start command to" \
+            " start the game \n"
 
     def __init__(self):
         cmd.Cmd.__init__(self)
@@ -108,7 +110,3 @@ class NewCommands(cmd.Cmd):
         :return:
         """
         self.controller.exit_game()
-
-
-if __name__ == "__main__":
-    NewCommands().cmdloop()
