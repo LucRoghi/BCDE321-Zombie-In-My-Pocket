@@ -1,5 +1,7 @@
 import cmd, sys
 
+from Model.database_handler import Database
+from Model.file_handler import Filehandler
 from Model.game import Game
 
 
@@ -8,9 +10,26 @@ class ZombieInMyPocket(cmd.Cmd):
     prompt = '(Main Menu)'
     game = None
 
-    def do_new_game(self, arg):
-        self.game = Game()
-        self.prompt = '(Game)'
+    def do_start(self, arg):
+        if self.prompt == "(Main Menu)":
+            self.game = Game()
+            self.prompt = '(Game)'
+
+    def do_save(self, arg):
+        file_handler = Filehandler()
+        if self.prompt == "(Game)":
+            print(f"Saving game as {arg}")
+            self.game.game_data.database.mydb = None
+            self.game.game_data.database.cursor = None
+            file_handler.save_object_to_pickle(arg, self.game)
+
+    def do_load(self, arg):
+        file_handler = Filehandler()
+        if self.prompt == "(Main Menu)":
+            print(f"Loading game from {arg}")
+            self.game = file_handler.load_object_from_pickle(arg)
+            self.game.game_data.database = Database("ZombieInMyPocket.db")
+            self.prompt = "(Game)"
 
     def do_tile(self, arg):
         try:
@@ -23,7 +42,7 @@ class ZombieInMyPocket(cmd.Cmd):
 
     def do_player(self, arg):
         try:
-            if self.prompt == "(Game)":
+            if self.prompt in ("(Game)", "(Tile)"):
                 self.prompt = "(Player)"
             else:
                 raise ValueError("Cannot switch to player mode if no game is running")
@@ -70,6 +89,12 @@ class ZombieInMyPocket(cmd.Cmd):
                     print(self.game.current_tile)
                 else:
                     raise ValueError("No tile is currently drawn")
+        except ValueError as e:
+            print(e)
+
+    def do_look(self, arg):
+        try:
+            self.game.print_tile(arg)
         except ValueError as e:
             print(e)
 

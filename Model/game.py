@@ -2,7 +2,9 @@
 
 """
 import random
+from pathlib import Path
 
+from PIL import Image
 from Model.game_data import GameData
 from Model.player import Player
 
@@ -25,6 +27,11 @@ class Game:
         :return:
         """
         self.player.current_location = self.active_tile_list.pop(-1)
+
+    def new_dev_card_deck(self):
+        self.game_data.dev_cards = self.game_data.get_dev_cards()
+        self.game_data.dev_card_pop()
+        self.game_data.dev_card_pop()
 
     def move_player(self, direction):
         move_player_functions = {"up": self.player.move_player_up,
@@ -76,7 +83,8 @@ class Game:
                                          "right": self.player.current_location.add_new_room_right(tile),
                                          "down": self.player.current_location.add_new_room_down(tile),
                                          "left": self.player.current_location.add_new_room_left(tile)}
-            attach_new_tile_functions[direction]
+            if not attach_new_tile_functions[direction]:
+                raise ValueError("Tile cannot be placed. Either a room already exists or no door can be connected")
             print(f"Attached tile {self.player.current_location.room_name} to "
                   f"{self.current_tile.room_name} going {direction}")
             self.current_tile = None
@@ -88,6 +96,20 @@ class Game:
             self.current_tile.rotate_tile_left()
         elif direction == "right":
             self.current_tile.rotate_tile_right()
+
+    def print_tile(self, direction):
+        try:
+            image_ref_dict = {"here": self.player.current_location,
+                              "up": self.player.current_location.room_up,
+                              "left": self.player.current_location.room_left,
+                              "down": self.player.current_location.room_down,
+                              "right": self.player.current_location.room_right}
+            root_dir = Path(__file__).parent.parent
+            img = Image.open(f"{root_dir}/Data/TileImages/{image_ref_dict[direction].room_name}.png")
+            img.show()
+        except (FileNotFoundError, AttributeError) as e:
+            print(e)
+            print("There is no room to look into")
 
 
 if __name__ == "__main__":
