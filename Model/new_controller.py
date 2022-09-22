@@ -22,6 +22,10 @@ class ZIMPController:
         self.dev_cards = DevCard
         self.time: int = 9
         self.is_at_temple = False
+        self.new_game()
+
+    def new_game(self):
+        pass
 
     def start_game(self):
         self.game_state = "START"

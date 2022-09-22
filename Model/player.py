@@ -16,6 +16,7 @@ class Player:
         self.has_totem: bool = False
         self.can_cower: bool = False
         self.can_attack: bool = False
+        self.can_flee: bool = False
 
     def move_player_up(self):
         if self.current_location.room_up is not None:
