@@ -50,7 +50,8 @@ def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
     tile_list = []
     for tile in tuple_list:
         _, room_name, _, door_up, door_right, door_down, door_left, type = tile
-        tile = MapTile(room_name, None, door_up, door_right, door_down, door_left)
+        tile = MapTile(room_name, None, str_to_bool(door_up), str_to_bool(door_right), str_to_bool(door_down),
+                       str_to_bool(door_left))
         tile_list.append(tile)
     return tile_list
 
@@ -111,6 +112,10 @@ def convert_tuples_to_items(tuple_list: tuple) -> list[Item]:
         new_item.effect = getattr(new_item, effect, None)
         item_list.append(new_item)
     return item_list
+
+
+def str_to_bool(string: str) -> bool:
+    return string.lower() in "true"
 
 
 class GameData:
@@ -240,4 +245,5 @@ class GameData:
 
 if __name__ == "__main__":
     import doctest
+
     doctest.testmod(verbose=True)

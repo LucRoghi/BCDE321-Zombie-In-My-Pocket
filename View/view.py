@@ -12,38 +12,73 @@ class ZombieInMyPocket(cmd.Cmd):
         self.game = Game()
         self.prompt = '(Game)'
 
-    def do_draw(self, arg):
-        self.prompt = '(Drawing)'
+    def do_tile(self, arg):
         try:
-            arg_dictionary = {"tile": self.game.draw_new_tile(),
-                              "devcard": self.game.draw_new_dev_card()}
-            arg_dictionary(arg)
-        except KeyError:
-            print("Invalid Option: Command must have tile or devcard as the arguments")
+            if self.prompt == "(Game)":
+                self.prompt = "(Tile)"
+            else:
+                raise ValueError("Cannot switch to tile mode if no game is running")
+        except ValueError as e:
+            print(e)
 
-    def do_tile(self, args):
+    def do_player(self, arg):
         try:
-            arg_list = args.split()
-            if arg_list[0] == "draw":
+            if self.prompt == "(Game)":
+                self.prompt = "(Player)"
+            else:
+                raise ValueError("Cannot switch to player mode if no game is running")
+        except ValueError as e:
+            print(e)
+
+    def do_game(self, arg):
+        self.prompt = "(Game)"
+
+    def do_draw(self, arg):
+        try:
+            if self.prompt == "(Tile)":
                 self.game.draw_new_tile()
                 print(f"Drew a new tile: {self.game.current_tile.room_name}")
-            elif arg_list[0] == "rotate":
-                self.game.rotate_tile(arg_list[1])
-            elif arg_list[0] == "place":
-                self.game.attach_new_tile(self.game.current_tile, arg_list[1])
-                print(f"Attached tile {self.game.player.current_location.room_name} to {self.game.current_tile} "
-                      f"going {arg_list[1]}")
+            else:
+                raise ValueError("You must be in Tile mode to draw a new tile")
+        except ValueError as e:
+            print(e)
+
+    def do_rotate(self, arg):
+        try:
+            if self.prompt == "(Tile)":
+                self.game.rotate_tile(arg)
+            else:
+                raise ValueError("You must be in Tile mode to rotate the drawn tile")
+        except ValueError as e:
+            print(e)
+
+    def do_place(self, arg):
+        try:
+            if self.game.current_tile is not None and self.prompt == "(Tile)":
+                self.game.attach_new_tile(arg)
+            else:
+                raise ValueError("Map tile is not currently drawn. Use tile draw to get a new tile")
         except ValueError as e:
             print(e)
 
     def do_get(self, arg):
-        if arg == "doors":
-            print(self.game.player.current_location.get_doors())
+        try:
+            if self.prompt == "(Game)" and arg == "doors":
+                print(self.game.player.current_location)
+            elif self.prompt == "(Tile)" and arg == "doors":
+                if self.game.current_tile is not None:
+                    print(self.game.current_tile)
+                else:
+                    raise ValueError("No tile is currently drawn")
+        except ValueError as e:
+            print(e)
 
     def do_move(self, arg):
-        self.prompt = '(Player)'
         try:
-            self.game.move_player(arg)
+            if self.prompt == "(Player)":
+                self.game.move_player(arg)
+            else:
+                raise ValueError("You must be in player mode to move the player")
         except ValueError as e:
             print(e)
 

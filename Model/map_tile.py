@@ -23,23 +23,14 @@ class MapTile:
         self.room_left = None
 
     def __str__(self):
-        available_doors = ""
-        if self.door_up:
-            available_doors += "UP "
-        if self.door_left:
-            available_doors += "LEFT "
-        if self.door_down:
-            available_doors += "DOWN "
-        if self.door_right:
-            available_doors += "RIGHT "
-        return f"{self.room_name} Available Doors [{available_doors}]"
+        return f"UP: {self.door_up}, RIGHT: {self.door_right}, DOWN: {self.door_down}, LEFT: {self.door_left}"
 
     def add_new_room_up(self, tile):
-        if self.door_up and tile.door_down and self.room_up is None:
+        if self.door_up and tile.door_down:
             tile.room_down = self
             self.room_up = tile
-        else:
-            raise ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
+        #else:
+            #raise ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
 
     def add_new_room_right(self, tile):
         if self.door_right and tile.door_left and self.room_right is None:
@@ -59,7 +50,6 @@ class MapTile:
         if self.door_left and tile.door_right and self.room_left is None:
             tile.room_right = self
             self.room_left = tile
-            return True
         else:
             raise ValueError("Tile cannot be added as there is not a connecting door or a room is already present")
 

@@ -68,17 +68,20 @@ class Game:
         except IndexError as e:
             print(e)
 
-    def attach_new_tile(self, tile, direction):
-        direction = direction.lower()
-        attach_new_tile_functions = {"up": self.player.current_location.add_new_room_up(tile),
-                                     "right": self.player.current_location.add_new_room_right(tile),
-                                     "down": self.player.current_location.add_new_room_down(tile),
-                                     "left": self.player.current_location.add_new_room_left(tile)}
+    def attach_new_tile(self, direction):
         try:
+            tile = self.current_tile
+            direction = direction.lower()
+            attach_new_tile_functions = {"up": self.player.current_location.add_new_room_up(tile),
+                                         "right": self.player.current_location.add_new_room_right(tile),
+                                         "down": self.player.current_location.add_new_room_down(tile),
+                                         "left": self.player.current_location.add_new_room_left(tile)}
             attach_new_tile_functions[direction]
+            print(f"Attached tile {self.player.current_location.room_name} to "
+                  f"{self.current_tile.room_name} going {direction}")
+            self.current_tile = None
         except (ValueError, KeyError) as e:
             print(e)
-            print("You need to rotate the tile in order to place it correctly")
 
     def rotate_tile(self, direction):
         if direction == "left":
@@ -91,6 +94,6 @@ if __name__ == "__main__":
     new_game = Game()
     new_game.draw_new_tile()
     print(new_game.player.current_location.room_name)
-    new_game.attach_new_tile(new_game.current_tile, "up")
+    new_game.attach_new_tile("up")
     new_game.move_player("up")
     print(new_game.player.current_location.room_name)
