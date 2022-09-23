@@ -1,6 +1,5 @@
 """
 Author: Luc Roghi - lcr0059
-Author: Jared Ireland - jai0095
 https://docs.python.org/3/library/sqlite3.html
 
 This module serves as a database handler. It can be used to create, interact and pull data from a database

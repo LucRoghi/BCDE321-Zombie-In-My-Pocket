@@ -13,6 +13,8 @@ class ZombieInMyPocket(cmd.Cmd):
     def do_help(self, arg):
         if arg == "all":
             help(ZombieInMyPocket)
+        else:
+            super().do_help(arg)
 
     def do_start(self, arg):
         """
@@ -54,7 +56,7 @@ class ZombieInMyPocket(cmd.Cmd):
 
     def do_tile(self, arg):
         """
-        Switches the current command set to (Tile). This allows the Draw, Rotate, Place commands to be used
+        Switches the current command set to (Tile). This allows the New, Rotate, Place commands to be used
         Can only switch to Tile Mode if a game is active as indicated by (Game) prompt
         Syntax:
         (Game)tile
@@ -96,6 +98,7 @@ class ZombieInMyPocket(cmd.Cmd):
                 raise ValueError("Cannot switch to devcard mode if no game is running")
         except ValueError as e:
             print(e)
+
     def do_game(self, arg):
         """
         Switched the current command set to (Game). This allows the Draw and Use command to be used.
@@ -110,7 +113,11 @@ class ZombieInMyPocket(cmd.Cmd):
                 raise ValueError("Cannot switch to game mode if no game is running")
         except ValueError as e:
             print(e)
-    def do_draw(self, arg):
+
+    def do_time(self, arg):
+        print(f"The time is {self.game.time} o'clock")
+
+    def do_new(self, arg):
         """
         Can only be used in within Tile Mode as indicated by (Tile) and switched to using the tile command
         This draws a new tile and stores it as a current_tile within the game. This can be rotated and places using
@@ -156,6 +163,7 @@ class ZombieInMyPocket(cmd.Cmd):
         try:
             if self.game.current_tile is not None and self.prompt == "(Tile)":
                 self.game.attach_new_tile(arg)
+                self.prompt = "(Player)"
             else:
                 raise ValueError("Map tile is not currently drawn. Use tile draw to get a new tile")
         except ValueError as e:
@@ -180,6 +188,13 @@ class ZombieInMyPocket(cmd.Cmd):
             print(e)
 
     def do_look(self, arg):
+        """
+        Shows an image of the tile you wish to look at. You can only look at the tile the player is currently
+        standing on or the tiles neighboring the tile you are currently standing on. It will the open the image of
+        the tile in the default image viewer
+        :param arg:
+        :return:
+        """
         try:
             self.game.print_tile(arg)
         except ValueError as e:

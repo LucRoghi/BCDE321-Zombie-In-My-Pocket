@@ -40,8 +40,6 @@ class Filehandler:
         Attributes:
             root_dir: Grabs the root directory of the project to ensure that all paths are relative and not absolute
         Methods:
-
-
             write_file_into_json:
                 :
     """

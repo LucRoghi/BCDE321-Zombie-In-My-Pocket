@@ -29,6 +29,7 @@ class Game:
         """
         self.player.current_location = self.active_tile_list.pop(-1)
 
+
     def new_dev_card_deck(self):
         self.game_data.dev_cards = self.game_data.get_dev_cards()
         self.game_data.dev_card_pop()
@@ -124,6 +125,7 @@ class Game:
             img.show()
         except (FileNotFoundError, AttributeError) as e:
             print("There is no room to look into")
+
 
 if __name__ == "__main__":
     new_game = Game()

@@ -1,6 +1,9 @@
 """
 Main executor of the code
 """
+import cmd
+
+from View.view import ZombieInMyPocket
 
 if __name__ == "__main__":
-    raise NotImplementedError()
+    ZombieInMyPocket.cmdloop(cmd.Cmd)
