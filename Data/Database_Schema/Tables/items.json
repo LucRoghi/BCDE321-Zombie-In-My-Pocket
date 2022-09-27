@@ -1,0 +1,6 @@
+{
+  "item_name": "TEXT", "effect": "TEXT",
+  "can_combine": "BOOL", "combines_with_1": "TEXT",
+  "combines_with_2": "TEXT", "makes_1": "TEXT",
+  "makes_2": "TEXT", "uses": "INT"
+}

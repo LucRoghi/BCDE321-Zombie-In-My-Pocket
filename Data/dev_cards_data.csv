@@ -1,0 +1,9 @@
+0,You try hard no to wet yourself,None,None,get_new_item,None,6,Oil
+1,None,4,You sense your impending doom,lose_1_health,None,get_new_item,Gasoline
+2,None,get_new_item,None,4,Something icky in your mouth,lose_1_health,Board with Nails
+3,None,4,A bat poops in your eye,lose_1_health,None,6,Machete
+4,None,get_new_item,None,5,Your soul isn't wanted here,lose_1_health,Grisly Femur
+5,Slip on nasty goo,lose_1_health,None,4,The smell of blood is in the air,None,Golf Club
+6,None,3,You hear terrible screams,None,None,5,Chainsaw
+7,Candybar in your pocket,add_1_health,None,get_new_item,None,4,Can of Soda
+8,Your body shiver uncontrollably,None,You feel a spark of hope,add_1_health,None,4,Candle

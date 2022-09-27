@@ -1,0 +1,16 @@
+0,Garden,add_1_health,False,True,True,True,Outdoor
+1,Sitting Area,None,False,True,True,True,Outdoor
+2,Yard1,None,False,True,True,True,Outdoor
+3,Yard2,None,False,True,True,True,Outdoor
+4,Yard3,None,False,True,True,True,Outdoor
+5,Graveyard,bury_totem,False,True,True,False,Outdoor
+6,Garage,None,False,False,True,True,Outdoor
+7,Patio,enter_indoors,True,True,True,False,Outdoor
+8,Bathroom,None,True,False,False,False,Indoor
+9,Kitchen,add_1_health,True,True,False,False,Indoor
+10,Storage,find_an_item,True,False,False,False,Indoor
+11,Evil Temple,find_totem,False,True,False,True,Indoor
+12,Family Room,None,True,True,False,True,Indoor
+13,Dining Room,enter_outdoors,True,True,True,True,Indoor
+14,Bedroom,None,True,False,False,True,Indoor
+15,Foyer,None,True,False,False,False,Indoor
