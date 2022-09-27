@@ -268,6 +268,6 @@ class Commands(cmd.Cmd):
         if self.game.state != "Game Over":
             self.game.get_player_status()
 
-    def do_graph(self):
+    def do_graph(self, line):
         """Shows a graph of the players health over turns"""
         self.graph.player_health_graph()
