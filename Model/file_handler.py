@@ -40,8 +40,6 @@ class Filehandler:
         Attributes:
             root_dir: Grabs the root directory of the project to ensure that all paths are relative and not absolute
         Methods:
-
-
             write_file_into_json:
                 :
     """
@@ -90,26 +88,26 @@ class Filehandler:
         """
         return os.path.exists(str(self.root_dir) + '/Saves/' + save_name + '.pickle')
 
-    def save_object_to_pickle(self, path: str, object: Generic):
+    def save_object_to_pickle(self, save_name: str, object_):
         """
         Uses the pickle library to save an object to a directory specified
-        :param object:
+        :param object_:
+        :param save_name:
         :return:
         """
-        save_name = f'{datetime.now().strftime("%d%m%Y")}'
         if self.check_if_save_exists(save_name + '.pickle'):
             save_name += '_1'
-        with open(str(self.root_dir) + path + save_name + '.pickle', 'wb') as file:
-            pickled_object = pickle.dumps(object)
+        with open(str(self.root_dir) + "/Saves/" + save_name + '.pickle', 'wb') as file:
+            pickled_object = pickle.dumps(object_)
             file.write(pickled_object)
 
-    def load_object_from_pickle(self, path: str, save_name: str) -> Generic:
+    def load_object_from_pickle(self, save_name: str):
         """
         Loads an object from a pickle file designated above
         :param save_name:
         :return: :Generic
         """
-        file_name = str(self.root_dir) + path + save_name + '.pickle'
+        file_name = str(self.root_dir) + "/Saves/" + save_name + '.pickle'
         file = open(file_name, 'rb')
         loaded_object = pickle.load(file)
         file.close()

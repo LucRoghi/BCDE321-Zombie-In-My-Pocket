@@ -1,4 +1,5 @@
-from View.new_commands import NewCommands
+from View.commands import Commands
 
 if __name__ == "__main__":
-    NewCommands().cmdloop()
+    Commands().cmdloop()
+    
