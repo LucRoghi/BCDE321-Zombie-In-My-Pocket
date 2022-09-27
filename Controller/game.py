@@ -504,3 +504,12 @@ class Game:
 
     def lose_game(self):
         self.state = "Game Over"
+
+    def move_dic(self, direction):
+        move_dic = {
+            "up": Controller.Direction.UP,
+            "right": Controller.Direction.RIGHT,
+            "down": Controller.Direction.DOWN,
+            "left": Controller.Direction.LEFT
+        }
+        return move_dic[direction]()

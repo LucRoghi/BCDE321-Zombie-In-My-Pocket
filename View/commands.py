@@ -59,16 +59,16 @@ class Commands(cmd.Cmd):
     def do_choose(self, direction):
         """When a zombie door attack is completeDirection. Use this command to select an exit door with a valid
         direction """
-        valid_inputs = ["n", "e", "s", "w"]
-        if direction not in valid_inputs:
+        valid_inputs = ["up", "right", "down", "left"]
+        if direction.lower() not in valid_inputs:
             return print("Input a valid direction. (Check choose help for more information)")
-        if direction == 'n':
+        if direction.lower() == 'up':
             direction = View.Direction.UP
-        if direction == "e":
+        if direction.lower() == "right":
             direction = View.Direction.RIGHT
-        if direction == "s":
+        if direction.lower() == "down":
             direction = View.Direction.DOWN
-        if direction == "w":
+        if direction.lower() == "left":
             direction = View.Direction.LEFT
         if self.game.state == "Choosing Door":
             self.game.can_cower = False
@@ -76,37 +76,57 @@ class Commands(cmd.Cmd):
         else:
             print("Cannot choose a door right now")
 
-    def do_move_up(self, line):
-        """Moves the player North"""
+    def do_move(self, line, direction):
+        direction = View.Game.move_dic
         if self.game.state == "Moving":
-            self.game.select_move(View.Direction.UP)
-            self.game.get_game()
-        else:
-            print("Player not ready to move")
+            if direction is None:
+                print("Can not move!")
+            if direction == 'up':
+                self.game.select_move(View.Direction.UP)
+                self.game.get_game()
+            if direction == "right":
+                self.game.select_move(View.Direction.RIGHT)
+                self.game.get_game()
+            if direction == "down":
+                self.game.select_move(View.Direction.DOWN)
+                self.game.get_game()
+            if direction == "left":
+                self.game.select_move(View.Direction.LEFT)
+                self.game.get_game()
 
-    def do_move_right(self, line):
-        """Moves the player East"""
-        if self.game.state == "Moving":
-            self.game.select_move(View.Direction.RIGHT)
-            self.game.get_game()
-        else:
-            print("Player not ready to move")
 
-    def do_move_down(self, line):
-        """Moves the player South"""
-        if self.game.state == "Moving":
-            self.game.select_move(View.Direction.DOWN)
-            self.game.get_game()
-        else:
-            print("Player not ready to move")
 
-    def do_move_left(self, line):
-        """Moves the player West"""
-        if self.game.state == "Moving":
-            self.game.select_move(View.Direction.LEFT)
-            self.game.get_game()
-        else:
-            print("Player not ready to move")
+    # def do_move_up(self, line):
+    #     """Moves the player North"""
+    #     if self.game.state == "Moving":
+    #         self.game.select_move(View.Direction.UP)
+    #         self.game.get_game()
+    #     else:
+    #         print("Player not ready to move")
+    #
+    # def do_move_right(self, line):
+    #     """Moves the player East"""
+    #     if self.game.state == "Moving":
+    #         self.game.select_move(View.Direction.RIGHT)
+    #         self.game.get_game()
+    #     else:
+    #         print("Player not ready to move")
+    #
+    # def do_move_down(self, line):
+    #     """Moves the player South"""
+    #     if self.game.state == "Moving":
+    #         self.game.select_move(View.Direction.DOWN)
+    #         self.game.get_game()
+    #     else:
+    #         print("Player not ready to move")
+    #
+    # def do_move_left(self, line):
+    #     """Moves the player West"""
+    #     if self.game.state == "Moving":
+    #         self.game.select_move(View.Direction.LEFT)
+    #         self.game.get_game()
+    #     else:
+    #         print("Player not ready to move")
 
     def do_save(self, line):
         """Takes a filepath and saves the game to a file"""
