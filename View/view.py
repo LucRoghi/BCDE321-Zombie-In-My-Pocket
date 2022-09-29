@@ -163,10 +163,9 @@ class ZombieInMyPocket(cmd.Cmd):
         try:
             if self.game.current_tile is not None and self.prompt == "(Tile)":
                 self.game.attach_new_tile(arg)
-                self.prompt = "(Player)"
             else:
-                self.prompt = "(Player)"
                 raise ValueError("Map tile is not currently drawn. Use tile draw to get a new tile")
+            self.prompt = "(Player)"
         except ValueError as e:
             print(e)
 
@@ -210,7 +209,7 @@ class ZombieInMyPocket(cmd.Cmd):
         except ValueError as e:
             print(e)
 
-    def do_attack(self):
+    def do_attack(self, arg):
         self.prompt = '(Player)'
         self.game.player_attack()
 

@@ -106,18 +106,17 @@ class Game:
 
     def execute_current_dev_card(self):
         message, effect = getattr(self.current_dev_card, self.time_list[self.current_time])
-        action_functions = {"get_new_item": self.get_new_item(),
-                            "lose_1_health": self.lose_1_health(),
-                            "add_1_health": self.add_1_health()}
-        if effect is None:
+        action_functions = {"get_new_item": self.get_new_item,
+                            "lose_1_health": self.lose_1_health,
+                            "add_1_health": self.add_1_health}
+        if effect == "None":
             print(message)
         elif effect.isnumeric():
             self.player.current_location.zombie_number += int(effect)
             print(f"{effect} Zombies have entered the room. What do you do? (Attack or Flee)")
         else:
             print(message)
-            if effect in action_functions.keys():
-                action_functions[effect]
+            action_functions[effect]()
 
     def get_new_item(self):
         self.draw_new_dev_card()
