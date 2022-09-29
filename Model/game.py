@@ -47,6 +47,7 @@ class Game:
         try:
             move_player_functions[direction]()
             print(f"Current location is {self.player.current_location.room_name}")
+            self.print_player_info()
         except (ValueError, KeyError) as e:
             print(e)
 
@@ -95,6 +96,13 @@ class Game:
         self.game_data.dev_card_pop()
         self.player.health += 3
 
+    def print_player_info(self):
+        print(f"PLAYER INFO: \n"
+              f"Current Location: {self.player.current_location.room_name} \n"
+              f"Player Health: {self.player.health} \n"
+              f"Player Attack: {self.player.attack} \n"
+              f"Current Time: {self.current_time + 9}")
+
     def draw_new_dev_card(self):
         try:
             if len(self.game_data.dev_cards) > 0:
@@ -114,6 +122,7 @@ class Game:
         elif effect.isnumeric():
             self.player.current_location.zombie_number += int(effect)
             print(f"{effect} Zombies have entered the room. What do you do? (Attack or Flee)")
+            self.print_player_info()
         else:
             print(message)
             action_functions[effect]()
@@ -165,6 +174,7 @@ class Game:
             print(f"Attached tile {self.player.current_location.room_name} to "
                   f"{self.current_tile.room_name} going {direction}")
             self.current_tile = None
+            self.print_player_info()
             print(f"Drawing new development card")
             self.draw_new_dev_card()
             self.execute_current_dev_card()

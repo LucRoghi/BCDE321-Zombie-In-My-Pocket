@@ -184,6 +184,8 @@ class ZombieInMyPocket(cmd.Cmd):
                     print(self.game.current_tile)
                 else:
                     raise ValueError("No tile is currently drawn")
+            elif arg == "info":
+                self.game.print_player_info()
         except ValueError as e:
             print(e)
 
