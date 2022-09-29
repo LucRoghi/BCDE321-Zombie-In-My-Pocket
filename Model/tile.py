@@ -8,11 +8,9 @@ import Model
 
 class Tile:
     def __init__(self, name, x=16, y=16, effect=None, doors=None, entrance=None):
-        if doors is None:
-            doors = []
         self.name = name
-        self.x = x  # x will represent the tiles position horizontally
-        self.y = y  # y will represent the tiles position vertically
+        self.x = x
+        self.y = y
         self.effect = effect
         self.doors = doors
         self.entrance = entrance
@@ -23,8 +21,26 @@ class Tile:
     def set_y(self, y):
         self.y = y
 
+    def get_x(self):
+        return self.x
+
+    def get_y(self):
+        return self.y
+
+    def get_name(self):
+        return self.name
+
     def change_door_position(self, idx, direction):
         self.doors[idx] = direction
+
+    def get_door_position(self, idx):
+        return self.doors[idx]
+
+    def get_doors(self):
+        return self.doors
+
+    def get_entrance(self):
+        return self.entrance
 
     def set_entrance(self, direction):
         self.entrance = direction
