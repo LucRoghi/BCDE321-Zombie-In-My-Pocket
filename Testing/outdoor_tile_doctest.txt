@@ -1,0 +1,20 @@
+>>> from Model.tile
+>>> from Model.directions
+>>> tile = OutdoorTile("Graveyard", x=0, y=0)
+>>> tile.get_name()
+'Graveyard'
+>>> print(tile)
+Graveyard, [], Outdoor, 0, 0, None
+>>> tile.set_entrance(Model.directions.DOWN)
+>>> tile.get_entrance()
+<Direction.DOWN: (2,)>
+>>> tile.rotate_entrance()
+>>> tile.rotate_entrance()
+>>> tile.get_entrance()
+<Direction.UP: (1,)>
+>>> tile.set_x(10)
+>>> tile.set_y(15)
+>>> tile.get_x()
+10
+>>> tile.get_y()
+15

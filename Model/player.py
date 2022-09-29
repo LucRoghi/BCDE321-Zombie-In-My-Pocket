@@ -6,27 +6,6 @@ Basic player setup
 
 
 class Player:
-    """
-    >>> from Model.player import Player
-    >>> player = Player()
-    >>> player.get_health()
-    6
-    >>> player.get_attack()
-    1
-    >>> player.get_items()
-    []
-    >>> player.add_item("Machete", 1)
-    >>> player.get_items()
-    [['Machete', 1]]
-    >>> player.get_item_charges("Machete")
-    1
-    >>> player.get_move_count()
-    0
-    >>> player.increment_move_count()
-    >>> player.increment_move_count()
-    >>> player.get_move_count()
-    2
-    """
     def __init__(self, attack=1, health=6, x=16, y=16, has_totem=False):
         self.attack = attack
         self.health = health

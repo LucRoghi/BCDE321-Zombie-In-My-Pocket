@@ -1,0 +1,14 @@
+"""
+>>> player = Controller.Player()
+>>> game = Game(player)
+>>> game.start_game()
+>>> game.get_time()
+9
+>>> game.place_tile(16, 16)
+>>> game.check_for_room(16, 16)
+True
+>>> game.get_current_tile().name
+'Foyer'
+>>> game.check_for_dead_player()
+False
+"""

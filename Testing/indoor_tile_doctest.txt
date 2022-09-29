@@ -1,0 +1,21 @@
+"""
+>>> from Model.tile
+>>> from Model.directions
+>>> tile = IndoorTile("Family Room", x=0, y=0)
+>>> tile.get_name()
+'Family Room'
+>>> print(tile)
+Family Room, [], Indoor, 0, 0, None
+>>> tile.set_entrance(Model.directions.UP)
+>>> tile.get_entrance()
+<Direction.UP: (1,)>
+>>> tile.rotate_entrance()
+>>> tile.get_entrance()
+<Direction.RIGHT: (3,)>
+>>> tile.set_x(1)
+>>> tile.set_y(1)
+>>> tile.get_x()
+1
+>>> tile.get_y()
+1
+"""

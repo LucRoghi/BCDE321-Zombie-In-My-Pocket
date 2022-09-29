@@ -7,21 +7,6 @@ import Controller
 
 
 class Game:
-    """
-    >>> player = Controller.Player()
-    >>> game = Game(player)
-    >>> game.start_game()
-    >>> game.get_time()
-    9
-    >>> game.place_tile(16, 16)
-    >>> game.check_for_room(16, 16)
-    True
-    >>> game.get_current_tile().name
-    'Foyer'
-    >>> game.check_for_dead_player()
-    False
-    """
-
     def __init__(self, player, time=9, game_map=None, indoor_tiles=None, outdoor_tiles=None, chosen_tile=None,
                  dev_cards=None, state="Starting", current_move_direction=None, can_cower=True):
         if indoor_tiles is None:
@@ -527,3 +512,4 @@ class Game:
                     "left": self.select_move(Controller.Direction.LEFT)
                     }
         return move_dic[direction]
+
