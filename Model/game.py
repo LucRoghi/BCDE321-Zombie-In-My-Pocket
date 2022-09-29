@@ -124,7 +124,8 @@ class Game:
             print(f"{effect} Zombies have entered the room. What do you do? (Attack or Flee)")
             self.print_player_info()
         else:
-            print(message)
+            if message != "None":
+                print(message)
             action_functions[effect]()
 
     def get_new_item(self):
