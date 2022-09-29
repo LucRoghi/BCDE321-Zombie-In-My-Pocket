@@ -15,10 +15,12 @@ class Game:
         self.game_data = GameData()
         self.active_tile_list = self.game_data.map_tiles_indoor
         self.player = Player()
-        self.time = 9
+        self.time_list = ["time_nine", "time_ten", "time_eleven"]
+        self.current_time = 0
         self.last_action = None
         self.current_dev_card = None
         self.current_tile = None
+        self.previous_direction = None
         self.start_game()
 
     def start_game(self):
@@ -29,6 +31,8 @@ class Game:
         """
         self.player.current_location = self.active_tile_list.pop(-1)
 
+    def end_game(self):
+        print("YOU HAVE LOST THE GAME. Returning to main menu")
 
     def new_dev_card_deck(self):
         self.game_data.dev_cards = self.game_data.get_dev_cards()
@@ -46,6 +50,17 @@ class Game:
         except (ValueError, KeyError) as e:
             print(e)
 
+    def update_last_direction(self, direction):
+        opposite_direction_dict = {"up": "down",
+                                   "left": "right",
+                                   "down": "up",
+                                   "right": "left"}
+        self.previous_direction = opposite_direction_dict[direction]
+
+    def update_time(self):
+        self.time += 1
+        self.new_dev_card_deck()
+
     def break_open_wall(self, direction):
         try:
             break_wall_direction = {"up": self.player.current_location.door_up,
@@ -54,12 +69,13 @@ class Game:
                                     "down": self.player.current_location.door_down}
             if not break_wall_direction[direction]:
                 break_wall_direction[direction] = True
-                self.player.current_location.zombie_number = 3
+                self.player.current_location.zombie_number += 3
                 print("You break open a wall but attract 3 zombies to you")
             else:
                 raise ValueError("Cannot break open a wall where a door is")
         except ValueError as e:
             print(e)
+
     def player_attack(self):
         zombie_number = self.player.current_location.zombie_number
         self.player.health = self.player.health - (zombie_number - self.player.attack)
@@ -67,10 +83,10 @@ class Game:
         if self.player.current_location.zombie_number < 0:
             self.player.current_location.zombie_number = 0
         if self.player.health <= 0:
-            print("YOU HAVE DIED")
+            self.end_game()
 
-    def player_flee(self, direction):
-        self.move_player(direction)
+    def player_flee(self):
+        self.move_player(self.previous_direction)
         self.player.health -= 1
 
     def player_cower(self):
@@ -82,6 +98,54 @@ class Game:
             self.current_dev_card = self.game_data.dev_card_pop()
         except IndexError as e:
             print(e)
+
+    def execute_current_dev_card(self):
+        try:
+            message, effect = getattr(self.current_dev_card, self.time_list[self.current_time])
+            action_functions = {"get_new_item": self.get_new_item(),
+                                "lose_1_health": self.lose_1_health(),
+                                "add_1_health": self.add_1_health()}
+            if effect is None:
+                print(message)
+            elif effect.isnumeric():
+                self.player.current_location.zombie_number += effect
+                print(f"{effect} Zombies have entered the room. What do you do? (Attack or Flee)")
+            else:
+                if effect in action_functions.keys():
+                    action_functions[effect]
+                else:
+                    raise ValueError("Cannot action the current dev card")
+        except ValueError as e:
+            print(e)
+
+    def get_new_item(self):
+        try:
+            self.draw_new_dev_card()
+            for item in self.game_data.items:
+                if item.name == self.current_dev_card.item:
+                    self.player.inventory.append(item)
+                    break
+                else:
+                    raise ValueError(f"Item {self.current_dev_card.item} does not exist")
+        except ValueError as e:
+            print(e)
+
+    def drop_item(self, item_name):
+        try:
+            for item in self.player.inventory:
+                if item.name == item_name:
+                    self.player.inventory.pop(item)
+                    break
+                else:
+                    raise ValueError(f"Item {item_name} is not in the players inventory")
+        except ValueError as e:
+            print(e)
+
+    def lose_1_health(self):
+        self.player.health -= 1
+
+    def add_1_health(self):
+        self.player.health += 1
 
     def draw_new_tile(self):
         try:
@@ -103,6 +167,7 @@ class Game:
             print(f"Attached tile {self.player.current_location.room_name} to "
                   f"{self.current_tile.room_name} going {direction}")
             self.current_tile = None
+            self.draw_new_dev_card()
         except (ValueError, KeyError) as e:
             print(e)
 
@@ -123,7 +188,7 @@ class Game:
             root_dir = Path(__file__).parent.parent
             img = Image.open(f"{root_dir}/Data/TileImages/{image_ref_dict[direction].room_name}.png")
             img.show()
-        except (FileNotFoundError, AttributeError) as e:
+        except (FileNotFoundError, AttributeError):
             print("There is no room to look into")
 
 
