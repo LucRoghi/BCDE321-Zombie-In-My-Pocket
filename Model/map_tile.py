@@ -27,7 +27,6 @@ class MapTile:
 
     def add_new_room_up(self, tile):
         if self.door_up and tile.door_down and self.room_up is None:
-            print("Adding room up")
             tile.room_down = self
             self.room_up = tile
             return True
@@ -36,7 +35,6 @@ class MapTile:
 
     def add_new_room_right(self, tile):
         if self.door_right and tile.door_left and self.room_right is None:
-            print("Adding room right")
             tile.room_left = self
             self.room_right = tile
             return True
@@ -45,7 +43,6 @@ class MapTile:
 
     def add_new_room_down(self, tile):
         if self.door_down and tile.door_up and self.room_down is None:
-            print("Adding room down")
             tile.room_up = self
             self.room_down = tile
             return True
@@ -54,7 +51,6 @@ class MapTile:
 
     def add_new_room_left(self, tile):
         if self.door_left and tile.door_right and self.room_left is None:
-            print("Adding room left")
             tile.room_right = self
             self.room_left = tile
             return True

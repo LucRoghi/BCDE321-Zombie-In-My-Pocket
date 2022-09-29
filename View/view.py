@@ -24,7 +24,7 @@ class ZombieInMyPocket(cmd.Cmd):
         """
         if self.prompt == "(Main Menu)":
             self.game = Game()
-            self.prompt = '(Game)'
+            self.prompt = '(Tile)'
 
     def do_save(self, arg):
         """
@@ -115,7 +115,7 @@ class ZombieInMyPocket(cmd.Cmd):
             print(e)
 
     def do_time(self, arg):
-        print(f"The time is {self.game.time} o'clock")
+        print(f"The time is {self.game.current_time + 8} o'clock")
 
     def do_new(self, arg):
         """
@@ -165,6 +165,7 @@ class ZombieInMyPocket(cmd.Cmd):
                 self.game.attach_new_tile(arg)
                 self.prompt = "(Player)"
             else:
+                self.prompt = "(Player)"
                 raise ValueError("Map tile is not currently drawn. Use tile draw to get a new tile")
         except ValueError as e:
             print(e)
@@ -215,7 +216,7 @@ class ZombieInMyPocket(cmd.Cmd):
 
     def do_flee(self, arg):
         self.prompt = '(Player)'
-        self.game.player_flee(arg)
+        self.game.player_flee()
 
     def do_cower(self):
         self.prompt = '(Player)'

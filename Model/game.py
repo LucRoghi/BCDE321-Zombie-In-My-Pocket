@@ -58,7 +58,7 @@ class Game:
         self.previous_direction = opposite_direction_dict[direction]
 
     def update_time(self):
-        self.time += 1
+        self.current_time += 1
         self.new_dev_card_deck()
 
     def break_open_wall(self, direction):
@@ -86,49 +86,46 @@ class Game:
             self.end_game()
 
     def player_flee(self):
+        print(f"You flee from {self.player.current_location.room_name} but get hit on the way. Lose 1 health")
         self.move_player(self.previous_direction)
         self.player.health -= 1
 
     def player_cower(self):
+        print(f"You cower in fear. You gain 3 health but lose some time")
         self.game_data.dev_card_pop()
         self.player.health += 3
 
     def draw_new_dev_card(self):
         try:
-            self.current_dev_card = self.game_data.dev_card_pop()
+            if len(self.game_data.dev_cards) > 0:
+                self.current_dev_card = self.game_data.dev_card_pop()
+            else:
+                self.update_time()
         except IndexError as e:
             print(e)
 
     def execute_current_dev_card(self):
-        try:
-            message, effect = getattr(self.current_dev_card, self.time_list[self.current_time])
-            action_functions = {"get_new_item": self.get_new_item(),
-                                "lose_1_health": self.lose_1_health(),
-                                "add_1_health": self.add_1_health()}
-            if effect is None:
-                print(message)
-            elif effect.isnumeric():
-                self.player.current_location.zombie_number += effect
-                print(f"{effect} Zombies have entered the room. What do you do? (Attack or Flee)")
-            else:
-                if effect in action_functions.keys():
-                    action_functions[effect]
-                else:
-                    raise ValueError("Cannot action the current dev card")
-        except ValueError as e:
-            print(e)
+        message, effect = getattr(self.current_dev_card, self.time_list[self.current_time])
+        action_functions = {"get_new_item": self.get_new_item(),
+                            "lose_1_health": self.lose_1_health(),
+                            "add_1_health": self.add_1_health()}
+        if effect is None:
+            print(message)
+        elif effect.isnumeric():
+            self.player.current_location.zombie_number += int(effect)
+            print(f"{effect} Zombies have entered the room. What do you do? (Attack or Flee)")
+        else:
+            print(message)
+            if effect in action_functions.keys():
+                action_functions[effect]
 
     def get_new_item(self):
-        try:
-            self.draw_new_dev_card()
-            for item in self.game_data.items:
-                if item.name == self.current_dev_card.item:
-                    self.player.inventory.append(item)
-                    break
-                else:
-                    raise ValueError(f"Item {self.current_dev_card.item} does not exist")
-        except ValueError as e:
-            print(e)
+        self.draw_new_dev_card()
+        for item in self.game_data.items:
+            if item.name == self.current_dev_card.item:
+                self.player.inventory.append(item)
+                print(f"You find a {item.name} in the room")
+                break
 
     def drop_item(self, item_name):
         try:
@@ -142,9 +139,11 @@ class Game:
             print(e)
 
     def lose_1_health(self):
+        print("You lose 1 health")
         self.player.health -= 1
 
     def add_1_health(self):
+        print("You gain 1 health")
         self.player.health += 1
 
     def draw_new_tile(self):
@@ -167,7 +166,9 @@ class Game:
             print(f"Attached tile {self.player.current_location.room_name} to "
                   f"{self.current_tile.room_name} going {direction}")
             self.current_tile = None
+            print(f"Drawing new development card")
             self.draw_new_dev_card()
+            self.execute_current_dev_card()
         except (ValueError, KeyError) as e:
             print(e)
 
