@@ -76,7 +76,7 @@ class Commands(cmd.Cmd):
         else:
             print("Cannot choose a door right now")
 
-    def do_move(self, line, direction):
+    def do_move(self, line):
         direction = View.Game.move_dic
         if self.game.state == "Moving":
             if direction is None:
@@ -93,8 +93,6 @@ class Commands(cmd.Cmd):
             if direction == "left":
                 self.game.select_move(View.Direction.LEFT)
                 self.game.get_game()
-
-
 
     # def do_move_up(self, line):
     #     """Moves the player North"""
