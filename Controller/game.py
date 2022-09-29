@@ -21,6 +21,7 @@ class Game:
     >>> game.check_for_dead_player()
     False
     """
+
     def __init__(self, player, time=9, game_map=None, indoor_tiles=None, outdoor_tiles=None, chosen_tile=None,
                  dev_cards=None, state="Starting", current_move_direction=None, can_cower=True):
         if indoor_tiles is None:
@@ -520,10 +521,9 @@ class Game:
         self.state = "Game Over"
 
     def move_dic(self, direction):
-        move_dic = {
-            "up": Controller.Direction.UP,
-            "right": Controller.Direction.RIGHT,
-            "down": Controller.Direction.DOWN,
-            "left": Controller.Direction.LEFT
-        }
+        move_dic = {"up": self.select_move(Controller.Direction.UP),
+                    "right": self.select_move(Controller.Direction.RIGHT),
+                    "down": self.select_move(Controller.Direction.DOWN),
+                    "left": self.select_move(Controller.Direction.LEFT)
+                    }
         return move_dic[direction]()
