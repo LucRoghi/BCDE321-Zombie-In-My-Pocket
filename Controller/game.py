@@ -526,4 +526,4 @@ class Game:
                     "down": self.select_move(Controller.Direction.DOWN),
                     "left": self.select_move(Controller.Direction.LEFT)
                     }
-        return move_dic[direction]()
+        return move_dic[direction]

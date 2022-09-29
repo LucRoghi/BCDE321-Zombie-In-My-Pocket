@@ -77,18 +77,22 @@ class Commands(cmd.Cmd):
             print("Cannot choose a door right now")
 
     # TODO - Fix this up
-    def do_move(self, line):
-        direction = View.Game.move_dic
+    def do_move(self, direction):
+        move_dic = View.Game.move_dic
         if self.game.state == "Moving":
             if direction is None:
                 print("Can not move!")
             if direction == 'up':
+                self.game.move_dic("up")
                 self.game.get_game()
             if direction == "right":
+                self.game.move_dic("right")
                 self.game.get_game()
             if direction == "down":
+                self.game.move_dic("down")
                 self.game.get_game()
             if direction == "left":
+                self.game.move_dic("left")
                 self.game.get_game()
 
     # def do_move_up(self, line):
