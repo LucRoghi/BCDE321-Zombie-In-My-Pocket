@@ -76,7 +76,6 @@ class Commands(cmd.Cmd):
         else:
             print("Cannot choose a door right now")
 
-
     def do_move(self, line):
         direction = View.Game.move_dic
         if self.game.state == "Moving":
