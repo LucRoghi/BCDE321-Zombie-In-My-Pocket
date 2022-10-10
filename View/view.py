@@ -184,7 +184,7 @@ class ZombieInMyPocket(cmd.Cmd):
                     print(self.game.current_tile)
                 else:
                     raise ValueError("No tile is currently drawn")
-            elif arg == "info":
+            elif self.prompt != "(Main Menu)" and arg == "info":
                 self.game.print_player_info()
         except ValueError as e:
             print(e)
@@ -206,6 +206,7 @@ class ZombieInMyPocket(cmd.Cmd):
         try:
             if self.prompt == "(Player)":
                 self.game.move_player(arg)
+                self.prompt = "(Tile)"
             else:
                 raise ValueError("You must be in player mode to move the player")
         except ValueError as e:

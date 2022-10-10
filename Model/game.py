@@ -46,8 +46,9 @@ class Game:
                                  "left": self.player.move_player_left}
         try:
             move_player_functions[direction]()
-            print(f"Current location is {self.player.current_location.room_name}")
             self.print_player_info()
+            self.draw_new_dev_card()
+            self.execute_current_dev_card()
         except (ValueError, KeyError) as e:
             print(e)
 
@@ -99,6 +100,7 @@ class Game:
     def print_player_info(self):
         print(f"PLAYER INFO: \n"
               f"Current Location: {self.player.current_location.room_name} \n"
+              f"{self.player.current_location.print_doors()} \n"
               f"Player Health: {self.player.health} \n"
               f"Player Attack: {self.player.attack} \n"
               f"Current Time: {self.current_time + 9}")
@@ -124,7 +126,8 @@ class Game:
             print(f"{effect} Zombies have entered the room. What do you do? (Attack or Flee)")
             self.print_player_info()
         else:
-            print(message)
+            if message != "None":
+                print(message)
             action_functions[effect]()
 
     def get_new_item(self):
@@ -175,9 +178,6 @@ class Game:
                   f"{self.current_tile.room_name} going {direction}")
             self.current_tile = None
             self.print_player_info()
-            print(f"Drawing new development card")
-            self.draw_new_dev_card()
-            self.execute_current_dev_card()
         except (ValueError, KeyError) as e:
             print(e)
 

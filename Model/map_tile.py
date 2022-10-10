@@ -76,14 +76,14 @@ class MapTile:
     def print_doors(self):
         final_string = f"Available doors are: "
         if self.door_up:
-            final_string += "Up "
+            final_string += "UP "
         if self.door_left:
-            final_string += "Left "
+            final_string += "LEFT "
         if self.door_down:
-            final_string += "Right "
+            final_string += "RIGHT "
         if self.door_right:
-            final_string += "Down "
-        print(final_string)
+            final_string += "DOWN "
+        return final_string
 
     def get_doors(self):
         return {"up": self.door_up, "right": self.door_right, "down": self.door_down, "left": self.door_left}
