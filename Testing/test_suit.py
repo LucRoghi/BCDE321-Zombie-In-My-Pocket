@@ -1,7 +1,7 @@
 import unittest
 
-from Testing.luc_testing.test_database_handler import DatabaseHandlerTest
-from Testing.luc_testing.test_map_tile import MapTileTest
+from Testing.test_database_handler import DatabaseHandlerTest
+from Testing.test_map_tile import MapTileTest
 
 
 class AllTests():
