@@ -80,6 +80,12 @@ class Filehandler:
             csv_data = list(csv.reader(data_file))
         return csv_data
 
+    def print_csv_data(self, path: str, filename: str):
+        with open(str(self.root_dir) + path + filename + ".csv", newline='') as data_file:
+            csv_data = csv.reader(data_file)
+            for line in csv_data:
+                print("".join(line))
+
     def check_if_save_exists(self, save_name):
         """
         Returns a boolean based on wether a file in a directory exists

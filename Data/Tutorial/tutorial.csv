@@ -1,0 +1,22 @@
+Welcome to Zombie In My Pocket CLI Edition.
+This is a board game based on https://boardgamegeek.com/boardgame/33468/zombie-my-pocket
+
+WHAT IS THE GAME?
+In Zombie in my Pocket, you're searching for the secret of the evil temple where you can find the item to destroy
+the zombies rising from the dead. You can pick up items to bash zombies along the way; a machete, golf club, chain saw
+or even your former uncle's grisly femur.
+
+Find the zombie totem, then bury it in the backyard graveyard before midnight and you've saved the world.
+Otherwise, you're zombie food.
+
+HOW TO PLAY:
+In the main menu:
+    use the start command to start a new game
+    use the load [save name] command to load a saved game (located within the saves folder within the root of the code)
+
+In the game:
+    Use the help and help all commands to see all of the commands at your disposal
+    You can manipulate and place maptiles, draw new development cards, manipulate your player to move, attack etc
+    as well as interact with the environment to win the game
+
+Good luck and have Fun

@@ -6,6 +6,8 @@ import random
 from pathlib import Path
 
 from PIL import Image
+
+from Model.file_handler import Filehandler
 from Model.game_data import GameData
 from Model.player import Player
 
@@ -51,6 +53,7 @@ class Game:
             self.execute_current_dev_card()
         except (ValueError, KeyError) as e:
             print(e)
+            print("Place a new tile to an available door to be able to navigate")
 
     def update_last_direction(self, direction):
         opposite_direction_dict = {"up": "down",
