@@ -5,7 +5,7 @@ The lis of commands the player can use to play the game
 """
 import pickle
 import cmd
-import View
+from ZombiesInMyPocket import View
 
 
 class Commands(cmd.Cmd):

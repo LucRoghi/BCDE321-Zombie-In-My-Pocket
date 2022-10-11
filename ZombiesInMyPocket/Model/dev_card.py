@@ -7,7 +7,7 @@ Simple Development card set up for the rest of the game
 
 class DevCard:
     """
-    >>> from Model.dev_card
+    >>> from ZombiesInMyPocket.Model
     >>> devcard = DevCard("Machete", "Unlimited", "Zombies", "Health", "Item")
     >>> devcard.get_item()
     'Machete'

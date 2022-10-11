@@ -1,5 +1,5 @@
 import random
-import Controller
+from ZombiesInMyPocket import Controller
 
 """
     This is a Controller class for the game. Holds most of the logic and calls everything

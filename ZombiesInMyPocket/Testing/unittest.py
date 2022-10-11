@@ -1,7 +1,5 @@
-import unittest
-from os.path import exists
-from View.commands import Commands
-from Controller.game import Game
+from ZombiesInMyPocket.View.commands import Commands
+from ZombiesInMyPocket.Controller.game import Game
 
 
 class TestGameCreation(unittest.TestCase):

@@ -3,13 +3,13 @@ Author: Jared Ireland jai0095
 
 Outdoor Tile setup
 """
-import Model
+from ZombiesInMyPocket import Model
 
 
 class OutdoorTile(Model.Tile):
     """
-    >>> from Model.tile
-    >>> from Model.directions
+    >>> from ZombiesInMyPocket.Model
+    >>> from ZombiesInMyPocket.Model
     >>> tile = OutdoorTile("Graveyard", x=0, y=0)
     >>> tile.get_name()
     'Graveyard'

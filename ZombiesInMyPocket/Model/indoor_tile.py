@@ -3,13 +3,13 @@ Author: Jared Ireland jai0095
 
 Indoor Tile setup
 """
-import Model
+from ZombiesInMyPocket import Model
 
 
 class IndoorTile(Model.Tile):
     """
-    >>> from Model.tile
-    >>> from Model.directions
+    >>> from ZombiesInMyPocket.Model
+    >>> from ZombiesInMyPocket.Model
     >>> tile = IndoorTile("Family Room", x=0, y=0)
     >>> tile.get_name()
     'Family Room'

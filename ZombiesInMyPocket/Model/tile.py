@@ -3,7 +3,7 @@ Author: Jared Ireland jai0095
 
 Tile Constructor for the two sub tile files (Outdoor and Indoor)
 """
-import Model
+from ZombiesInMyPocket import Model
 
 
 class Tile:
