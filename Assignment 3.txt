@@ -2,6 +2,7 @@ What to do (Possibly) for assignment 3:
     Finish off Assignment 2
         Add difficulty
         Add wall breaking
+        Add Save Game File Location
 
     Patterns:
         Abstract Factory - https://refactoring.guru/design-patterns/abstract-factory

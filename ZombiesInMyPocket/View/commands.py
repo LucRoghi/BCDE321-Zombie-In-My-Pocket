@@ -76,22 +76,23 @@ class Commands(cmd.Cmd):
         else:
             print("Cannot choose a door right now")
 
-    def do_move(self, line):
-        direction = View.Game.move_dic
+    # TODO - Fix this up
+    def do_move(self, direction):
+        move_dic = View.Game.move_dic
         if self.game.state == "Moving":
             if direction is None:
                 print("Can not move!")
             if direction == 'up':
-                self.game.select_move(View.Direction.UP)
+                self.game.move_dic("up")
                 self.game.get_game()
             if direction == "right":
-                self.game.select_move(View.Direction.RIGHT)
+                self.game.move_dic("right")
                 self.game.get_game()
             if direction == "down":
-                self.game.select_move(View.Direction.DOWN)
+                self.game.move_dic("down")
                 self.game.get_game()
             if direction == "left":
-                self.game.select_move(View.Direction.LEFT)
+                self.game.move_dic("left")
                 self.game.get_game()
 
     # def do_move_up(self, line):
@@ -275,7 +276,10 @@ class Commands(cmd.Cmd):
 
     def do_prompt(self, line):
         """Change the interactive prompt"""
-        self.prompt = line + ': '
+        if self.prompt == "> ":
+            self.prompt = line + ': '
+        else:
+            self.prompt = "> "
 
     def do_exit(self, line):
         """Exits the game without saving"""
