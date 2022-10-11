@@ -81,6 +81,12 @@ class Filehandler:
         return csv_data
 
     def print_csv_data(self, path: str, filename: str):
+        """
+        Prints all the contents of a csv file as a string
+        :param path:
+        :param filename:
+        :return:
+        """
         with open(str(self.root_dir) + path + filename + ".csv", newline='') as data_file:
             csv_data = csv.reader(data_file)
             for line in csv_data:
