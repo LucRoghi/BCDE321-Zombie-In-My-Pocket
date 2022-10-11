@@ -1,7 +1,11 @@
+"""
+ATTEMPTED TO IMPLEMENT BUT COULD NOT GET IMAGES TO STITCH UP CORRECTLY
+"""
+
 from pathlib import Path
 
 
-class Mapper():
+class Mapper:
     def __init__(self):
         self.map = None
         self.image_directory = str(Path(__file__).parent.parent) + "/Data/TileImages/"

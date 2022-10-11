@@ -1,7 +1,6 @@
 """
 Author: Luc Roghi lcr0059
 """
-from typing import Callable
 
 
 class Devcard:

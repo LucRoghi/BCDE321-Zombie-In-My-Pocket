@@ -9,7 +9,9 @@ GAME DATA MAPTILES:
         >>> print(len(test_game_data.map_tiles_indoor))
         8
         >>> print(test_game_data.map_tiles_indoor) #doctest: +ELLIPSIS
-        [<Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>]
+        [<Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object
+        at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile
+         object at ...>, <Model.map_tile.MapTile object at ...>, <Model.map_tile.MapTile object at ...>]
         >>> print(test_game_data.map_tiles_indoor[-1])
         Foyer Available Doors [UP LEFT DOWN RIGHT ]
         >>> print(test_game_data.map_tiles_indoor[0].room_name)
@@ -27,12 +29,15 @@ GAME DATA DEVCARDS:
         >>> print(len(test_game_data.dev_cards))
         9
         >>> print(test_game_data.dev_cards) #doctest: +ELLIPSIS
-        [<Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>]
+        [<Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard obje
+        ct at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.D
+        evcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.dev_cards.Devcard object at ...>, <Model.
+        dev_cards.Devcard object at ...>]
         >>> print(test_game_data.dev_cards[0]) #doctest: +ELLIPSIS
         <Model.dev_cards.Devcard object at ...>
 """
 
-from random import random, randint
+from random import randint
 from Model.dev_cards import Devcard
 from Model.database_handler import Database
 from Model.file_handler import Filehandler
@@ -49,7 +54,7 @@ def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
     """
     tile_list = []
     for tile in tuple_list:
-        _, room_name, _, door_up, door_right, door_down, door_left, type = tile
+        _, room_name, _, door_up, door_right, door_down, door_left, _type = tile
         tile = MapTile(room_name, None, str_to_bool(door_up), str_to_bool(door_right), str_to_bool(door_down),
                        str_to_bool(door_left))
         tile_list.append(tile)
@@ -95,12 +100,12 @@ def str_to_bool(string: str) -> bool:
 
 class GameData:
     def __init__(self):
-        self.map_tiles_indoor = []
-        self.map_tiles_outdoor = []
-        self.dev_cards = []
-        self.items = []
-        self.database = Database("ZombieInMyPocket.db")
-        self.file_handler = Filehandler()
+        self.map_tiles_indoor: list[MapTile] = []
+        self.map_tiles_outdoor: list[MapTile] = []
+        self.dev_cards: list[Devcard] = []
+        self.items: list[Item] = []
+        self.database: Database = Database("ZombieInMyPocket.db")
+        self.file_handler: Filehandler = Filehandler()
         self.reset_database()
         self.initialize_game_data()
 
@@ -149,7 +154,7 @@ class GameData:
 
     def add_devcards_to_db(self):
         """
-        Creates a new table for DevCard pbject within the database and insert the data from the csv file
+        Creates a new table for DevCard object within the database and insert the data from the csv file
         within /Data/
         :return:
         """
@@ -160,7 +165,7 @@ class GameData:
 
     def add_items_to_db(self):
         """
-        Creates a new table for Items objefts within the database and inserts the data from the csv file
+        Creates a new table for Items objects within the database and inserts the data from the csv file
         within /Data/
         :return:
         """
@@ -199,7 +204,7 @@ class GameData:
     def get_items(self):
         """
         Queries the database for the item data then converts them into the Item objects using
-        the convert_tuples_to_items functions to get a list of Item objects for the self.items list
+        the convert_tuples_to_items functions to get a list of Item objects for the self. Items list
         :return:
         """
         item_tuples = self.database.query_all_data_from_table("Items")

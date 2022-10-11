@@ -20,7 +20,7 @@ class DatabaseHandlerTest(unittest.TestCase):
         self.assertEqual(result, True)
 
     def test_create_new_table_no_columns(self):
-        result = self.database.create_new_table("test_table_2", None)
+        result = self.database.create_new_table("test_table_2", {})
         self.assertEqual(result, False)
 
     def test_delete_all_rows_in_table(self):

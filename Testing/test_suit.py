@@ -4,7 +4,7 @@ from Testing.test_database_handler import DatabaseHandlerTest
 from Testing.test_map_tile import MapTileTest
 
 
-class AllTests():
+class AllTests:
     def __init__(self):
         self.test_classes_to_run = [DatabaseHandlerTest, MapTileTest]
         self.big_suite = self.add_test_to_test_suite()
@@ -23,6 +23,7 @@ class AllTests():
         runner = unittest.TextTestRunner()
         results = runner.run(self.big_suite)
         return results
+
 
 if __name__ == "__main__":
     test_suite = AllTests()

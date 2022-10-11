@@ -1,5 +1,4 @@
-import cmd, sys
-
+import cmd
 from Model.database_handler import Database
 from Model.file_handler import Filehandler
 from Model.game import Game
@@ -28,7 +27,8 @@ class ZombieInMyPocket(cmd.Cmd):
             print(self.game.player.current_location.print_doors())
             self.prompt = '(Player)'
 
-    def do_tutorial(self, arg):
+    @staticmethod
+    def do_tutorial(arg):
         """
         Prints a tutorial on how to play the game
         :param arg:
@@ -240,7 +240,7 @@ class ZombieInMyPocket(cmd.Cmd):
         self.prompt = '(Player)'
         self.game.player_attack()
 
-    def do_flee(self, arg):
+    def do_flee(self):
         """
         Moves the player into the previous room they were in. As they do so they will lose one health.
         :param arg:
@@ -249,7 +249,7 @@ class ZombieInMyPocket(cmd.Cmd):
         self.prompt = '(Player)'
         self.game.player_flee()
 
-    def do_cower(self):
+    def do_cower(self, arg):
         """
         Makes the player cower for a turn. This will allow the player to recover some health but lose time
         in the process

@@ -1,7 +1,3 @@
-from Model.map_tile import MapTile
-from Model.game_data import GameData
-
-
 class Player:
     def __init__(self):
         self.current_location = None
@@ -48,7 +44,6 @@ class Player:
         new_health = self.health - self.current_location.zombie_number
         health_diff = self.health - new_health
         self.health = new_health
-        self.current_location = self.previous_location
         return f'Player lost {health_diff} health. The player now has {self.health} health remaining'
 
     def drop_item(self, index):

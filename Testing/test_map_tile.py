@@ -9,7 +9,7 @@ class MapTileTest(unittest.TestCase):
         self.adding_new_maptile = MapTile("Test Room UP", None, True, False, True, False)
 
     def test_print_maptile_object(self):
-        self.assertEqual(self.test_initial_maptile.print_door(), "up: True, right: False, down: True, left: False")
+        self.assertEqual(self.test_initial_maptile.print_doors(), "up: True, right: False, down: True, left: False")
 
     def test_get_door_dict(self):
         self.assertEqual(self.test_initial_maptile.get_doors(),

@@ -60,8 +60,6 @@ USING DATABASE HANDLER::
 import doctest
 import sqlite3
 import os
-from typing import List, Any
-
 from Model.file_handler import Filehandler
 
 

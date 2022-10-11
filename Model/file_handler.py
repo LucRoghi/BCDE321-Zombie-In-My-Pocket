@@ -13,7 +13,8 @@ FILE HANDLING) JSON ::
 
 FILE HANDLING CSV::
     >>> print(temp_filehandler.read_csv_data_into_list("/Data/Test_Data/", "test_csv"))
-    [['this', 'is', 'a', 'test', 'csv'], ['it', 'reads', 'comma', 'separated', 'values'], ['from', 'a', 'designated', 'file', 'location']]
+    [['this', 'is', 'a', 'test', 'csv'], ['it', 'reads', 'comma', 'separated', 'values'], ['from', 'a', 'designated',
+    'file', 'location']]
 
 FILE HANDLING PICKLE::
     >>> from Model.item import Item
@@ -31,7 +32,6 @@ import os.path
 import pickle
 from pathlib import Path
 from datetime import datetime
-from typing import Generic
 
 
 class Filehandler:
@@ -94,7 +94,7 @@ class Filehandler:
 
     def check_if_save_exists(self, save_name):
         """
-        Returns a boolean based on wether a file in a directory exists
+        Returns a boolean based on whether a file in a directory exists
         :param save_name:
         :return: bool
         """

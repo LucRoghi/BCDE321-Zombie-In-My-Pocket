@@ -4,10 +4,7 @@
 
 import random
 from pathlib import Path
-
 from PIL import Image
-
-from Model.file_handler import Filehandler
 from Model.game_data import GameData
 from Model.player import Player
 
@@ -33,7 +30,8 @@ class Game:
         """
         self.player.current_location = self.active_tile_list.pop(-1)
 
-    def end_game(self):
+    @staticmethod
+    def end_game():
         print("YOU HAVE LOST THE GAME. Returning to main menu")
 
     def new_dev_card_deck(self):
