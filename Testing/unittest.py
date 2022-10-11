@@ -1,5 +1,5 @@
-from ZombiesInMyPocket.View.commands import Commands
-from ZombiesInMyPocket.Controller.game import Game
+from View.commands import Commands
+from Controller.game import Game
 
 
 class TestGameCreation(unittest.TestCase):

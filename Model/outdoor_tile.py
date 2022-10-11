@@ -1,32 +1,33 @@
 """
 Author: Jared Ireland jai0095
 
-Indoor Tile setup
+Outdoor Tile setup
 """
-from ZombiesInMyPocket import Model
+import Model
 
 
-class IndoorTile(Model.Tile):
+class OutdoorTile(Model.Tile):
     """
     >>> from ZombiesInMyPocket.Model
     >>> from ZombiesInMyPocket.Model
-    >>> tile = IndoorTile("Family Room", x=0, y=0)
+    >>> tile = OutdoorTile("Graveyard", x=0, y=0)
     >>> tile.get_name()
-    'Family Room'
+    'Graveyard'
     >>> print(tile)
-    Family Room, [], Indoor, 0, 0, None
-    >>> tile.set_entrance(Model.directions.UP)
+    Graveyard, [], Outdoor, 0, 0, None
+    >>> tile.set_entrance(Model.directions.DOWN)
     >>> tile.get_entrance()
-    <Direction.UP: (1,)>
+    <Direction.DOWN: (2,)>
+    >>> tile.rotate_entrance()
     >>> tile.rotate_entrance()
     >>> tile.get_entrance()
-    <Direction.RIGHT: (3,)>
-    >>> tile.set_x(1)
-    >>> tile.set_y(1)
+    <Direction.UP: (1,)>
+    >>> tile.set_x(10)
+    >>> tile.set_y(15)
     >>> tile.get_x()
-    1
+    10
     >>> tile.get_y()
-    1
+    15
     """
 
     def __init__(self, name, effect=None, doors=None, x=16, y=16, entrance=None):

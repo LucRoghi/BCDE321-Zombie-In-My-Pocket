@@ -4,7 +4,7 @@ Author: Jared Ireland jai0095
 ENUM for the directions the player can move and where the tiles can be placed
 """
 
-from ZombiesInMyPocket import Model
+import Model
 
 
 class Direction(Model.Enum):
