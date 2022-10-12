@@ -8,14 +8,14 @@ import Model
 
 class OutdoorTile(Model.Tile):
     """
-    >>> from ZombiesInMyPocket.Model
-    >>> from ZombiesInMyPocket.Model
+    >>> from Model.tile
+    >>> from Model.directions import Direction
     >>> tile = OutdoorTile("Graveyard", x=0, y=0)
     >>> tile.get_name()
     'Graveyard'
     >>> print(tile)
     Graveyard, [], Outdoor, 0, 0, None
-    >>> tile.set_entrance(Model.directions.DOWN)
+    >>> tile.set_entrance(Direction.DOWN)
     >>> tile.get_entrance()
     <Direction.DOWN: (2,)>
     >>> tile.rotate_entrance()

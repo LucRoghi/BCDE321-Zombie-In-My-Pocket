@@ -40,6 +40,7 @@ class Game:
                 self.state = "Rotating"
                 break
 
+    # Tells the player the current status of the game
     def get_game(self):
         s = ''
         f = ''

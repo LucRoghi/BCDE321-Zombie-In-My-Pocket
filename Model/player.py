@@ -7,7 +7,7 @@ Basic player setup
 
 class Player:
     """
-    >>> from ZombiesInMyPocket.Model import Player
+    >>> from Model import Player
     >>> player = Player()
     >>> player.get_health()
     6

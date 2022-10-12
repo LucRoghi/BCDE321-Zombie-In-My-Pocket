@@ -18,6 +18,9 @@ class Commands(cmd.Cmd):
         self.game = View.Game(self.player)
         self.graph = View.Graph()
 
+    def get_game(self):
+        return self.game
+
     def do_start(self, line):
         """Starts a new game"""
         if self.game.state == "Starting":
@@ -76,7 +79,7 @@ class Commands(cmd.Cmd):
         else:
             print("Cannot choose a door right now")
 
-    # TODO - Fix this up
+    # TODO - Pattern Matching https://peps.python.org/pep-0636/
     def do_move(self, direction):
         move_dic = View.Game.move_dic
         if self.game.state == "Moving":
@@ -277,7 +280,7 @@ class Commands(cmd.Cmd):
     def do_prompt(self, line):
         """Change the interactive prompt"""
         if self.prompt == "> ":
-            self.prompt = line + ': '
+            self.prompt = line + ' '
         else:
             self.prompt = "> "
 

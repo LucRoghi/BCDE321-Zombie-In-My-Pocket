@@ -8,14 +8,14 @@ import Model
 
 class IndoorTile(Model.Tile):
     """
-    >>> from ZombiesInMyPocket.Model
-    >>> from ZombiesInMyPocket.Model
+    >>> from Model.tile
+    >>> from Model.directions import Direction
     >>> tile = IndoorTile("Family Room", x=0, y=0)
     >>> tile.get_name()
     'Family Room'
     >>> print(tile)
     Family Room, [], Indoor, 0, 0, None
-    >>> tile.set_entrance(Model.directions.UP)
+    >>> tile.set_entrance(Direction.UP)
     >>> tile.get_entrance()
     <Direction.UP: (1,)>
     >>> tile.rotate_entrance()
