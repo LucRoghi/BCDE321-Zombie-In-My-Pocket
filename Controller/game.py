@@ -29,9 +29,15 @@ class Game:
         self.current_zombies = 0
         self.can_cower = can_cower
         self.room_item = None
-        self.load = Controller.Load
+        self.last_room = None
+        self.dev_cards_used = 0
+        self.tiles_placed = 0
+        self.attack_count = 0
+        # TODO - To be implemented
+        self.difficulty = None
 
     def start_game(self):  # Run to initialise the game
+        self.database = Controller.Database()
         self.load_tiles()
         self.load_dev_cards()
         for tile in self.indoor_tiles:
@@ -68,6 +74,52 @@ class Game:
 
     def get_time(self):
         return self.time
+
+    def get_player(self):
+        return self.player
+
+    def get_player_x(self):
+        return self.player.get_x()
+
+    def get_player_y(self):
+        return self.player.get_y()
+
+    def get_player_moves(self):
+        return self.player.get_move_count()
+
+    def get_dev_cards_used(self):
+        return self.dev_cards_used
+
+    def get_tiles_placed(self):
+        return self.tiles_placed
+
+    def get_attacks_completed(self):
+        return self.attack_count
+
+    def update_player_move(self):
+        self.player.increment_move_count()
+
+    def update_tiles_placed(self):
+        self.tiles_placed += 1
+
+    def update_dev_cards_used(self):
+        self.dev_cards_used += 1
+
+    def update_attacks(self):
+        self.attack_count += 1
+
+    def increment_player_moves(self):
+        self.player.increment_move_count()
+
+    def set_last_room(self, direction):
+        if direction == "n":
+            self.last_room = Controller.Direction.DOWN
+        elif direction == "e":
+            self.last_room = Controller.Direction.LEFT
+        elif direction == "s":
+            self.last_room = Controller.Direction.UP
+        elif direction == "w":
+            self.last_room = Controller.Direction.RIGHT
 
     # Loads tiles from excel file
     def load_tiles(self):  # Needs Error handling in this method
@@ -247,8 +299,8 @@ class Game:
         if self.get_current_tile().name == "Dining Room" or "Patio":
             tile.rotate_entrance()
 
-    # Call when player enters a room and draws a dev card
-    def trigger_dev_card(self, time):
+    # Removed dupe code - put into 1
+    def dev_card_check(self):
         if len(self.dev_cards) == 0:
             if self.get_time == 11:
                 print("You have run out of time")
@@ -259,6 +311,9 @@ class Game:
                 self.load_dev_cards()
                 self.time += 1
 
+    # Call when player enters a room and draws a dev card
+    def trigger_dev_card(self, time):
+        self.dev_card_check()
         dev_card = self.dev_cards[0]
         self.dev_cards.pop(0)
         event = dev_card.get_event_at_time(time)  # Gets the event at the current time
@@ -295,15 +350,7 @@ class Game:
                 self.state = "Moving"
                 self.get_game()
         elif event[0] == "Item":  # Add item to player's inventory if there is room
-            if len(self.dev_cards) == 0:
-                if self.get_time == 11:
-                    print("You have run out of time")
-                    self.lose_game()
-                    return
-                else:
-                    print("Reshuffling The Deck")
-                    self.load_dev_cards()
-                    self.time += 1
+            self.dev_card_check()
             next_card = self.dev_cards[0]
             print(f"There is an item in this room: {next_card.get_item()}")
             if len(self.player.get_items()) < 2:
@@ -513,4 +560,3 @@ class Game:
                     "left": self.select_move(Controller.Direction.LEFT)
                     }
         return move_dic[direction]
-
