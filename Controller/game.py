@@ -299,6 +299,13 @@ class Game:
         if self.get_current_tile().name == "Dining Room" or "Patio":
             tile.rotate_entrance()
 
+    def draw_dev_card(self):
+        if self.state == "Drawing Dev Card":
+            self.update_dev_cards_used()
+            self.trigger_dev_card(self.time)
+        else:
+            print("Cannot currently draw a card")
+
     # Removed dupe code - put into 1
     def dev_card_check(self):
         if len(self.dev_cards) == 0:

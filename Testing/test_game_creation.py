@@ -21,7 +21,6 @@ class TestGameCreation(unittest.TestCase):
         player_pos = game.get_player_x(), game.get_player_y()
         self.assertEqual(player_pos, (16, 16))
 
-    # TODO - Fix the exists?
     def test_save_saves_current_game(self):
         self.commands.do_start(None)
         self.commands.do_place(None)

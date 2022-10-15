@@ -5,7 +5,10 @@ The lis of commands the player can use to play the game
 """
 import pickle
 import cmd
+
+import Controller
 import View
+import sys
 
 
 class Commands(cmd.Cmd):
@@ -17,6 +20,11 @@ class Commands(cmd.Cmd):
         self.player = View.Player()
         self.game = View.Game(self.player)
         self.graph = View.Graph()
+        if len(sys.argv) > 1:
+            try:
+                self.do_load(sys.argv[1])
+            except Exception:
+                print("File not found")
 
     def get_game(self):
         return self.game
@@ -29,6 +37,7 @@ class Commands(cmd.Cmd):
         else:
             print("Game has already Started")
 
+    # TODO - Add arguments for multiple rotation
     def do_rotate(self, line):
         """Rotates the current map piece 1 rotation clockwise"""
         if self.game.state == "Rotating":
@@ -225,10 +234,7 @@ class Commands(cmd.Cmd):
 
     def do_draw(self, line):
         """Draws a new development card (Must be done after evey move)"""
-        if self.game.state == "Drawing Dev Card":
-            self.game.trigger_dev_card(self.game.time)
-        else:
-            print("Cannot currently draw a card")
+        self.game.draw_dev_card()
 
     # DELETE LATER, DEV COMMANDS FOR TESTING
     def do_give(self, line):
