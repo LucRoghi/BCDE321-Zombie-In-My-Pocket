@@ -8,7 +8,7 @@ import Model
 
 class OutdoorTile(Model.Tile):
     """
-    >>> from Model.tile
+    >>> from Model.tile import Tile
     >>> from Model.directions import Direction
     >>> tile = OutdoorTile("Graveyard", x=0, y=0)
     >>> tile.get_name()
@@ -33,8 +33,14 @@ class OutdoorTile(Model.Tile):
     def __init__(self, name, effect=None, doors=None, x=16, y=16, entrance=None):
         if doors is None:
             doors = []
-        self.type = "Indoor"
+        self.type = "Outdoor"
         super().__init__(name, x, y, effect, doors, entrance)
 
     def __repr__(self):
         return f"{self.name}, {self.doors}, {self.type}, {self.x}, {self.y}, {self.effect}"
+
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
