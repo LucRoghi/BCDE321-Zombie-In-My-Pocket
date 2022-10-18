@@ -16,7 +16,7 @@ class TestGameCreation(unittest.TestCase):
         self.assertEqual(current_tile.get_name(), "Foyer")
 
     def test_load_creates_loaded_game(self):
-        self.commands.do_load("./save/test_move.db.dat")
+        self.commands.do_load("../save/test_move.db.dat")
         game = self.commands.get_game()
         player_pos = game.get_player_x(), game.get_player_y()
         self.assertEqual(player_pos, (16, 16))
@@ -25,7 +25,7 @@ class TestGameCreation(unittest.TestCase):
         self.commands.do_start(None)
         self.commands.do_place(None)
         self.commands.do_save("test_saving")
-        self.assertTrue(exists("./save/test_saving.db.dat"))
+        self.assertTrue(exists("../save/test_saving.db.dat"))
         pass
 
     def test_restart_restarts_game(self):

@@ -3,10 +3,11 @@ Author: Jared Ireland jai0095
 
 The lis of commands the player can use to play the game
 """
+import os
 import pickle
 import cmd
+import shelve
 
-import Controller
 import View
 import sys
 
@@ -139,29 +140,35 @@ class Commands(cmd.Cmd):
     #     else:
     #         print("Player not ready to move")
 
-    def do_save(self, line):
+    def do_save(self, line, name):
         """Takes a filepath and saves the game to a file"""
-        if not line:
+        if not name:
             return print("Must enter a valid file name")
         else:
-            if len(self.game.tiles) == 0:
-                return print("Cannot save game with empty map")
-            file_name = line + '.pickle'
-            with open(file_name, 'wb') as f:
-                pickle.dump(self.game, f)
+            name = name.lower().strip()
+            file_name = name + ".db"
+            game_shelve = shelve.open("../save/" + file_name)
+            game_shelve["game"] = self.game
+            self.game.get_game()
+            game_shelve.close()
 
     def do_load(self, name):
         """Takes a filepath and loads the game from a file"""
         if not name:
             return print("Must enter a valid file name")
         else:
-            file_name = name + '.pickle'
+            name = name.lower().strip()
             try:
-                with open(file_name, 'rb') as f:
-                    self.game = pickle.load(f)
-                    self.game.get_game()
+                file_exists = os.path.exists("../save/" + name + ".dat")
+                if not file_exists:
+                    raise FileNotFoundError
+                game_shelve = shelve.open("../save/" + name)
+                save = game_shelve["game"]
+                self.game = save
+                self.game.get_game()
+                game_shelve.close()
             except FileNotFoundError:
-                print("No File with this name exists")
+                print(f"No File with this name, {name} exists")
 
     def do_restart(self, line):
         """Deletes your progress and ends the game"""
