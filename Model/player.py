@@ -104,9 +104,3 @@ class Player:
         self.move_count += 1
 
     # TODO - Add difficulty?
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

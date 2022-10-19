@@ -166,9 +166,15 @@ class Commands(cmd.Cmd):
                 file_exists = os.path.exists("../save/" + file_name + ".dat")
                 if not file_exists:
                     raise FileNotFoundError
+<<<<<<< HEAD
                 game_shelve = shelve.open("../save/" + file_name)
                 save = self.game
                 game_shelve["game"] = save
+=======
+                game_shelve = shelve.open("../save/" + name)
+                save = game_shelve["game"]
+                self.game = save
+>>>>>>> parent of 62df723 (DocTest work UnitTest Dont)
                 self.game.get_game()
                 game_shelve.close()
             except FileNotFoundError:
