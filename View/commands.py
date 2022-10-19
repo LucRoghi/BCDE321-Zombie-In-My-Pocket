@@ -140,7 +140,7 @@ class Commands(cmd.Cmd):
     #     else:
     #         print("Player not ready to move")
 
-    def do_save(self, line, name):
+    def do_save(self, name):
         """Takes a filepath and saves the game to a file"""
         if not name:
             return print("Must enter a valid file name")
@@ -153,22 +153,26 @@ class Commands(cmd.Cmd):
             game_shelve.close()
 
     def do_load(self, name):
-        """Takes a filepath and loads the game from a file"""
+        """Loads a game specifically from the 'save' sub-folder"""
         if not name:
             return print("Must enter a valid file name")
         else:
             name = name.lower().strip()
+            if ".db" not in name:
+                file_name = name + ".db"
+            else:
+                file_name = name
             try:
-                file_exists = os.path.exists("../save/" + name + ".dat")
+                file_exists = os.path.exists("../save/" + file_name + ".dat")
                 if not file_exists:
                     raise FileNotFoundError
-                game_shelve = shelve.open("../save/" + name) # Loads the DB file
+                game_shelve = shelve.open("../save/" + file_name)
                 save = self.game
                 game_shelve["game"] = save
                 self.game.get_game()
                 game_shelve.close()
             except FileNotFoundError:
-                print(f"No File with this name, {name} exists")
+                print(f"No File with this name, {file_name} exists")
 
     def do_restart(self, line):
         """Deletes your progress and ends the game"""
