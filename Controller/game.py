@@ -38,7 +38,6 @@ class Game:
             dev_cards = []  # Will contain a list of all available development cards
         if game_map is None:
             game_map = {}  # Tiles dictionary will have the x and y co-ords as the key and the Tile object as the value
-        self.database = Controller.Database()
         self.player = player
         self.time = time
         self.indoor_tiles = indoor_tiles
@@ -59,7 +58,6 @@ class Game:
         self.difficulty = None
 
     def start_game(self):  # Run to initialise the game
-        self.database = Controller.Database()
         self.load_tiles()
         self.load_dev_cards()
         for tile in self.indoor_tiles:
