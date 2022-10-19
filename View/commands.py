@@ -162,9 +162,9 @@ class Commands(cmd.Cmd):
                 file_exists = os.path.exists("../save/" + name + ".dat")
                 if not file_exists:
                     raise FileNotFoundError
-                game_shelve = shelve.open("../save/" + name)
-                save = game_shelve["game"]
-                self.game = save
+                game_shelve = shelve.open("../save/" + name) # Loads the DB file
+                save = self.game
+                game_shelve["game"] = save
                 self.game.get_game()
                 game_shelve.close()
             except FileNotFoundError:

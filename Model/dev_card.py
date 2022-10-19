@@ -7,7 +7,7 @@ Simple Development card set up for the rest of the game
 
 class DevCard:
     """
-    >>> from ZombiesInMyPocket.Model
+    >>> from Model.dev_card import DevCard
     >>> devcard = DevCard("Machete", "Unlimited", "Zombies", "Health", "Item")
     >>> devcard.get_item()
     'Machete'
@@ -29,6 +29,7 @@ class DevCard:
     >>> devcard_two.get_charges()
     1
     """
+
     def __init__(self, item, charges, event_one, event_two, event_three):
         self.item = item
         self.charges = charges
@@ -53,3 +54,8 @@ class DevCard:
     def get_charges(self):
         return self.charges
 
+
+if __name__ == "__main__":
+    import doctest
+
+    doctest.testmod()
