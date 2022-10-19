@@ -7,27 +7,6 @@ import Controller
 
 
 class Game:
-    """
-    >>> from Model.player import Player
-    >>> from Controller.game import Game
-    >>> from Model.tile import Tile
-    >>> from Model.dev_card import DevCard
-    >>> from Model.directions import Direction
-    >>> from database.database import Database
-    >>> player = Player()
-    >>> game = Game(player)
-    >>> game.start_game()
-    >>> game.get_time()
-    9
-    >>> game.place_tile(16, 16)
-    >>> game.check_for_room(16, 16)
-    True
-    >>> game.get_current_tile().name
-    'Foyer'
-    >>> game.check_for_dead_player()
-    False
-    """
-
     def __init__(self, player, time=9, game_map=None, indoor_tiles=None, outdoor_tiles=None, chosen_tile=None,
                  dev_cards=None, state="Starting", current_move_direction=None, can_cower=True):
         if indoor_tiles is None:
@@ -38,7 +17,6 @@ class Game:
             dev_cards = []  # Will contain a list of all available development cards
         if game_map is None:
             game_map = {}  # Tiles dictionary will have the x and y co-ords as the key and the Tile object as the value
-        self.database = Controller.Database()
         self.player = player
         self.time = time
         self.indoor_tiles = indoor_tiles
@@ -59,7 +37,6 @@ class Game:
         self.difficulty = None
 
     def start_game(self):  # Run to initialise the game
-        self.database = Controller.Database()
         self.load_tiles()
         self.load_dev_cards()
         for tile in self.indoor_tiles:
@@ -79,7 +56,7 @@ class Game:
             s = "Use the rotate command to rotate tiles and align doors," \
                 " Once you are happy with the door position you can place the tile with the place command"
         if self.state == "Choosing Door":
-            s = "Choose where to place a new door with the choose command + up, right, down, left"
+            s = "Choose where to place a new door with the choose command + n, e, s, w"
         if self.state == "Drawing Dev Card":
             s = "Use the draw command to draw a random development card"
         for door in self.chosen_tile.doors:
@@ -134,13 +111,13 @@ class Game:
         self.player.increment_move_count()
 
     def set_last_room(self, direction):
-        if direction == "up":
+        if direction == "n":
             self.last_room = Controller.Direction.DOWN
-        elif direction == "right":
+        elif direction == "e":
             self.last_room = Controller.Direction.LEFT
-        elif direction == "down":
+        elif direction == "s":
             self.last_room = Controller.Direction.UP
-        elif direction == "left":
+        elif direction == "w":
             self.last_room = Controller.Direction.RIGHT
 
     # Loads tiles from excel file
@@ -567,15 +544,15 @@ class Game:
             return False
 
     @staticmethod
-    def resolve_doors(up, right, down, left):
+    def resolve_doors(n, e, s, w):
         doors = []
-        if up == 1:
+        if n == 1:
             doors.append(Controller.Direction.UP)
-        if right == 1:
+        if e == 1:
             doors.append(Controller.Direction.RIGHT)
-        if down == 1:
+        if s == 1:
             doors.append(Controller.Direction.DOWN)
-        if left == 1:
+        if w == 1:
             doors.append(Controller.Direction.LEFT)
         return doors
 
@@ -589,9 +566,3 @@ class Game:
                     "left": self.select_move(Controller.Direction.LEFT)
                     }
         return move_dic[direction]
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

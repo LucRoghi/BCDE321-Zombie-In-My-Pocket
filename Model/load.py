@@ -4,11 +4,11 @@ import pandas
 class Load:
     @staticmethod
     def dev_cards():
-        return pandas.read_excel(r'../Model/DevCards.xlsx')
+        return pandas.read_excel(r'DevCards.xlsx')
 
     @staticmethod
     def tiles():
-        return pandas.read_excel(r'../Model/Tiles.xlsx')
+        return pandas.read_excel(r'Tiles.xlsx')
 
 
 # Debugging Test Case - Ignore
