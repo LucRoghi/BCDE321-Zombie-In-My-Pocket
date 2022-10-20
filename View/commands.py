@@ -90,6 +90,7 @@ class Commands(cmd.Cmd):
             print("Cannot choose a door right now")
 
     def do_move(self, direction):
+        """Movement of the player"""
         move_dic = View.Game.move_dic
         if self.game.state == "Moving":
             if direction is None:
@@ -276,10 +277,6 @@ class Commands(cmd.Cmd):
         """Shows a graph of the players health over turns"""
         self.graph.player_health_graph()
 
-    def do_all(self, line):
-        f = open('help.json')
-        data = json.load(f)
-        print("Help Command Syntax:")
-        for i in data['Help Commands']:
-            print(i)
-        f.close()
+    def do_commands(self, line):
+        """Prints out a list of all the CMD's from a JSON file"""
+        return self.game.help_all()

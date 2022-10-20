@@ -3,7 +3,7 @@ from os import path
 
 def read_file():
     _path = path.dirname(__file__)
-    _path = path.join(_path, r'assets\DevCards.xlsx')
+    _path = path.join(_path, r'assets\DevCards.csv')
 
     with open(_path, 'r') as f:
         lines = f.readlines()

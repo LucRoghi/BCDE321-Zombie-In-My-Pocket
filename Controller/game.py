@@ -1,3 +1,4 @@
+import json
 import random
 import Controller
 
@@ -565,3 +566,11 @@ class Game:
                     "left": self.select_move(Controller.Direction.LEFT)
                     }
         return move_dic[direction]
+
+    def help_all(self):
+        f = open('help.json')
+        data = json.load(f)
+        print("Help Command Syntax:")
+        for i in data['Help Commands']:
+            print(i)
+        f.close()
