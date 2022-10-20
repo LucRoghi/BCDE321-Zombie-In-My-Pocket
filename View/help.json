@@ -1,70 +1,70 @@
 {
   "Help Commands": [
     {
-      "cmd": "help attack - Player attacks the zombies"
+      "cmd": "attack - Player attacks the zombies"
     },
     {
-      "cmd": " prompt - Change the interactive prompt"
+      "cmd": "prompt - Change the interactive prompt"
     },
     {
-      "cmd": " choose - When a zombie door attack is complete Direction. Use this command to select an exit door with a valid direction "
+      "cmd": "choose - When a zombie door attack is complete Direction. Use this command to select an exit door with a valid direction "
     },
     {
-      "cmd": " draw - Draws a new development card (Must be done after every move)"
+      "cmd": "draw - Draws a new development card (Must be done after every move)"
     },
     {
-      "cmd": " exit - Exits the game without saving"
+      "cmd": "exit - Exits the game without saving"
     },
     {
-      "cmd": " help - List available commands with 'help' or detailed help with 'help attack'."
+      "cmd": "help - List available commands with 'help' or detailed help with 'help attack'."
     },
     {
-      "cmd": " place - Places the current map tile"
+      "cmd": "place - Places the current map tile"
     },
     {
-      "cmd": " restart - Deletes your progress and ends the game"
+      "cmd": "restart - Deletes your progress and ends the game"
     },
     {
-      "cmd": " run - Given a direction will flee attacking zombies at a price of one health"
+      "cmd": "run - Given a direction will flee attacking zombies at a price of one health"
     },
     {
-      "cmd": " search - Searches for the zombie totem. (Player must be in the evil temple and will have to resolve a dev card)"
+      "cmd": "search - Searches for the zombie totem. (Player must be in the evil temple and will have to resolve a dev card)"
     },
     {
-      "cmd": " status - Shows the status of the player"
+      "cmd": "status - Shows the status of the player"
     },
     {
-      "cmd": " use - Player uses item"
+      "cmd": "use - Player uses item"
     },
     {
-      "cmd": " bury - Buries the totem. (Player must be in the graveyard and will have to resolve a dev card)"
+      "cmd": "bury - Buries the totem. (Player must be in the graveyard and will have to resolve a dev card)"
     },
     {
-      "cmd": " cower - When attacked use this command to cower. You will take no damage but will advance the time"
+      "cmd": "cower - When attacked use this command to cower. You will take no damage but will advance the time"
     },
     {
-      "cmd": " drop - Drops an item from your hand"
+      "cmd": "drop - Drops an item from your hand"
     },
     {
-      "cmd": " graph - Shows a graph of the players health over turns"
+      "cmd": "graph - Shows a graph of the players health over turns"
     },
     {
-      "cmd": " load - Takes a file path and loads the game from a file"
+      "cmd": "load - Takes a file path and loads the game from a file"
     },
     {
-      "cmd": " prompt - Change the interactive prompt"
+      "cmd": "prompt - Change the interactive prompt"
     },
     {
-      "cmd": " rotate - Rotates the current map piece 1 rotation clockwise"
+      "cmd": "rotate - Rotates the current map piece 1 rotation clockwise"
     },
     {
-      "cmd": " save - Takes a file path and saves the game to a file"
+      "cmd": "save - Takes a file path and saves the game to a file"
     },
     {
-      "cmd": " start - Starts a new game"
+      "cmd": "start - Starts a new game"
     },
     {
-      "cmd": " swap - Swaps an item in you hand with the one in the room"
+      "cmd": "swap - Swaps an item in you hand with the one in the room"
     }
   ]
 }

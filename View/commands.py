@@ -7,6 +7,7 @@ import os
 import pickle
 import cmd
 import shelve
+import json
 
 import View
 import sys
@@ -274,3 +275,11 @@ class Commands(cmd.Cmd):
     def do_graph(self, line):
         """Shows a graph of the players health over turns"""
         self.graph.player_health_graph()
+
+    def do_all(self, line):
+        f = open('help.json')
+        data = json.load(f)
+        print("Help Command Syntax:")
+        for i in data['Help Commands']:
+            print(i)
+        f.close()
