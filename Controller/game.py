@@ -33,7 +33,6 @@ class Game:
         self.dev_cards_used = 0
         self.tiles_placed = 0
         self.attack_count = 0
-        # TODO - To be implemented
         self.difficulty = None
 
     def start_game(self):  # Run to initialise the game

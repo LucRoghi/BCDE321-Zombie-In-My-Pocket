@@ -102,5 +102,3 @@ class Player:
 
     def increment_move_count(self):
         self.move_count += 1
-
-    # TODO - Add difficulty?

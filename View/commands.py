@@ -38,7 +38,6 @@ class Commands(cmd.Cmd):
         else:
             print("Game has already Started")
 
-    # TODO - Add arguments for multiple rotation
     def do_rotate(self, line):
         """Rotates the current map piece 1 rotation clockwise"""
         if self.game.state == "Rotating":
@@ -89,7 +88,6 @@ class Commands(cmd.Cmd):
         else:
             print("Cannot choose a door right now")
 
-    # TODO - Pattern Matching https://peps.python.org/pep-0636/
     def do_move(self, direction):
         move_dic = View.Game.move_dic
         if self.game.state == "Moving":
@@ -107,38 +105,6 @@ class Commands(cmd.Cmd):
             if direction == "left":
                 self.game.move_dic("left")
                 self.game.get_game()
-
-    # def do_move_up(self, line):
-    #     """Moves the player North"""
-    #     if self.game.state == "Moving":
-    #         self.game.select_move(View.Direction.UP)
-    #         self.game.get_game()
-    #     else:
-    #         print("Player not ready to move")
-    #
-    # def do_move_right(self, line):
-    #     """Moves the player East"""
-    #     if self.game.state == "Moving":
-    #         self.game.select_move(View.Direction.RIGHT)
-    #         self.game.get_game()
-    #     else:
-    #         print("Player not ready to move")
-    #
-    # def do_move_down(self, line):
-    #     """Moves the player South"""
-    #     if self.game.state == "Moving":
-    #         self.game.select_move(View.Direction.DOWN)
-    #         self.game.get_game()
-    #     else:
-    #         print("Player not ready to move")
-    #
-    # def do_move_left(self, line):
-    #     """Moves the player West"""
-    #     if self.game.state == "Moving":
-    #         self.game.select_move(View.Direction.LEFT)
-    #         self.game.get_game()
-    #     else:
-    #         print("Player not ready to move")
 
     def do_save(self, line, name):
         """Takes a filepath and saves the game to a file"""
@@ -224,7 +190,6 @@ class Commands(cmd.Cmd):
         else:
             print("You cannot do that right now")
 
-    # Not finished yet, needs testing for spelling
     def do_drop(self, item):
         """Drops an item from your hand"""
         if self.game.state != "Game Over":

@@ -4,7 +4,6 @@ from os.path import exists
 from View.commands import Commands
 
 
-# TODO - Fix the movement tests as its broken from when I changed to move [arg]
 class TestPlayerMovement(unittest.TestCase):
     def setUp(self) -> None:
         self.commands = Commands()
