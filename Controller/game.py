@@ -1,5 +1,7 @@
 import json
 import random
+from pathlib import Path
+
 import Controller
 
 """
@@ -568,9 +570,10 @@ class Game:
         return move_dic[direction]
 
     def help_all(self):
-        f = open('help.json')
+        path = f"{Path(__file__).parent}\help.json"
+        f = open(path)
         data = json.load(f)
         print("Help Command Syntax:")
-        for i in data['Help Commands']:
-            print(i)
+        for i in data:
+            print(f"{i}: {data[i]}")
         f.close()
