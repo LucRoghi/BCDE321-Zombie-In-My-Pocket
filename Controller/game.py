@@ -577,3 +577,174 @@ class Game:
         for i in data:
             print(f"{i}: {data[i]}")
         f.close()
+
+    def place(self, line):
+        if self.state == "Rotating":
+            if self.chosen_tile.name == "Foyer":
+                self.place_tile(16, 16)
+            elif self.check_dining_room_has_exit() is False:
+                return print("Dining room entrance must face an empty tile")
+            else:
+                if self.get_current_tile().name == "Dining Room" \
+                        and self.current_move_direction == self.get_current_tile().entrance:
+                    if self.check_entrances_align():
+                        self.place_tile(self.chosen_tile.x, self.chosen_tile.y)
+                        self.move_player(self.chosen_tile.x, self.chosen_tile.y)
+                elif self.check_doors_align(self.current_move_direction):
+                    self.place_tile(self.chosen_tile.x, self.chosen_tile.y)
+                    self.move_player(self.chosen_tile.x, self.chosen_tile.y)
+                else:
+                    print(" Must have at least one door facing the way you came from")
+            self.get_game()
+        else:
+            print("Tile not chosen to place")
+
+    def choose(self, direction):
+        valid_inputs = ["up", "right", "down", "left"]
+        if direction.lower() not in valid_inputs:
+            return print("Input a valid direction. (Check choose help for more information)")
+        if direction.lower() == 'up':
+            direction = Controller.Direction.UP
+        if direction.lower() == "right":
+            direction = Controller.Direction.RIGHT
+        if direction.lower() == "down":
+            direction = Controller.Direction.DOWN
+        if direction.lower() == "left":
+            direction = Controller.Direction.LEFT
+        if self.state == "Choosing Door":
+            self.can_cower = False
+            self.choose_door(direction)
+        else:
+            print("Cannot choose a door right now")
+
+    def move(self, direction):
+        valid_inputs = ["up", "right", "down", "left"]
+        if self.state == "Moving":
+            if direction.lower() not in valid_inputs:
+                return print("Input a valid movement direction")
+            if direction is None:
+                print("Can not move!")
+            if direction == 'up':
+                self.move_dic("up")
+                self.get_game()
+            if direction == "right":
+                self.move_dic("right")
+                self.get_game()
+            if direction == "down":
+                self.move_dic("down")
+                self.get_game()
+            if direction == "left":
+                self.move_dic("left")
+                self.get_game()
+        else:
+            print("Can not move right now")
+
+    def attack(self, line):
+        arg1 = ''
+        arg2 = 0
+        if "," in line:
+            arg1, arg2 = [item for item in line.split(", ")]
+        else:
+            arg1 = line
+
+        if self.state == "Attacking":
+            if arg1 == '':
+                self.trigger_attack()
+            elif arg2 == 0:
+                self.trigger_attack(arg1)
+            elif arg1 != '' and arg2 != 0:
+                self.trigger_attack(arg1, arg2)
+
+            if len(self.chosen_tile.doors) == 1 and self.chosen_tile.name != "Foyer":
+                self.state = "Choosing Door"
+                self.get_game()
+            if self.state == "Game Over":
+                print("You lose, game over, you have succumbed to the zombie horde")
+                print("To play again, type 'restart'")
+            else:
+                self.get_game()
+        else:
+            print("You cannot attack right now")
+
+    def use(self, line):
+        arg1 = ''
+        arg2 = 0
+        if "," in line:
+            arg1, arg2 = [item for item in line.split(", ")]
+        else:
+            arg1 = line
+
+        if self.state == "Moving":
+            if arg1 == '':
+                return
+            if arg2 == 0:
+                self.use_item(arg1)
+            elif arg1 != '' and arg2 != 0:
+                self.use_item(arg1, arg2)
+        else:
+            print("You cannot do that right now")
+
+    def drop(self, item):
+        if self.state != "Game Over":
+            self.drop_item(item)
+            self.get_game()
+
+    def swap(self, line):
+        if self.state == "Swapping Item":
+            self.drop_item(line)
+            self.player.add_item(self.room_item[0], self.room_item[1])
+            self.room_item = None
+            self.get_game()
+
+    def draw(self, line):
+        self.draw_dev_card()
+
+    # DELETE LATER, DEV COMMANDS FOR TESTING
+    def give(self, line):
+        self.player.add_item("Oil", 2)
+
+    def give2(self, line):
+        self.player.add_item("Candle", 1)
+
+    def run(self, direction):
+        if self.state == "Attacking":
+            if direction == 'up':
+                self.trigger_run(Controller.Direction.UP)
+            elif direction == 'right':
+                self.trigger_run(Controller.Direction.RIGHT)
+            elif direction == 'down':
+                self.trigger_run(Controller.Direction.DOWN)
+            elif direction == 'left':
+                self.trigger_run(Controller.Direction.LEFT)
+            else:
+                print("Cannot run that direction")
+            if len(self.get_current_tile().doors) == 1 and self.chosen_tile.name != "Foyer":
+                self.state = "Choosing Door"
+                self.get_game()
+        else:
+            print("Cannot run when not being attacked")
+
+    def cower(self, line):
+        if self.state == "Moving":
+            self.trigger_cower()
+        else:
+            print("Cannot cower while right now")
+
+    def search(self, line):
+        if self.state == "Moving":
+            self.search_for_totem()
+        else:
+            print("Cannot search currently")
+
+    def bury(self, line):
+        if self.state == "Moving":
+            self.bury_totem()
+        else:
+            print("Cannot currently bury the totem")
+
+    def rotate_tile(self, line):
+        if self.state == "Rotating":
+            self.rotate()
+            self.get_game()
+        else:
+            print("Tile not chosen to rotate")

@@ -53,7 +53,7 @@ class TestPlayerMovement(unittest.TestCase):
 
     def test_zombies_break_through_wall(self):
         self.commands.do_load("test_zombie_break_wall")
-        self.commands.do_choose("n")
+        self.commands.do_choose("up")
         game = self.commands.get_game()
         self.assertEqual(game.state, "Attacking")
 
