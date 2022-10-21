@@ -195,3 +195,7 @@ class Commands(cmd.Cmd):
             Syntax: commands
         """
         return self.game.help_all()
+
+    def egs(self):
+        """IDK if this works :)"""
+        return View.FinishScreen.start()

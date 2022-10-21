@@ -4,7 +4,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
 
-class FinishScreen():
+class FinishScreen:
 
     def __init__(self, win, game_stats):
         self.game = game_stats
