@@ -10,6 +10,28 @@ import Controller
 
 
 class Game:
+    """
+    >>> import Controller
+    >>> from Controller.game import Game
+    >>> from Model.player import Player
+    >>> from Model.tile import Tile
+    >>> from Database.database import Database
+    >>> from Model.dev_card import DevCard
+    >>> from Model.directions import Direction
+    >>> player = Player()
+    >>> game = Game(player)
+    >>> game.start_game()
+    >>> game.get_time()
+    9
+    >>> game.place_tile(16, 16)
+    >>> game.check_for_room(16, 16)
+    True
+    >>> game.get_current_tile().name
+    'Foyer'
+    >>> game.check_for_dead_player()
+    False
+
+    """
     def __init__(self, player, time=9, game_map=None, indoor_tiles=None, outdoor_tiles=None, chosen_tile=None,
                  dev_cards=None, state="Starting", current_move_direction=None, can_cower=True):
         if indoor_tiles is None:
@@ -20,6 +42,7 @@ class Game:
             dev_cards = []  # Will contain a list of all available development cards
         if game_map is None:
             game_map = {}  # Tiles dictionary will have the x and y co-ords as the key and the Tile object as the value
+        self.database = Controller.Database()
         self.player = player
         self.time = time
         self.indoor_tiles = indoor_tiles
@@ -39,8 +62,11 @@ class Game:
         self.difficulty = None
 
     def start_game(self):  # Run to initialise the game
+        self.database = Controller.Database()
         self.load_tiles()
         self.load_dev_cards()
+        self.database.close_connection()
+        del self.database
         for tile in self.indoor_tiles:
             if tile.name == 'Foyer':  # Game always starts in the Foyer at 16,16
                 self.chosen_tile = tile
@@ -130,58 +156,69 @@ class Game:
             self.last_room = Controller.Direction.RIGHT
 
     # Loads tiles from excel file
-    def load_tiles(self):  # Needs Error handling in this method
-        load = Controller.Load.tiles()
-        tiles = []
-        for name in load.iterrows():
-            tiles.append(name[1].tolist())
+    def load_tiles(self):
+        tiles = self.database.get_tiles()
+        indoor_factory = Controller.IndoorFactory()
+        outdoor_factory = Controller.OutdoorFactory()
         for tile in tiles:
-            doors = self.resolve_doors(tile[3], tile[4], tile[5], tile[6])
-            if tile[2] == "Outdoor":
-                new_tile = Controller.OutdoorTile(tile[0], tile[1], doors)
-                if tile[0] == "Patio":
-                    new_tile.set_entrance(Controller.Direction.UP)
+            doors = self.resolve_doors(tile[4], tile[5], tile[6], tile[7])
+            if tile[3] == "Outdoor":
+                new_tile = outdoor_factory.create_tile(name=tile[1],
+                                                       effect=tile[2],
+                                                       doors=doors)
+                if tile[1] == "Patio":
+                    new_tile.set_entrance(d.NORTH)
                 self.outdoor_tiles.append(new_tile)
-            if tile[2] == "Indoor":
-                new_tile = Controller.IndoorTile(tile[0], tile[1], doors)
-                if tile[0] == "Dining Room":
-                    new_tile.set_entrance(Controller.Direction.UP)
+            if tile[3] == "Indoor":
+                new_tile = indoor_factory.create_tile(name=tile[1],
+                                                      effect=tile[2],
+                                                      doors=doors)
+                if tile[1] == "Dining Room":
+                    new_tile.set_entrance(d.NORTH)
                 self.indoor_tiles.append(new_tile)
+        random.shuffle(self.indoor_tiles)
+        random.shuffle(self.outdoor_tiles)
 
-    def draw_tile(self, x, y):  # Called when the player moves through a door into an un-discovered room to
-        if self.get_current_tile().type == "Indoor":  # get a new tile
+    def draw_tile(self, x, y):
+        if self.get_current_tile().type == "Indoor":
             if len(self.indoor_tiles) == 0:
-                return print("No more indoor tiles")
-            if self.get_current_tile().name == "Dining Room" \
-                    and self.current_move_direction == self.get_current_tile().entrance:
+                print("No more indoor tiles")
+                return
+            if (
+                self.get_current_tile().name == "Dining Room" and
+                self.current_move_direction ==
+                self.get_current_tile().entrance
+            ):
                 t = [t for t in self.outdoor_tiles if t.name == "Patio"]
                 tile = t[0]
                 tile.set_x(x)
                 tile.set_y(y)
                 self.chosen_tile = tile
             else:
-                tile = random.choice(self.indoor_tiles)  # Chooses a random indoor tile and places it
+                tile = self.indoor_tiles[0]
                 tile.set_x(x)
                 tile.set_y(y)
                 self.chosen_tile = tile
         elif self.get_current_tile().type == "Outdoor":
             if len(self.outdoor_tiles) == 0:
                 return print("No more outdoor tiles")
-            tile = random.choice(self.outdoor_tiles)
+            tile = self.outdoor_tiles[0]
             tile.set_x(x)
             tile.set_y(y)
             self.chosen_tile = tile
 
     # Loads development cards from excel file
     def load_dev_cards(self):
-        load = Controller.Load.dev_cards()
-        for card in load.iterrows():
-            item = card[1][0]
-            event_one = (card[1][1], card[1][2])
-            event_two = (card[1][3], card[1][4])
-            event_three = (card[1][5], card[1][6])
-            charges = card[1][7]
-            dev_card = Controller.DevCard(item, charges, event_one, event_two, event_three)
+        dev_cards = self.database.get_dev_cards()
+        for card in dev_cards:
+            item = card[1]
+            event_one = (card[2], card[3])
+            event_two = (card[4], card[5])
+            event_three = (card[6], card[7])
+            charges = card[8]
+            dev_card = Controller.DevCard(
+                item, charges, event_one, event_two, event_three
+            )
             self.dev_cards.append(dev_card)
         random.shuffle(self.dev_cards)
         self.dev_cards.pop(0)
@@ -328,7 +365,19 @@ class Game:
 
     # Call when player enters a room and draws a dev card
     def trigger_dev_card(self, time):
-        self.dev_card_check()
+        if len(self.dev_cards) == 0:
+            if self.get_time() >= 11:
+                print("You have run out of time")
+                self.lose_game()
+                return
+            else:
+                print("Reshuffling The Deck")
+                self.database = Controller.Database()
+                self.load_dev_cards()
+                self.database.close_connection()
+                del self.database
+                self.time += 1
+
         dev_card = self.dev_cards[0]
         self.dev_cards.pop(0)
         event = dev_card.get_event_at_time(time)  # Gets the event at the current time
@@ -342,37 +391,54 @@ class Game:
                 self.state = "Moving"
                 self.get_game()
             return
-        elif event[0] == "Health":  # Change health of player
+        elif event[0] == "Health":
             print("There might be something in this room")
-            self.player.add_health(event[1])
+            health = int(event[1])
+            self.player.add_health(health)
 
-            if event[1] > 0:
-                print(f"You gained {event[1]} health")
+            if health > 0:
+                print(f"You gained {health} health")
                 self.state = "Moving"
-            elif event[1] < 0:
-                print(f"You lost {event[1]} health")
+            elif health < 0:
+                print(f"You lost {health} health")
                 self.state = "Moving"
                 if self.player.get_health() <= 0:
                     self.lose_game()
                     return
-            elif event[1] == 0:
+            elif health == 0:
                 print("You didn't gain or lose any health")
-            if len(self.chosen_tile.doors) == 1 and self.chosen_tile.name != "Foyer":
+            if (
+                    len(self.chosen_tile.doors) == 1 and
+                    self.chosen_tile.name != "Foyer"
+            ):
                 self.state = "Choosing Door"
             if self.get_current_tile().name == "Garden" or "Kitchen":
                 self.trigger_room_effect(self.get_current_tile().name)
             else:
                 self.state = "Moving"
                 self.get_game()
-        elif event[0] == "Item":  # Add item to player's inventory if there is room
-            self.dev_card_check()
+        elif (
+                event[0] == "Item"
+        ):
+            if len(self.dev_cards) == 0:
+                if self.get_time() >= 11:
+                    print("You have run out of time")
+                    self.lose_game()
+                    return
+                else:
+                    print("Reshuffling The Deck")
+                    self.load_dev_cards()
+                    self.time += 1
             next_card = self.dev_cards[0]
             print(f"There is an item in this room: {next_card.get_item()}")
             if len(self.player.get_items()) < 2:
                 self.dev_cards.pop(0)
                 self.player.add_item(next_card.get_item(), next_card.charges)
                 print(f"You picked up the {next_card.get_item()}")
-                if len(self.chosen_tile.doors) == 1 and self.chosen_tile.name != "Foyer":
+                if (
+                        len(self.chosen_tile.doors) == 1 and
+                        self.chosen_tile.name != "Foyer"
+                ):
                     self.state = "Choosing Door"
                     self.get_game()
                 else:
@@ -380,19 +446,25 @@ class Game:
                     self.get_game()
             else:
                 self.room_item = [next_card.get_item(), next_card.charges]
-                response = input("You already have two items, do you want to drop one of them? (Y/N) ")
+                response = input(
+                    "You already have two items, do you want to drop "
+                    "one of them? (Y/N) "
+                )
                 if response == "Y" or response == "y":
                     self.state = "Swapping Item"
-                else:  # If player doesn't want to drop item, just move on
+                else:
                     self.state = "Moving"
                     self.room_item = None
                     self.get_game()
             if self.get_current_tile().name == "Garden" or "Kitchen":
                 self.trigger_room_effect(self.get_current_tile().name)
-        elif event[0] == "Zombies":  # Add zombies to the game, begin combat
-            print(f"There are {event[1]} zombies in this room, prepare to fight!")
+        elif event[0] == "Zombies":
+            print(
+                f"There are {event[1]} zombies in this room, "
+                f"prepare to fight!"
+            )
             self.current_zombies = int(event[1])
-            self.state = "Attacking"  # Create CMD for attacking zombies
+            self.state = "Attacking"
 
     # Call in CMD if state is attacking, *items is a list of items the player is going to use
     def trigger_attack(self, *item):
