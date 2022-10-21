@@ -29,6 +29,7 @@ class DevCard:
     >>> devcard_two.get_charges()
     1
     """
+
     def __init__(self, item, charges, event_one, event_two, event_three):
         self.item = item
         self.charges = charges
@@ -52,4 +53,3 @@ class DevCard:
 
     def get_charges(self):
         return self.charges
-

@@ -39,7 +39,8 @@ class FinishScreen():
         self.create_label(f"Your items were: {self.lines[4]}", self.frame)
         self.create_label(f"You moved {self.lines[5]} times", self.frame)
         self.create_label(f"You placed {self.lines[6]} tiles", self.frame)
-        self.create_label(f"You used {self.lines[7]} development cards", self.frame)
+        self.create_label(
+            f"You used {self.lines[7]} development cards", self.frame)
         self.create_label(f"You attacked {self.lines[8]} times", self.frame)
         self.create_label("", self.frame)
         self.create_graph()
@@ -65,8 +66,10 @@ class FinishScreen():
 
     def create_graph(self):
         self.stats = self.lines
-        self.titles = ["Health", "Attack", "Moves", "Tiles Placed", "Development Cards", "Attacks"]
-        self.data = [self.stats[2], self.stats[3], self.stats[5], self.stats[6], self.stats[7], self.stats[8]]
+        self.titles = ["Health", "Attack", "Moves",
+                       "Tiles Placed", "Development Cards", "Attacks"]
+        self.data = [self.stats[2], self.stats[3], self.stats[5],
+                     self.stats[6], self.stats[7], self.stats[8]]
         self.data = [float(point) for point in self.data]
         self.fig = Figure(figsize=(5, 5), dpi=100)
         self.ax = self.fig.add_axes([0.1, 0.1, 0.8, 0.8])

@@ -61,10 +61,14 @@ class Tile(metaclass=ABCMeta):
     def rotate_tile(self):
         for door in self.doors:
             if door == Model.Direction.UP:
-                self.change_door_position(self.doors.index(door), Model.Direction.RIGHT)
+                self.change_door_position(
+                    self.doors.index(door), Model.Direction.RIGHT)
             if door == Model.Direction.RIGHT:
-                self.change_door_position(self.doors.index(door), Model.Direction.DOWN)
+                self.change_door_position(
+                    self.doors.index(door), Model.Direction.DOWN)
             if door == Model.Direction.DOWN:
-                self.change_door_position(self.doors.index(door), Model.Direction.LEFT)
+                self.change_door_position(
+                    self.doors.index(door), Model.Direction.LEFT)
             if door == Model.Direction.LEFT:
-                self.change_door_position(self.doors.index(door), Model.Direction.UP)
+                self.change_door_position(
+                    self.doors.index(door), Model.Direction.UP)

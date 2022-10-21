@@ -32,6 +32,7 @@ class Game:
     False
 
     """
+
     def __init__(self, player, time=9, game_map=None, indoor_tiles=None, outdoor_tiles=None, chosen_tile=None,
                  dev_cards=None, state="Starting", current_move_direction=None, can_cower=True):
         if indoor_tiles is None:
@@ -224,7 +225,8 @@ class Game:
         self.dev_cards.pop(0)
         self.dev_cards.pop(0)
 
-    def move_player(self, x, y):  # Moves the player coordinates to the selected tile, changes game state
+    # Moves the player coordinates to the selected tile, changes game state
+    def move_player(self, x, y):
         self.player.set_y(y)
         self.player.set_x(x)
         if self.state == "Running":
@@ -235,9 +237,11 @@ class Game:
     def get_tile_at(self, x, y):  # Returns the tile given x and y coordinates
         return self.tiles[(x, y)]
 
-    def select_move(self, direction):  # Takes the player input and runs all checks to make sure the move is valid
+    # Takes the player input and runs all checks to make sure the move is valid
+    def select_move(self, direction):
         x, y = self.get_destination_coords(direction)
-        if self.check_for_door(direction):  # If there's a door where the player tried to move
+        # If there's a door where the player tried to move
+        if self.check_for_door(direction):
             self.current_move_direction = direction
             if self.check_for_room(x, y) is False:
                 if self.state == "Running":
@@ -251,11 +255,13 @@ class Game:
                 else:
                     self.move_player(x, y)
 
-    def check_indoor_outdoor_move(self, current_type, move_type):  # Makes sure player can only move outside through
+    # Makes sure player can only move outside through
+    def check_indoor_outdoor_move(self, current_type, move_type):
         if current_type != move_type and self.get_current_tile().name != "Patio" or "Dining Room":  # the dining room
             return False
 
-    def get_destination_coords(self, direction):  # Gets the x and y value of the proposed move
+    # Gets the x and y value of the proposed move
+    def get_destination_coords(self, direction):
         if direction == Controller.Direction.UP:
             return self.player.get_x(), self.player.get_y() - 1
         if direction == Controller.Direction.DOWN:
@@ -265,20 +271,23 @@ class Game:
         if direction == Controller.Direction.LEFT:
             return self.player.get_x() - 1, self.player.get_y()
 
-    def check_for_door(self, direction):  # Takes a direction and checks if the current room has a door there
+    # Takes a direction and checks if the current room has a door there
+    def check_for_door(self, direction):
         if direction in self.get_current_tile().doors:
             return True
         else:
             return False
 
-    def check_for_room(self, x, y):  # Takes a move direction and checks if there is a room there
+    # Takes a move direction and checks if there is a room there
+    def check_for_room(self, x, y):
         if (x, y) not in self.tiles:
             return False
         else:
             self.chosen_tile = self.tiles[(x, y)]
             return True
 
-    def check_doors_align(self, direction):  # Makes sure when placing a tile that a door is facing where the player is
+    # Makes sure when placing a tile that a door is facing where the player is
+    def check_doors_align(self, direction):
         if self.chosen_tile.name == "Foyer":  # Trying to come from
             return True
         if direction == Controller.Direction.UP:
@@ -295,7 +304,8 @@ class Game:
                 return False
         return True
 
-    def check_entrances_align(self):  # Makes sure the dining room and patio entrances align
+    # Makes sure the dining room and patio entrances align
+    def check_entrances_align(self):
         if self.get_current_tile().entrance == Controller.Direction.UP:
             if self.chosen_tile.entrance == Controller.Direction.DOWN:
                 return True
@@ -310,7 +320,8 @@ class Game:
                 return True
         return print(" Dining room and Patio entrances dont align")
 
-    def check_dining_room_has_exit(self):  # used to make sure the dining room exit is not facing an existing door
+    # used to make sure the dining room exit is not facing an existing door
+    def check_dining_room_has_exit(self):
         tile = self.chosen_tile
         if tile.name == "Dining Room":
             if self.current_move_direction == Controller.Direction.UP and tile.entrance == Controller.Direction.DOWN:
@@ -326,7 +337,8 @@ class Game:
 
     def place_tile(self, x, y):  # Places the tile into the game map dictionary
         tile = self.chosen_tile
-        self.tiles[(x, y)] = tile  # The location of the tile is stored as a tuple as the key of the dictionary entry
+        # The location of the tile is stored as a tuple as the key of the dictionary entry
+        self.tiles[(x, y)] = tile
         self.state = "Moving"  # And the tile is stored as the value
         if tile.type == "Outdoor":
             self.outdoor_tiles.pop(self.outdoor_tiles.index(tile))
@@ -380,7 +392,8 @@ class Game:
 
         dev_card = self.dev_cards[0]
         self.dev_cards.pop(0)
-        event = dev_card.get_event_at_time(time)  # Gets the event at the current time
+        # Gets the event at the current time
+        event = dev_card.get_event_at_time(time)
         if event[0] == "Nothing":
             print("There is nothing in this room")
             if len(self.chosen_tile.doors) == 1 and self.chosen_tile.name != "Foyer":
@@ -472,12 +485,14 @@ class Game:
         zombies = self.current_zombies
         if len(item) == 2:  # If the player is using two items
             if "Oil" in item and "Candle" in item:
-                print("You used the oil and the candle to attack the zombies, it kills all of them")
+                print(
+                    "You used the oil and the candle to attack the zombies, it kills all of them")
                 self.drop_item("Oil")
                 self.state = "Moving"
                 return
             elif "Gasoline" in item and "Candle" in item:
-                print("You used the gasoline and the candle to attack the zombies, it kills all of them")
+                print(
+                    "You used the gasoline and the candle to attack the zombies, it kills all of them")
                 self.drop_item("Gasoline")
                 self.state = "Moving"
                 return
@@ -535,21 +550,25 @@ class Game:
         self.select_move(direction)
         if self.state == "Moving":
             self.player.add_health(health_lost)
-            print(f"You run away from the zombies, and lose {health_lost} health")
+            print(
+                f"You run away from the zombies, and lose {health_lost} health")
             self.can_cower = True
             if self.get_current_tile().name == "Garden" or "Kitchen":
                 self.trigger_room_effect(self.get_current_tile().name)
         else:
             self.state = "Attacking"
 
-    def trigger_room_effect(self, room_name):  # Used for the Garden and Kitchen special room effects
+    # Used for the Garden and Kitchen special room effects
+    def trigger_room_effect(self, room_name):
         if room_name == "Garden":
             self.player.add_health(1)
-            print(f"After ending your turn in the {room_name} you have gained one health")
+            print(
+                f"After ending your turn in the {room_name} you have gained one health")
             self.state = "Moving"
         if room_name == "Kitchen":
             self.player.add_health(1)
-            print(f"After ending your turn in the {room_name} you have gained one health")
+            print(
+                f"After ending your turn in the {room_name} you have gained one health")
             self.state = "Moving"
 
     # If player chooses to cower instead of move to a new room
@@ -586,7 +605,8 @@ class Game:
             print("These items cannot be used right now")
             return
 
-    def choose_door(self, direction):  # used to select where a door will be made during a zombie door attack
+    # used to select where a door will be made during a zombie door attack
+    def choose_door(self, direction):
         if direction in self.chosen_tile.doors:
             print("Choose a NEW door not an existing one")
             return False
@@ -597,7 +617,8 @@ class Game:
                   f" fight or the run command to flee")
             self.state = "Attacking"
 
-    def search_for_totem(self):  # Used to search for a totem in the evil temple, will force the user to draw a dev card
+    # Used to search for a totem in the evil temple, will force the user to draw a dev card
+    def search_for_totem(self):
         if self.get_current_tile().name == "Evil Temple":
             if self.player.has_totem:
                 print("player already has the totem")
@@ -655,7 +676,6 @@ class Game:
         print("Help Command Syntax:")
         for i in data:
             print(f"{i}: {data[i]}")
-        f.close()
 
     def place(self, line):
         if self.state == "Rotating":
@@ -668,7 +688,8 @@ class Game:
                         and self.current_move_direction == self.get_current_tile().entrance:
                     if self.check_entrances_align():
                         self.place_tile(self.chosen_tile.x, self.chosen_tile.y)
-                        self.move_player(self.chosen_tile.x, self.chosen_tile.y)
+                        self.move_player(self.chosen_tile.x,
+                                         self.chosen_tile.y)
                 elif self.check_doors_align(self.current_move_direction):
                     self.place_tile(self.chosen_tile.x, self.chosen_tile.y)
                     self.move_player(self.chosen_tile.x, self.chosen_tile.y)

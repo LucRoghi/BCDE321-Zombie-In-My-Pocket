@@ -27,6 +27,7 @@ class Player:
     >>> player.get_move_count()
     2
     """
+
     def __init__(self, attack=1, health=6, x=16, y=16, has_totem=False):
         self.attack = attack
         self.health = health
@@ -69,7 +70,7 @@ class Player:
         for check_item in self.get_items():
             if check_item[0] == item:
                 check_item[1] = charge
-    
+
     def use_item_charge(self, item):
         for check_item in self.get_items():
             if check_item[0] == item:

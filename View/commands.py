@@ -3,11 +3,7 @@ Author: Jared Ireland jai0095
 
 The lis of commands the player can use to play the game
 """
-import os
-import pickle
 import cmd
-import shelve
-import json
 
 import Controller
 import View

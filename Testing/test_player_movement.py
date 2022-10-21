@@ -1,5 +1,4 @@
 import unittest
-from os.path import exists
 
 from View.commands import Commands
 
