@@ -167,14 +167,14 @@ class Game:
                                                        effect=tile[2],
                                                        doors=doors)
                 if tile[1] == "Patio":
-                    new_tile.set_entrance(d.NORTH)
+                    new_tile.set_entrance(Controller.Direction.UP)
                 self.outdoor_tiles.append(new_tile)
             if tile[3] == "Indoor":
                 new_tile = indoor_factory.create_tile(name=tile[1],
                                                       effect=tile[2],
                                                       doors=doors)
                 if tile[1] == "Dining Room":
-                    new_tile.set_entrance(d.NORTH)
+                    new_tile.set_entrance(Controller.Direction.UP)
                 self.indoor_tiles.append(new_tile)
         random.shuffle(self.indoor_tiles)
         random.shuffle(self.outdoor_tiles)
