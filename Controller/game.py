@@ -47,6 +47,13 @@ class Game:
                 self.state = "Rotating"
                 break
 
+    def game_start(self):
+        if self.state == "Starting":
+            self.start_game()
+            self.get_game()
+        else:
+            print("Game has already Started")
+
     # Tells the player the current status of the game
     def get_game(self):
         s = ''

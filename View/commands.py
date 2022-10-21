@@ -38,11 +38,7 @@ class Commands(cmd.Cmd):
             Starts a new game
             Syntax: Start
         """
-        if self.game.state == "Starting":
-            self.game.start_game()
-            self.get_game()
-        else:
-            print("Game has already Started")
+        self.game.game_start()
 
     def do_restart(self, line):
         """
