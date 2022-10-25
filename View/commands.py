@@ -5,8 +5,8 @@ The lis of commands the player can use to play the game
 """
 import cmd
 
-import Controller
-import View
+import controller
+import view
 import sys
 
 
@@ -16,10 +16,10 @@ class Commands(cmd.Cmd):
     def __init__(self):
         cmd.Cmd.__init__(self)
         self.prompt = "> "
-        self.player = View.Player()
-        self.game = View.Game(self.player)
-        self.graph = View.Graph()
-        self.file_handle = Controller.FileHandler()
+        self.player = view.Player()
+        self.game = view.Game(self.player)
+        self.graph = view.Graph()
+        self.file_handle = controller.FileHandler()
         if len(sys.argv) > 1:
             try:
                 self.do_load(sys.argv[1])
@@ -43,8 +43,8 @@ class Commands(cmd.Cmd):
         """
         del self.game
         del self.player
-        self.player = View.Player()
-        self.game = View.Game(self.player)
+        self.player = view.Player()
+        self.game = view.Game(self.player)
 
     def prompt(self, line):
         """
@@ -198,4 +198,4 @@ class Commands(cmd.Cmd):
 
     def egs(self):
         """IDK if this works :)"""
-        return View.FinishScreen.start()
+        return view.FinishScreen.start()

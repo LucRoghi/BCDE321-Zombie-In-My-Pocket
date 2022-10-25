@@ -1,11 +1,10 @@
 import unittest
-
-from View.commands import Commands
+import testing
 
 
 class TestPlayerMovement(unittest.TestCase):
     def setUp(self) -> None:
-        self.commands = Commands()
+        self.commands = testing.Commands()
         self.commands.do_load("test_move")
 
     def test_player_moves_north(self):

@@ -1,11 +1,10 @@
 import unittest
-
-from View.commands import Commands
+import testing
 
 
 class TestPlayerAttacks(unittest.TestCase):
     def setUp(self) -> None:
-        self.commands = Commands()
+        self.commands = testing.Commands()
 
     def test_player_attacks_with_no_weapon(self):
         self.commands.do_load("test_chainsaw_gasoline")

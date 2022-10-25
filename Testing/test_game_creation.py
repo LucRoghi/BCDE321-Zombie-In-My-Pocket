@@ -1,12 +1,11 @@
 import unittest
 from os.path import exists
-
-from View.commands import Commands
+import testing
 
 
 class TestGameCreation(unittest.TestCase):
     def setUp(self) -> None:
-        self.commands = Commands()
+        self.commands = testing.Commands()
 
     def test_start_creates_new_game(self):
         self.commands.do_start(None)

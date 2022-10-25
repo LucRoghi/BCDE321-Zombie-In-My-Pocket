@@ -2,7 +2,7 @@ import json
 import random
 from pathlib import Path
 
-import Controller
+import controller
 
 """
     This is a Controller class for the game. Holds most of the logic and calls everything
@@ -11,13 +11,13 @@ import Controller
 
 class Game:
     """
-    >>> import Controller
-    >>> from Controller.game import Game
-    >>> from Model.player import Player
-    >>> from Model.tile import Tile
+    >>> import controller
+    >>> from controller.game import Game
+    >>> from model.player import Player
+    >>> from model.tile import Tile
     >>> from Database.database import Database
-    >>> from Model.dev_card import DevCard
-    >>> from Model.directions import Direction
+    >>> from model.dev_card import DevCard
+    >>> from model.directions import Direction
     >>> player = Player()
     >>> game = Game(player)
     >>> game.start_game()
@@ -43,7 +43,7 @@ class Game:
             dev_cards = []  # Will contain a list of all available development cards
         if game_map is None:
             game_map = {}  # Tiles dictionary will have the x and y co-ords as the key and the Tile object as the value
-        self.database = Controller.Database()
+        self.database = controller.Database()
         self.player = player
         self.time = time
         self.indoor_tiles = indoor_tiles
@@ -63,7 +63,7 @@ class Game:
         self.difficulty = None
 
     def start_game(self):  # Run to initialise the game
-        self.database = Controller.Database()
+        self.database = controller.Database()
         self.load_tiles()
         self.load_dev_cards()
         self.database.close_connection()
@@ -148,19 +148,19 @@ class Game:
 
     def set_last_room(self, direction):
         if direction == "n":
-            self.last_room = Controller.Direction.DOWN
+            self.last_room = controller.Direction.DOWN
         elif direction == "e":
-            self.last_room = Controller.Direction.LEFT
+            self.last_room = controller.Direction.LEFT
         elif direction == "s":
-            self.last_room = Controller.Direction.UP
+            self.last_room = controller.Direction.UP
         elif direction == "w":
-            self.last_room = Controller.Direction.RIGHT
+            self.last_room = controller.Direction.RIGHT
 
     # Loads tiles from excel file
     def load_tiles(self):
         tiles = self.database.get_tiles()
-        indoor_factory = Controller.IndoorFactory()
-        outdoor_factory = Controller.OutdoorFactory()
+        indoor_factory = controller.IndoorFactory()
+        outdoor_factory = controller.OutdoorFactory()
         for tile in tiles:
             doors = self.resolve_doors(tile[4], tile[5], tile[6], tile[7])
             if tile[3] == "Outdoor":
@@ -168,14 +168,14 @@ class Game:
                                                        effect=tile[2],
                                                        doors=doors)
                 if tile[1] == "Patio":
-                    new_tile.set_entrance(Controller.Direction.UP)
+                    new_tile.set_entrance(controller.Direction.UP)
                 self.outdoor_tiles.append(new_tile)
             if tile[3] == "Indoor":
                 new_tile = indoor_factory.create_tile(name=tile[1],
                                                       effect=tile[2],
                                                       doors=doors)
                 if tile[1] == "Dining Room":
-                    new_tile.set_entrance(Controller.Direction.UP)
+                    new_tile.set_entrance(controller.Direction.UP)
                 self.indoor_tiles.append(new_tile)
         random.shuffle(self.indoor_tiles)
         random.shuffle(self.outdoor_tiles)
@@ -217,7 +217,7 @@ class Game:
             event_two = (card[4], card[5])
             event_three = (card[6], card[7])
             charges = card[8]
-            dev_card = Controller.DevCard(
+            dev_card = controller.DevCard(
                 item, charges, event_one, event_two, event_three
             )
             self.dev_cards.append(dev_card)
@@ -262,13 +262,13 @@ class Game:
 
     # Gets the x and y value of the proposed move
     def get_destination_coords(self, direction):
-        if direction == Controller.Direction.UP:
+        if direction == controller.Direction.UP:
             return self.player.get_x(), self.player.get_y() - 1
-        if direction == Controller.Direction.DOWN:
+        if direction == controller.Direction.DOWN:
             return self.player.get_x(), self.player.get_y() + 1
-        if direction == Controller.Direction.RIGHT:
+        if direction == controller.Direction.RIGHT:
             return self.player.get_x() + 1, self.player.get_y()
-        if direction == Controller.Direction.LEFT:
+        if direction == controller.Direction.LEFT:
             return self.player.get_x() - 1, self.player.get_y()
 
     # Takes a direction and checks if the current room has a door there
@@ -290,33 +290,33 @@ class Game:
     def check_doors_align(self, direction):
         if self.chosen_tile.name == "Foyer":  # Trying to come from
             return True
-        if direction == Controller.Direction.UP:
-            if Controller.Direction.DOWN not in self.chosen_tile.doors:
+        if direction == controller.Direction.UP:
+            if controller.Direction.DOWN not in self.chosen_tile.doors:
                 return False
-        if direction == Controller.Direction.DOWN:
-            if Controller.Direction.UP not in self.chosen_tile.doors:
+        if direction == controller.Direction.DOWN:
+            if controller.Direction.UP not in self.chosen_tile.doors:
                 return False
-        if direction == Controller.Direction.LEFT:
-            if Controller.Direction.RIGHT not in self.chosen_tile.doors:
+        if direction == controller.Direction.LEFT:
+            if controller.Direction.RIGHT not in self.chosen_tile.doors:
                 return False
-        elif direction == Controller.Direction.RIGHT:
-            if Controller.Direction.LEFT not in self.chosen_tile.doors:
+        elif direction == controller.Direction.RIGHT:
+            if controller.Direction.LEFT not in self.chosen_tile.doors:
                 return False
         return True
 
     # Makes sure the dining room and patio entrances align
     def check_entrances_align(self):
-        if self.get_current_tile().entrance == Controller.Direction.UP:
-            if self.chosen_tile.entrance == Controller.Direction.DOWN:
+        if self.get_current_tile().entrance == controller.Direction.UP:
+            if self.chosen_tile.entrance == controller.Direction.DOWN:
                 return True
-        if self.get_current_tile().entrance == Controller.Direction.DOWN:
-            if self.chosen_tile.entrance == Controller.Direction.UP:
+        if self.get_current_tile().entrance == controller.Direction.DOWN:
+            if self.chosen_tile.entrance == controller.Direction.UP:
                 return True
-        if self.get_current_tile().entrance == Controller.Direction.LEFT:
-            if self.chosen_tile.entrance == Controller.Direction.RIGHT:
+        if self.get_current_tile().entrance == controller.Direction.LEFT:
+            if self.chosen_tile.entrance == controller.Direction.RIGHT:
                 return True
-        if self.get_current_tile().entrance == Controller.Direction.RIGHT:
-            if self.chosen_tile.entrance == Controller.Direction.LEFT:
+        if self.get_current_tile().entrance == controller.Direction.RIGHT:
+            if self.chosen_tile.entrance == controller.Direction.LEFT:
                 return True
         return print(" Dining room and Patio entrances dont align")
 
@@ -324,13 +324,13 @@ class Game:
     def check_dining_room_has_exit(self):
         tile = self.chosen_tile
         if tile.name == "Dining Room":
-            if self.current_move_direction == Controller.Direction.UP and tile.entrance == Controller.Direction.DOWN:
+            if self.current_move_direction == controller.Direction.UP and tile.entrance == controller.Direction.DOWN:
                 return False
-            if self.current_move_direction == Controller.Direction.DOWN and tile.entrance == Controller.Direction.UP:
+            if self.current_move_direction == controller.Direction.DOWN and tile.entrance == controller.Direction.UP:
                 return False
-            if self.current_move_direction == Controller.Direction.RIGHT and tile.entrance == Controller.Direction.LEFT:
+            if self.current_move_direction == controller.Direction.RIGHT and tile.entrance == controller.Direction.LEFT:
                 return False
-            if self.current_move_direction == Controller.Direction.LEFT and tile.entrance == Controller.Direction.RIGHT:
+            if self.current_move_direction == controller.Direction.LEFT and tile.entrance == controller.Direction.RIGHT:
                 return False
         else:
             return True
@@ -384,7 +384,7 @@ class Game:
                 return
             else:
                 print("Reshuffling The Deck")
-                self.database = Controller.Database()
+                self.database = controller.Database()
                 self.load_dev_cards()
                 self.database.close_connection()
                 del self.database
@@ -649,23 +649,23 @@ class Game:
     def resolve_doors(n, e, s, w):
         doors = []
         if n == 1:
-            doors.append(Controller.Direction.UP)
+            doors.append(controller.Direction.UP)
         if e == 1:
-            doors.append(Controller.Direction.RIGHT)
+            doors.append(controller.Direction.RIGHT)
         if s == 1:
-            doors.append(Controller.Direction.DOWN)
+            doors.append(controller.Direction.DOWN)
         if w == 1:
-            doors.append(Controller.Direction.LEFT)
+            doors.append(controller.Direction.LEFT)
         return doors
 
     def lose_game(self):
         self.state = "Game Over"
 
     def move_dic(self, direction):
-        move_dic = {"up": self.select_move(Controller.Direction.UP),
-                    "right": self.select_move(Controller.Direction.RIGHT),
-                    "down": self.select_move(Controller.Direction.DOWN),
-                    "left": self.select_move(Controller.Direction.LEFT)
+        move_dic = {"up": self.select_move(controller.Direction.UP),
+                    "right": self.select_move(controller.Direction.RIGHT),
+                    "down": self.select_move(controller.Direction.DOWN),
+                    "left": self.select_move(controller.Direction.LEFT)
                     }
         return move_dic[direction]
 
@@ -704,13 +704,13 @@ class Game:
         if direction.lower() not in valid_inputs:
             return print("Input a valid direction. (Check choose help for more information)")
         if direction.lower() == 'up':
-            direction = Controller.Direction.UP
+            direction = controller.Direction.UP
         if direction.lower() == "right":
-            direction = Controller.Direction.RIGHT
+            direction = controller.Direction.RIGHT
         if direction.lower() == "down":
-            direction = Controller.Direction.DOWN
+            direction = controller.Direction.DOWN
         if direction.lower() == "left":
-            direction = Controller.Direction.LEFT
+            direction = controller.Direction.LEFT
         if self.state == "Choosing Door":
             self.can_cower = False
             self.choose_door(direction)
@@ -809,13 +809,13 @@ class Game:
     def run(self, direction):
         if self.state == "Attacking":
             if direction == 'up':
-                self.trigger_run(Controller.Direction.UP)
+                self.trigger_run(controller.Direction.UP)
             elif direction == 'right':
-                self.trigger_run(Controller.Direction.RIGHT)
+                self.trigger_run(controller.Direction.RIGHT)
             elif direction == 'down':
-                self.trigger_run(Controller.Direction.DOWN)
+                self.trigger_run(controller.Direction.DOWN)
             elif direction == 'left':
-                self.trigger_run(Controller.Direction.LEFT)
+                self.trigger_run(controller.Direction.LEFT)
             else:
                 print("Cannot run that direction")
             if len(self.get_current_tile().doors) == 1 and self.chosen_tile.name != "Foyer":

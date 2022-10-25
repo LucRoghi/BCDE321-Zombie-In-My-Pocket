@@ -1,4 +1,4 @@
-import Model
+import abfac
 from abc import ABCMeta
 
 
@@ -44,31 +44,31 @@ class Tile(metaclass=ABCMeta):
         self.entrance = direction
 
     def rotate_entrance(self):
-        if self.entrance == Model.Direction.UP:
-            self.set_entrance(Model.Direction.RIGHT)
+        if self.entrance == abfac.Direction.UP:
+            self.set_entrance(abfac.Direction.RIGHT)
             return
-        elif self.entrance == Model.Direction.DOWN:
-            self.set_entrance(Model.Direction.LEFT)
+        elif self.entrance == abfac.Direction.DOWN:
+            self.set_entrance(abfac.Direction.LEFT)
             return
-        elif self.entrance == Model.Direction.RIGHT:
-            self.set_entrance(Model.Direction.DOWN)
+        elif self.entrance == abfac.Direction.RIGHT:
+            self.set_entrance(abfac.Direction.DOWN)
             return
         else:
-            self.set_entrance(Model.Direction.UP)
+            self.set_entrance(abfac.Direction.UP)
             return
 
     # Will rotate the tile one position clockwise
     def rotate_tile(self):
         for door in self.doors:
-            if door == Model.Direction.UP:
+            if door == abfac.Direction.UP:
                 self.change_door_position(
-                    self.doors.index(door), Model.Direction.RIGHT)
-            if door == Model.Direction.RIGHT:
+                    self.doors.index(door), abfac.Direction.RIGHT)
+            if door == abfac.Direction.RIGHT:
                 self.change_door_position(
-                    self.doors.index(door), Model.Direction.DOWN)
-            if door == Model.Direction.DOWN:
+                    self.doors.index(door), abfac.Direction.DOWN)
+            if door == abfac.Direction.DOWN:
                 self.change_door_position(
-                    self.doors.index(door), Model.Direction.LEFT)
-            if door == Model.Direction.LEFT:
+                    self.doors.index(door), abfac.Direction.LEFT)
+            if door == abfac.Direction.LEFT:
                 self.change_door_position(
-                    self.doors.index(door), Model.Direction.UP)
+                    self.doors.index(door), abfac.Direction.UP)

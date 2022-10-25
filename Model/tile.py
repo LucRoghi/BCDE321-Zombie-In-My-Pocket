@@ -3,7 +3,7 @@ Author: Jared Ireland jai0095
 
 Tile Constructor for the two sub tile files (Outdoor and Indoor)
 """
-import Model
+import model
 
 
 class Tile:
@@ -46,30 +46,30 @@ class Tile:
         self.entrance = direction
 
     def rotate_entrance(self):
-        if self.entrance == Model.Direction.UP:
-            self.set_entrance(Model.Direction.RIGHT)
+        if self.entrance == model.Direction.UP:
+            self.set_entrance(model.Direction.RIGHT)
             return
-        if self.entrance == Model.Direction.DOWN:
-            self.set_entrance(Model.Direction.LEFT)
+        if self.entrance == model.Direction.DOWN:
+            self.set_entrance(model.Direction.LEFT)
             return
-        if self.entrance == Model.Direction.RIGHT:
-            self.set_entrance(Model.Direction.DOWN)
+        if self.entrance == model.Direction.RIGHT:
+            self.set_entrance(model.Direction.DOWN)
             return
-        if self.entrance == Model.Direction.LEFT:
-            self.set_entrance(Model.Direction.UP)
+        if self.entrance == model.Direction.LEFT:
+            self.set_entrance(model.Direction.UP)
             return
 
     def rotate_tile(self):  # Will rotate the tile 1 position clockwise
         for door in self.doors:
-            if door == Model.Direction.UP:
+            if door == model.Direction.UP:
                 self.change_door_position(
-                    self.doors.index(door), Model.Direction.RIGHT)
-            if door == Model.Direction.RIGHT:
+                    self.doors.index(door), model.Direction.RIGHT)
+            if door == model.Direction.RIGHT:
                 self.change_door_position(
-                    self.doors.index(door), Model.Direction.DOWN)
-            if door == Model.Direction.DOWN:
+                    self.doors.index(door), model.Direction.DOWN)
+            if door == model.Direction.DOWN:
                 self.change_door_position(
-                    self.doors.index(door), Model.Direction.LEFT)
-            if door == Model.Direction.LEFT:
+                    self.doors.index(door), model.Direction.LEFT)
+            if door == model.Direction.LEFT:
                 self.change_door_position(
-                    self.doors.index(door), Model.Direction.UP)
+                    self.doors.index(door), model.Direction.UP)

@@ -3,13 +3,13 @@ Author: Jared Ireland jai0095
 
 Outdoor Tile setup
 """
-import Model
+import model
 
 
-class OutdoorTile(Model.Tile):
+class OutdoorTile(model.Tile):
     """
-    >>> from Model.tile
-    >>> from Model.directions import Direction
+    >>> from model.tile
+    >>> from model.directions import Direction
     >>> tile = OutdoorTile("Graveyard", x=0, y=0)
     >>> tile.get_name()
     'Graveyard'

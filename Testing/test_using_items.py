@@ -1,11 +1,10 @@
 import unittest
-
-from View.commands import Commands
+import testing
 
 
 class TestUsingItems(unittest.TestCase):
     def setUp(self):
-        self.commands = Commands()
+        self.commands = testing.Commands()
 
     def test_using_soda_increases_health(self):
         self.commands.do_load("test_give_soda")

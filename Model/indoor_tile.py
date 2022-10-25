@@ -3,13 +3,13 @@ Author: Jared Ireland jai0095
 
 Indoor Tile setup
 """
-import Model
+import model
 
 
-class IndoorTile(Model.Tile):
+class IndoorTile(model.Tile):
     """
-    >>> from Model.tile
-    >>> from Model.directions import Direction
+    >>> from model.tile
+    >>> from model.directions import Direction
     >>> tile = IndoorTile("Family Room", x=0, y=0)
     >>> tile.get_name()
     'Family Room'

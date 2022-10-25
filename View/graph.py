@@ -5,12 +5,12 @@ This class here, over time, takes in the data of all the players moves making it
 players health at every turn. When the player loses or wins the graph will then be displayed as an "End of Game" result
 """
 import matplotlib.pyplot as plt
-import View
+import view
 
 
 class Graph:
     def __init__(self):
-        self.player = View.Player()
+        self.player = view.Player()
         self.turn_list = []
         self.health_list = []
 

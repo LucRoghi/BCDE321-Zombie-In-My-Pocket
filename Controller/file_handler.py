@@ -1,12 +1,12 @@
 import os
 import shelve
-import Controller
+import controller
 
 
 class FileHandler:
     def __int__(self):
-        self.player = Controller.Player()
-        self.game = Controller.Game(self.player)
+        self.player = controller.Player()
+        self.game = controller.Game(self.player)
 
     def save(self, line, name):
         if not name:

@@ -1,16 +1,16 @@
-from Controller.game import Game
-from Controller.file_handler import FileHandler
+from controller.game import Game
+from controller.file_handler import FileHandler
 
-from Database.database import Database
+from database.database import Database
 
-from Model.dev_card import DevCard
-from Model.directions import Direction
-from Model.indoor_tile import IndoorTile
-from Model.load import Load
-from Model.outdoor_tile import OutdoorTile
-from Model.player import Player
-from Model.tile import Tile
-from Model.indoor_factory import IndoorFactory
-from Model.outdoor_factory import OutdoorFactory
+from model.dev_card import DevCard
+from model.directions import Direction
+from model.indoor_tile import IndoorTile
+from model.load import Load
+from model.outdoor_tile import OutdoorTile
+from model.player import Player
+from model.tile import Tile
+from abfac.indoor_factory import IndoorFactory
+from abfac.outdoor_factory import OutdoorFactory
 
-from View.end_game_screen import FinishScreen
+from view.end_game_screen import FinishScreen
