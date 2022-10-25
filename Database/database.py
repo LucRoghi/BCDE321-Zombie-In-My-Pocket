@@ -5,11 +5,11 @@ import os
 
 class Database:
     def __init__(self):
-        if os.path.isfile(r"pythonsqlite.db"):
-            self.conn = self.create_connection(r"pythonsqlite.db")
+        if os.path.isfile(r".\database\pythonsqlite.db"):
+            self.conn = self.create_connection(r".\database\pythonsqlite.db")
             return
         else:
-            self.conn = self.create_connection(r"pythonsqlite.db")
+            self.conn = self.create_connection(r".\database\pythonsqlite.db")
             sql_create_tiles_table = """ CREATE TABLE IF NOT EXISTS tiles (
                                             id integer PRIMARY KEY,
                                             name text NOT NULL,

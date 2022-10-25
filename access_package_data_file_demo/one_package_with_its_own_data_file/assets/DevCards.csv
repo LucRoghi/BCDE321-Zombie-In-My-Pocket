@@ -1,0 +1,10 @@
+﻿item,event_one,consequence,event_two,consequence,event_three,consequence,charges
+Oil,Nothing,None,Item,None,Zombies,6,1
+Gasoline,Zombies,4,Health,-1,Item,None,1
+Board With Nails,Item,None,Zombies,4,Health,-1,Unlimited
+Machete,Zombies,4,Health,-1,Zombies,6,Unlimited
+Grisly Femur,Item,None,Zombies,5,Health,-1,Unlimited
+Golf Club,Health,-1,Zombies,4,Nothing,None,Unlimited
+Chainsaw,Zombies,3,Nothing,None,Zombies,5,2
+Can of Soda,Health,1,Item,,Zombies,4,1
+Candle,Nothing,None,Health,1,Zombies,4,Unlimited

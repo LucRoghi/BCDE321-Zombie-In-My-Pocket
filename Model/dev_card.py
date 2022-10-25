@@ -53,9 +53,3 @@ class DevCard:
 
     def get_charges(self):
         return self.charges
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

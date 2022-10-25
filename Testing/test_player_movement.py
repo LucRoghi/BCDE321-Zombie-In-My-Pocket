@@ -1,10 +1,8 @@
 import unittest
-from os.path import exists
 
 from View.commands import Commands
 
 
-# TODO - Fix the movement tests as its broken from when I changed to move [arg]
 class TestPlayerMovement(unittest.TestCase):
     def setUp(self) -> None:
         self.commands = Commands()
@@ -54,7 +52,7 @@ class TestPlayerMovement(unittest.TestCase):
 
     def test_zombies_break_through_wall(self):
         self.commands.do_load("test_zombie_break_wall")
-        self.commands.do_choose("n")
+        self.commands.do_choose("up")
         game = self.commands.get_game()
         self.assertEqual(game.state, "Attacking")
 

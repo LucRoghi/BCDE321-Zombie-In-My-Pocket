@@ -1,13 +1,11 @@
-"""
-Author: Jared Ireland jai0095
-
-Tile Constructor for the two sub tile files (Outdoor and Indoor)
-"""
 import Model
+from abc import ABCMeta
 
 
-class Tile:
-    def __init__(self, name, x=16, y=16, effect=None, doors=None, entrance=None):
+class Tile(metaclass=ABCMeta):
+    def __init__(
+            self, name, x=16, y=16, effect=None, doors=None, entrance=None
+    ):
         self.name = name
         self.x = x
         self.y = y
@@ -49,17 +47,18 @@ class Tile:
         if self.entrance == Model.Direction.UP:
             self.set_entrance(Model.Direction.RIGHT)
             return
-        if self.entrance == Model.Direction.DOWN:
+        elif self.entrance == Model.Direction.DOWN:
             self.set_entrance(Model.Direction.LEFT)
             return
-        if self.entrance == Model.Direction.RIGHT:
+        elif self.entrance == Model.Direction.RIGHT:
             self.set_entrance(Model.Direction.DOWN)
             return
-        if self.entrance == Model.Direction.LEFT:
+        else:
             self.set_entrance(Model.Direction.UP)
             return
 
-    def rotate_tile(self):  # Will rotate the tile 1 position clockwise
+    # Will rotate the tile one position clockwise
+    def rotate_tile(self):
         for door in self.doors:
             if door == Model.Direction.UP:
                 self.change_door_position(

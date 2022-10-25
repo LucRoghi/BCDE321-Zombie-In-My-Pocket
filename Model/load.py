@@ -4,11 +4,17 @@ import pandas
 class Load:
     @staticmethod
     def dev_cards():
-        return pandas.read_excel(r'../Model/DevCards.xlsx')
+        path = f"{Path(__file__).parent}\DevCards.xlsx"
+        f = open(path)
+        data = pandas.read_excel(f)
+        return data
 
     @staticmethod
     def tiles():
-        return pandas.read_excel(r'../Model/Tiles.xlsx')
+        path = f"{Path(__file__).parent}\Tiles.xlsx"
+        f = open(path)
+        data = pandas.read_excel(f)
+        return data
 
 
 # Debugging Test Case - Ignore

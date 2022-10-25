@@ -8,7 +8,7 @@ import Model
 
 class IndoorTile(Model.Tile):
     """
-    >>> from Model.tile import Tile
+    >>> from Model.tile
     >>> from Model.directions import Direction
     >>> tile = IndoorTile("Family Room", x=0, y=0)
     >>> tile.get_name()
@@ -37,9 +37,3 @@ class IndoorTile(Model.Tile):
 
     def __repr__(self):
         return f"{self.name}, {self.doors}, {self.type}, {self.x}, {self.y}, {self.effect}"
-
-
-if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()

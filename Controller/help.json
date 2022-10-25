@@ -1,0 +1,23 @@
+{
+  "attack": "Player attacks the zombies",
+  "prompt": "Change the interactive prompt",
+  "choose": "When a zombie door attack is complete Direction. Use this command to select an exit door with a valid direction ",
+  "draw": "Draws a new development card (Must be done after every move)",
+  "exit": "Exits the game without saving",
+  "help": "List available commands with 'help' or detailed help with 'help attack'.",
+  "place": "Places the current map tile",
+  "restart": "Deletes your progress and ends the game",
+  "run": "Given a direction will flee attacking zombies at a price of one health",
+  "search": "Searches for the zombie totem. (Player must be in the evil temple and will have to resolve a dev card)",
+  "status": "Shows the status of the player",
+  "use": "Player uses item",
+  "bury": "Buries the totem. (Player must be in the graveyard and will have to resolve a dev card)",
+  "cower": "When attacked use this command to cower. You will take no damage but will advance the time",
+  "drop": "Drops an item from your hand",
+  "graph": "Shows a graph of the players health over turns",
+  "load": "Takes a file path and loads the game from a file",
+  "rotate": "Rotates the current map piece 1 rotation clockwise",
+  "save": "Takes a file path and saves the game to a file",
+  "start": "Starts a new game",
+  "swap": "Swaps an item in you hand with the one in the room"
+}

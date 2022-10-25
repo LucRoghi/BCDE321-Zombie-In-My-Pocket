@@ -1,0 +1,6 @@
+PEP 302 - New Import Hooks
+
+To retrieve the data for arbitrary "files" from the underlying storage backend,
+loader objects may supply a method named get_data():
+
+loader.get_data(path)
