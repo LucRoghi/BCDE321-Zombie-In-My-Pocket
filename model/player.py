@@ -7,7 +7,7 @@ Basic player setup
 
 class Player:
     """
-    >>> from Model import Player
+    >>> from model import Player
     >>> player = Player()
     >>> player.get_health()
     6
