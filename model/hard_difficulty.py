@@ -1,7 +1,7 @@
 import model
 
 
-class HardDifficulty(AbstractDifficulty):
+class HardDifficulty(model.AbstractDifficulty):
     def __init__(self, game):
         self.game = game
 
