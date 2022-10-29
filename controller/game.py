@@ -3,6 +3,7 @@ import random
 from pathlib import Path
 
 import controller
+import model.easy_difficulty
 
 """
     This is a Controller class for the game. Holds most of the logic and calls everything
@@ -15,7 +16,7 @@ class Game:
     >>> from controller.game import Game
     >>> from model.player import Player
     >>> from model.tile import Tile
-    >>> from Database.database import Database
+    >>> from database.database import Database
     >>> from model.dev_card import DevCard
     >>> from model.directions import Direction
     >>> player = Player()
@@ -71,7 +72,7 @@ class Game:
         for tile in self.indoor_tiles:
             if tile.name == 'Foyer':  # Game always starts in the Foyer at 16,16
                 self.chosen_tile = tile
-                self.state = "Rotating"
+                self.state = "Choosing Difficulty"
                 break
 
     def game_start(self):
@@ -95,17 +96,38 @@ class Game:
             s = "Choose where to place a new door with the choose command + n, e, s, w"
         if self.state == "Drawing Dev Card":
             s = "Use the draw command to draw a random development card"
+        if self.state == "Choosing Difficulty":
+            print("Select the difficulty of the game by typing the difficulty\n Difficulties: Easy, Medium, "
+                  "Hard \n e.g. 'difficulty Easy'")
+            return
         for door in self.chosen_tile.doors:
             f += door.name + ', '
         return print(f' The chosen tile is {self.chosen_tile.name}, the available doors in this room are {f}\n '
                      f'The state is {self.state}. {s} \n Special Entrances : {self.chosen_tile.entrance}')
 
     def get_player_status(self):
-        return print(f'It is {self.get_time()} pm \n'
-                     f'The player currently has {self.player.get_health()} health \n'
-                     f'The player currently has {self.player.get_attack()} attack \n'
-                     f'The players items are {self.player.get_items()}\n'
-                     f'The game state is {self.state}')
+        return print(
+            f"--------------------------------------\n"
+            f"Game Status \n"
+            f"--------------------------------------\n"
+            f"It is {self.get_time()} pm \n"
+            f"Holding totem: {self.player.get_totem()} \n"
+            f"Game Difficulty: {self.difficulty} \n"
+            f"--------------------------------------\n"
+            f"Player Status \n"
+            f"--------------------------------------\n"
+            f"The player currently has {self.player.get_health()} health \n"
+            f"The player currently has {self.player.get_attack()} attack \n"
+            f"The players items are {self.player.get_items()} "
+            f"(Item, Charges left)\n"
+            f"--------------------------------------\n"
+            f"Current \n"
+            f"--------------------------------------\n"
+            f"The current tile is {self.get_current_tile().name} \n"
+            f"There are currently {len(self.dev_cards)} development cards left in the deck\n"
+            f"The game state is {self.state}\n"
+            f"--------------------------------------"
+        )
 
     def get_time(self):
         return self.time
@@ -186,9 +208,9 @@ class Game:
                 print("No more indoor tiles")
                 return
             if (
-                self.get_current_tile().name == "Dining Room" and
-                self.current_move_direction ==
-                self.get_current_tile().entrance
+                    self.get_current_tile().name == "Dining Room" and
+                    self.current_move_direction ==
+                    self.get_current_tile().entrance
             ):
                 t = [t for t in self.outdoor_tiles if t.name == "Patio"]
                 tile = t[0]
@@ -482,7 +504,6 @@ class Game:
     # Call in CMD if state is attacking, *items is a list of items the player is going to use
     def trigger_attack(self, *item):
         player_attack = self.player.get_attack()
-        zombies = self.current_zombies
         if len(item) == 2:  # If the player is using two items
             if "Oil" in item and "Candle" in item:
                 print(
@@ -528,8 +549,11 @@ class Game:
                 print("You cannot use this item right now, try again")
                 return
 
+        self.trigger_damage(player_attack)
+
+    def trigger_damage(self, player_attack):
         # Calculate damage on the player
-        damage = zombies - player_attack
+        damage = self.current_zombies - player_attack
         if damage < 0:
             damage = 0
         print(f"You attacked the zombies, you lost {damage} health")
@@ -848,3 +872,19 @@ class Game:
             self.get_game()
         else:
             print("Tile not chosen to rotate")
+
+    def difficulty(self, line):
+        if self.state == "Choosing Difficulty":
+            if line == "easy":
+                self.get_player().set_difficulty(model.EasyDifficulty())
+                self.get_player().trigger_difficulty()
+            elif line == "medium":
+                self.get_player().set_difficulty(model.MediumDifficulty())
+                self.get_player().trigger_difficulty()
+            else:
+                self.get_player().set_difficulty(model.HardDifficulty())
+                self.get_player().trigger_difficulty()
+            self.state = "Rotating"
+            self.get_game()
+        else:
+            print("Cannot Set Difficulty Right Now")

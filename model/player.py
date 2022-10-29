@@ -36,6 +36,7 @@ class Player:
         self.items = []  # Holds the players items. Can hold 2 items at a time
         self.has_totem = has_totem
         self.move_count = 0
+        self.difficulty = None
 
     def get_health(self):
         return self.health
@@ -103,3 +104,9 @@ class Player:
 
     def increment_move_count(self):
         self.move_count += 1
+
+    def set_difficulty(self, difficulty):
+        self.difficulty = difficulty
+
+    def trigger_difficulty(self):
+        self.difficulty.set_difficulty()

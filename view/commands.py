@@ -199,3 +199,11 @@ class Commands(cmd.Cmd):
     def egs(self):
         """IDK if this works :)"""
         return view.FinishScreen.start()
+
+    def do_difficulty(self, line):
+        """
+            Selects the games difficulty
+            Required State: Choosing Difficulty
+            Syntax: difficulty <difficulty>
+        """
+        return self.game.difficulty()
