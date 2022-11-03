@@ -9,3 +9,9 @@ What to do (Possibly) for assignment 3:
         Abstract Factory - https://refactoring.guru/design-patterns/abstract-factory
             Outdoor
             Indoor
+
+        Stat:
+            Action
+            Time
+            With/Without Zombie
+            Strat for Moving tiles <-

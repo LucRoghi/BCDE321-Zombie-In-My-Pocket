@@ -1,7 +1,7 @@
 """
-Author: Jared Ireland jai0095
+    Author: Jared Ireland jai0095
 
-The lis of commands the player can use to play the game
+    The lis of commands the player can use to play the game
 """
 import cmd
 
