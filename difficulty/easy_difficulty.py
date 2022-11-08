@@ -1,9 +1,9 @@
-import model
+import difficulty
 
 
-class EasyDifficulty(model.AbstractDifficulty):
-    def __init__(self, game):
-        self.game = game
+class EasyDifficulty(difficulty.AbstractDifficulty):
+    def __init__(self):
+        self.game = difficulty.Game(difficulty.Player)
 
     def set_difficulty(self):
         self.game.difficulty = "Easy"

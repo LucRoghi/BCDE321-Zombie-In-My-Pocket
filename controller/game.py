@@ -3,7 +3,7 @@ import random
 from pathlib import Path
 
 import controller
-import model.easy_difficulty
+import difficulty
 
 """
     This is a Controller class for the game. Holds most of the logic and calls everything
@@ -61,7 +61,7 @@ class Game:
         self.dev_cards_used = 0
         self.tiles_placed = 0
         self.attack_count = 0
-        self.difficulty = None
+        # self.difficulty = None
 
     def start_game(self):  # Run to initialise the game
         self.database = controller.Database()
@@ -745,20 +745,9 @@ class Game:
         valid_inputs = ["up", "right", "down", "left"]
         if self.state == "Moving":
             if direction.lower() not in valid_inputs:
-                return print("Input a valid movement direction")
-            if direction is None:
-                print("Can not move!")
-            if direction == 'up':
-                self.move_dic("up")
-                self.get_game()
-            if direction == "right":
-                self.move_dic("right")
-                self.get_game()
-            if direction == "down":
-                self.move_dic("down")
-                self.get_game()
-            if direction == "left":
-                self.move_dic("left")
+                print("Input a valid movement direction")
+            else:
+                self.move_dic(direction)
                 self.get_game()
         else:
             print("Can not move right now")
@@ -875,15 +864,14 @@ class Game:
 
     def difficulty(self, line):
         if self.state == "Choosing Difficulty":
-            if line == "easy":
-                self.get_player().set_difficulty(model.EasyDifficulty())
-                self.get_player().trigger_difficulty()
-            elif line == "medium":
-                self.get_player().set_difficulty(model.MediumDifficulty())
-                self.get_player().trigger_difficulty()
+            if line.lower() == "easy":
+                self.get_player().set_difficulty(difficulty.EasyDifficulty())
+            elif line.lower() == "medium":
+                self.get_player().set_difficulty(difficulty.MediumDifficulty())
+            elif line.lower() == "hard":
+                self.get_player().set_difficulty(difficulty.HardDifficulty())
             else:
-                self.get_player().set_difficulty(model.HardDifficulty())
-                self.get_player().trigger_difficulty()
+                raise ValueError("Something Broke Here!")
             self.state = "Rotating"
             self.get_game()
         else:

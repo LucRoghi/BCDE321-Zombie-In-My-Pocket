@@ -206,4 +206,4 @@ class Commands(cmd.Cmd):
             Required State: Choosing Difficulty
             Syntax: difficulty <difficulty>
         """
-        return self.game.difficulty()
+        return self.game.difficulty(line)

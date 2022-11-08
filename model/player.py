@@ -108,5 +108,5 @@ class Player:
     def set_difficulty(self, difficulty):
         self.difficulty = difficulty
 
-    def trigger_difficulty(self):
-        self.difficulty.set_difficulty()
+    # def trigger_difficulty(self):
+    #     self.difficulty.set_difficulty()
