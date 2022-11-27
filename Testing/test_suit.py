@@ -2,11 +2,12 @@ import unittest
 
 from Testing.test_database_handler import DatabaseHandlerTest
 from Testing.test_map_tile import MapTileTest
+from Testing.test_game_data import GameDataTest
 
 
 class AllTests:
     def __init__(self):
-        self.test_classes_to_run = [DatabaseHandlerTest, MapTileTest]
+        self.test_classes_to_run = [DatabaseHandlerTest, MapTileTest, GameDataTest]
         self.big_suite = self.add_test_to_test_suite()
 
     def add_test_to_test_suite(self):

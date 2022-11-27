@@ -38,60 +38,16 @@ GAME DATA DEVCARDS:
 """
 
 from random import randint
+
+from Model.CardConverter.CardConverter import CardConverter
+from Model.CardConverter.ConvertDevCards import ConvertDevCards
+from Model.CardConverter.ConvertMaptiles import ConvertMaptiles
+from Model.CardConverter.ConvertItems import ConvertItems
 from Model.dev_cards import Devcard
 from Model.database_handler import Database
 from Model.file_handler import Filehandler
 from Model.item import Item
 from Model.map_tile import MapTile
-
-
-def convert_tuples_to_maptile(tuple_list: tuple) -> list[MapTile]:
-    """
-    When given a tuple it will attempt to convert it into a Maptile object and then append it to a list.
-    It will then return the list of MapTile objects
-    :param tuple_list:
-    :return:
-    """
-    tile_list = []
-    for tile in tuple_list:
-        _, room_name, _, door_up, door_right, door_down, door_left, _type = tile
-        tile = MapTile(room_name, None, str_to_bool(door_up), str_to_bool(door_right), str_to_bool(door_down),
-                       str_to_bool(door_left))
-        tile_list.append(tile)
-    return tile_list
-
-
-def convert_tuples_to_dev_card(tuple_list: tuple) -> list[Devcard]:
-    """
-    When given a tuple it will attempt to convert it into a DevCard object and then append to a list. During the
-    conversion, if the effect is an integer it will convert it to a call to a function within the MapTile Class to
-    add_zombies_to_room. If the effect is non-numeric, the other functions will be attached to the effect
-    :param tuple_list:
-    :return:
-    """
-    devcard_list = []
-    for card in tuple_list:
-        _, nine_message, nine_effect, ten_message, ten_effect, eleven_message, eleven_effect, item = card
-        dev_card = Devcard(nine_message, nine_effect, ten_message, ten_effect,
-                           eleven_message, eleven_effect, item)
-        devcard_list.append(dev_card)
-    return devcard_list
-
-
-def convert_tuples_to_items(tuple_list: tuple) -> list[Item]:
-    """
-    When given a tuple will attempt to convert it to an Item object. The effect will get an attribute from within the
-    item class to be stored as a callable. It will then be appended to a list and then the list is returned
-    :param tuple_list:
-    :return:
-    """
-    item_list = []
-    for item in tuple_list:
-        _, name, effect, can_combine, combines_with_1, combines_with_2, makes_1, makes_2, uses = item
-        new_item = Item(name, effect, can_combine, [combines_with_1, combines_with_2], [makes_1, makes_2], uses)
-        new_item.effect = getattr(new_item, effect, None)
-        item_list.append(new_item)
-    return item_list
 
 
 def str_to_bool(string: str) -> bool:
@@ -105,6 +61,7 @@ class GameData:
         self.dev_cards: list[Devcard] = []
         self.items: list[Item] = []
         self.database: Database = Database("ZombieInMyPocket.db")
+        self.card_converter = CardConverter()
         self.file_handler: Filehandler = Filehandler()
         self.reset_database()
 
@@ -179,8 +136,9 @@ class GameData:
         convert_tuples_to_maptiles function to get a list of Maptile objects for the self.map_tiles_indoors list
         :return:
         """
+        self.card_converter.set_maker_behavior(ConvertMaptiles())
         map_tuples = self.database.query_data_from_table("Maptiles", "type", "Indoor")
-        self.map_tiles_indoor = convert_tuples_to_maptile(map_tuples)
+        self.map_tiles_indoor = self.card_converter.tuple_to_objects(map_tuples)
 
     def get_map_tiles_outdoors(self):
         """
@@ -188,8 +146,9 @@ class GameData:
         convert_tuples_to_maptiles function to get a list of Maptile objects for the self.map_tiles_outdoors list
         :return:
         """
+        self.card_converter.set_maker_behavior(ConvertMaptiles())
         map_tuples = self.database.query_data_from_table("Maptiles", "type", "Outdoor")
-        self.map_tiles_outdoor = convert_tuples_to_maptile(map_tuples)
+        self.map_tiles_outdoor = self.card_converter.tuple_to_objects(map_tuples)
 
     def get_dev_cards(self):
         """
@@ -197,8 +156,9 @@ class GameData:
         the convert_tuples_to_devcard function to get a list of DevCard objects for the self.dev_cards list
         :return:
         """
+        self.card_converter.set_maker_behavior(ConvertDevCards())
         dev_card_tuples = self.database.query_all_data_from_table("Devcards")
-        self.dev_cards = convert_tuples_to_dev_card(dev_card_tuples)
+        self.dev_cards = self.card_converter.tuple_to_objects(dev_card_tuples)
 
     def get_items(self):
         """
@@ -206,8 +166,9 @@ class GameData:
         the convert_tuples_to_items functions to get a list of Item objects for the self. Items list
         :return:
         """
+        self.card_converter.set_maker_behavior(ConvertItems())
         item_tuples = self.database.query_all_data_from_table("Items")
-        self.items = convert_tuples_to_items(item_tuples)
+        self.items = self.card_converter.tuple_to_objects(item_tuples)
 
     def dev_card_pop(self):
         """
@@ -218,5 +179,3 @@ class GameData:
             max_dev_card_index = len(self.dev_cards) - 1
             random_index = randint(0, max_dev_card_index)
             return self.dev_cards.pop(random_index)
-
-
