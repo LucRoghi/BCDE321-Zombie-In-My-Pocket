@@ -11,7 +11,7 @@ from Model.player import Player
 
 class Game:
     def __init__(self):
-        self.game_data = GameData()
+        self.game_data = GameData().initialize_game_data()
         self.active_tile_list = self.game_data.map_tiles_indoor
         self.player = Player()
         self.time_list = ["time_nine", "time_ten", "time_eleven"]
